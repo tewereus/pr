@@ -28,6 +28,22 @@ export const register = createAsyncThunk('auth/register', async (user, thunkAPI)
     }
 })
 
+export const forgotPasswordToken = createAsyncThunk('auth/forgot-password', async(value, thunkAPI) => {
+  try {
+    return await authService.forgotPasswordToken(value)
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error)
+  }
+})
+
+export const resetPassword = createAsyncThunk('auth/reset-password', async(data, thunkAPI) => {
+  try {
+    return await authService.resetPassword(data)
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error)
+  }
+})
+
 export const viewProfile = createAsyncThunk('auth/profile', async(thunkAPI) => {
     try {
         return await authService.viewProfile()
@@ -95,6 +111,36 @@ export const authSlice = createSlice({
                 const validationError = action.payload.response.data.message.split(':')
                 toast.error(validationError[0].trim())
             }
+          })
+          .addCase(forgotPasswordToken.pending, (state) => {
+            state.isLoading = true
+          })
+          .addCase(forgotPasswordToken.fulfilled, (state, action) => {
+            state.isLoading = false
+            state.isSuccess = true
+            state.isError = false
+            state.message = 'success'
+          })
+          .addCase(forgotPasswordToken.rejected, (state, action) => {
+            state.isLoading = false
+            state.isSuccess = false
+            state.isError = true
+            state.message = action.error
+          })
+          .addCase(resetPassword.pending, (state) => {
+            state.isLoading = true
+          })
+          .addCase(resetPassword.fulfilled, (state, action) => {
+            state.isLoading = false
+            state.isSuccess = true
+            state.isError = false
+            state.message = 'success'
+          })
+          .addCase(resetPassword.rejected, (state, action) => {
+            state.isLoading = false
+            state.isSuccess = false
+            state.isError = true
+            state.message = action.error
           })
           .addCase(viewProfile.pending, (state) => {
             state.isLoading = true

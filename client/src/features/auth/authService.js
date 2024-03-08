@@ -5,7 +5,7 @@ const getTokenFromLocalStorage = localStorage.getItem("user")
   ? JSON.parse(localStorage.getItem("user"))
   : null;
 
-export const config = {
+const config = {
   headers: {
     Authorization: `Bearer ${
       getTokenFromLocalStorage !== null ? getTokenFromLocalStorage.token : ""
@@ -28,6 +28,19 @@ const register = async (user) => {
   return response.data;
 };
 
+const forgotPasswordToken = async(value) => {
+  const response = await axios.post(`${base_url}/user/forgot-password`, value)
+  console.log(value)
+  return response.data
+}
+
+const resetPassword = async (data) => {
+  const response = await axios.put(`${base_url}/user/reset-password/${data.token}`, { password: data?.password })
+  if (response.data) {
+     return response.data
+  }
+}
+
 const viewProfile = async () => {
   const response = await axios.get("/user/profile", config);
   return response.data;
@@ -36,6 +49,8 @@ const authService = {
   login,
   register,
   viewProfile,
+  forgotPasswordToken,
+  resetPassword
 };
 
 export default authService;

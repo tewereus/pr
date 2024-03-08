@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 import { login, messageClear } from "../features/auth/authSlice";
 
@@ -58,6 +58,7 @@ const Login = () => {
         />
         <button type="submit">submit</button>
       </form>
+      <Link to="/forgot-password">forgot password ?</Link>
     </>
   );
 };
