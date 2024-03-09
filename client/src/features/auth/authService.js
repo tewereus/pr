@@ -28,21 +28,29 @@ const register = async (user) => {
   return response.data;
 };
 
-const forgotPasswordToken = async(value) => {
-  const response = await axios.post(`${base_url}/user/forgot-password`, value)
-  console.log(value)
-  return response.data
-}
+const forgotPasswordToken = async (data) => {
+  console.log("executed");
+  const response = await axios.post(`${base_url}/user/forgot-password`, data);
+  console.log("executed 2");
+
+  if (response.data) {
+    console.log(response.data);
+    return response.data;
+  }
+};
 
 const resetPassword = async (data) => {
-  const response = await axios.put(`${base_url}/user/reset-password/${data.token}`, { password: data?.password })
+  const response = await axios.put(
+    `${base_url}/user/reset-password/${data.token}`,
+    { password: data?.password }
+  );
   if (response.data) {
-     return response.data
+    return response.data;
   }
-}
+};
 
 const viewProfile = async () => {
-  const response = await axios.get("/user/profile", config);
+  const response = await axios.get(`${base_url}/user/profile`, config);
   return response.data;
 };
 const authService = {
@@ -50,7 +58,7 @@ const authService = {
   register,
   viewProfile,
   forgotPasswordToken,
-  resetPassword
+  resetPassword,
 };
 
 export default authService;
