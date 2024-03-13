@@ -1,14 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 // import BreadCrumb from '../components/BreadCrumb'
 // import Meta from '../components/Meta'
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { forgotPasswordToken } from "../features/auth/authSlice";
 
 const ForgotPassword = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const [enteredEmail, setEnteredEmail] = useState(null);
+  const [enteredEmail, setEnteredEmail] = useState("");
 
   const handleChange = (e) => {
     setEnteredEmail(e.target.value);
@@ -18,6 +20,13 @@ const ForgotPassword = () => {
     e.preventDefault();
     dispatch(forgotPasswordToken({ email: enteredEmail }));
   };
+
+  const { isSuccess } = useSelector((state) => state.auth);
+  useEffect(() => {
+    if (isSuccess) {
+      navigate("");
+    }
+  }, [isSuccess]);
 
   return (
     <>
@@ -43,9 +52,7 @@ const ForgotPassword = () => {
 
                 <div>
                   <div className="mt-3 flex justify-content-center gap-15 flex-column items-center">
-                    <button className="button border-0" type="submit">
-                      Submit
-                    </button>
+                    <button className="button border-0">Submit</button>
                     <Link to="/login">Cancel</Link>
                   </div>
                 </div>

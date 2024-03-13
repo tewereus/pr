@@ -136,7 +136,7 @@ export const authSlice = createSlice({
         state.isSuccess = true;
         state.message = "Success";
         state.token = action.payload;
-        if (state.isSuccess) {
+        if (state.isSuccess === true) {
           toast.success("Email Sent Successfully!");
         }
       })
@@ -145,7 +145,7 @@ export const authSlice = createSlice({
         state.isError = true;
         state.isSuccess = false;
         state.message = action.error;
-        if (state.isSuccess === false) {
+        if (state.isError === true) {
           toast.error("Something Went Wrong!");
         }
       })
@@ -157,12 +157,18 @@ export const authSlice = createSlice({
         state.isSuccess = true;
         state.isError = false;
         state.message = "success";
+        if (state.isSuccess === true) {
+          toast.success("Password reseted Successfully!");
+        }
       })
       .addCase(resetPassword.rejected, (state, action) => {
         state.isLoading = false;
         state.isSuccess = false;
         state.isError = true;
         state.message = action.error;
+        if (state.isError === true) {
+          toast.error(action.payload.response.data.message);
+        }
       })
       .addCase(viewProfile.pending, (state) => {
         state.isLoading = true;
