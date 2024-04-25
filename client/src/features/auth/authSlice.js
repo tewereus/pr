@@ -22,11 +22,33 @@ export const login = createAsyncThunk("auth/login", async (user, thunkAPI) => {
   }
 });
 
+export const validateUser = createAsyncThunk(
+  "auth/validate-user",
+  async (data, thunkAPI) => {
+    try {
+      return await authService.validateUser(data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 export const register = createAsyncThunk(
   "auth/register",
   async (user, thunkAPI) => {
     try {
       return await authService.register(user);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+export const verifyEmail = createAsyncThunk(
+  "auth/verify-email",
+  async (email, thunkAPI) => {
+    try {
+      return await authService.verifyEmail(email);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -103,6 +125,27 @@ export const authSlice = createSlice({
           toast.error(action.payload.response.data.message);
         }
       })
+      .addCase(validateUser.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(validateUser.fulfilled, (state, action) => {
+        state.isError = false;
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.message = "Success";
+        if (state.isSuccess === true) {
+          toast.success("user validation successfully");
+        }
+      })
+      .addCase(validateUser.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.isSuccess = false;
+        state.message = action.error;
+        if (state.isError === true) {
+          toast.error(action.payload.response.data);
+        }
+      })
       .addCase(register.pending, (state) => {
         state.isLoading = true;
       })
@@ -125,6 +168,29 @@ export const authSlice = createSlice({
           const validationError =
             action.payload.response.data.message.split(":");
           toast.error(validationError[0].trim());
+        }
+      })
+      .addCase(verifyEmail.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(verifyEmail.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.message = "success";
+        state.otp = action.payload;
+        if (state.isSuccess === true) {
+          toast.success("email sent Successfully");
+        }
+      })
+      .addCase(verifyEmail.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = false;
+        state.isError = true;
+        state.message = action.error;
+        if (state.isError === true) {
+          const validationError =
+            action.payload.response.data.message.split(":");
+          toast.error(action.payload.response.data.message);
         }
       })
       .addCase(forgotPasswordToken.pending, (state) => {

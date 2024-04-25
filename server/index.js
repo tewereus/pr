@@ -8,6 +8,7 @@ const cors = require('cors')
 const morgan = require('morgan')
 const {errorHandler, notFound} = require('./middlewares/errorHandler')
 const authRouter = require("./routes/authRoutes")
+const otpRouter = require("./routes/otpRoutes")
 
 
 const PORT = process.env.PORT || 9001
@@ -28,7 +29,7 @@ app.use(express.urlencoded({ extended: true }));
 
 
 app.use('/api/v1/user', authRouter)
-
+app.use('/api/v1/otp', otpRouter)
 
 app.use(notFound);
 app.use(errorHandler);

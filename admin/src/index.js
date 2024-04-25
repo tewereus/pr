@@ -3,12 +3,23 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import {store} from "./store/store"
+import {Provider} from "react-redux"
+import { Toaster } from 'react-hot-toast'
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
+  <Provider store={store}>
     <App />
-  </React.StrictMode>
+    <Toaster toastOptions={{
+      position: 'top-right',
+      style: {
+        background: 'white',
+        color: 'black'
+      }
+    }} />
+  </Provider>
 );
 
 // If you want to start measuring performance in your app, pass a function

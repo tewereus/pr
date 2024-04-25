@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const {
+  validateUserRegister,
   registerUser,
   loginUser,
   getAllUsers,
@@ -16,13 +17,14 @@ const {
   forgotPasswordToken,
   resetPassword,
   logout,
-  loginAdmin
+  loginAdmin,
 } = require("../controllers/authCtrl");
 const { authMiddleware, authorize } = require("../middlewares/authMiddleware");
 
+router.post("/validate-user", validateUserRegister);
 router.post("/login", loginUser);
 router.post("/register", registerUser);
-router.post("/admin/login", loginAdmin);
+router.post("/admin-login/517331692", loginAdmin);
 router.post("/logout", authMiddleware, logout);
 
 router.get("/profile", authMiddleware, viewProfile);
@@ -38,6 +40,6 @@ router.post("/forgot-password", forgotPasswordToken);
 router.put("/reset-password/:token", resetPassword);
 
 router.delete("/all-users/delete", authMiddleware, authorize, deleteAllUsers);
-router.get("/all-users", authMiddleware, authorize, getAllUsers);
+router.get("/all-users", getAllUsers);
 
 module.exports = router;

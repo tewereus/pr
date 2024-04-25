@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import logo from "./onPrintz-removebg-preview.png";
+// import logo from "./onPrintz-removebg-preview.png";
 import { useSelector, useDispatch } from "react-redux";
 // import {user_reset} from "../features/auth/authSlice"
 
@@ -17,12 +17,12 @@ const Navigation = () => {
 
   return (
     <div className="flex justify-around items-center border-b-8">
-      <Link to="/">
+      {/* <Link to="/">
         <img src={logo} alt="logo" className="h-20" />
-      </Link>
+      </Link> */}
       <ul>
         <li>
-          <Link to="/">Home</Link>
+          <Link to="/admin">Home</Link>
         </li>
       </ul>
       <div>
@@ -30,7 +30,7 @@ const Navigation = () => {
           <>
             <button type="button">
               <Link to="/profile">
-                {user.profile} {user.username}
+                {user.username}
               </Link>
             </button>
             <button onClick={handleLogout} type="button">

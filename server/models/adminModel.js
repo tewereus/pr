@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const crypto = require("crypto");
 
-const userSchema = mongoose.Schema(
+const adminSchema = mongoose.Schema(
   {
     username: {
       type: String,
@@ -14,7 +14,7 @@ const userSchema = mongoose.Schema(
     fullname: {
       type: String,
       required: [true, "full name is required"],
-      set: (v) => v.trim().replace(/\s+/g, " "),
+      trim: true
     },
     email: {
       type: String,
@@ -79,7 +79,7 @@ const userSchema = mongoose.Schema(
   }
 );
 
-userSchema.pre("save", async function (next) {
+adminSchema.pre("save", async function (next) {
   if (!this.isModified("password")) {
     next();
   }
@@ -92,11 +92,11 @@ userSchema.pre("save", async function (next) {
   next();
 });
 
-userSchema.methods.isPasswordMatched = async function (enteredPassword) {
+adminSchema.methods.isPasswordMatched = async function (enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password);
 };
 
-userSchema.methods.createResetPasswordToken = async function () {
+adminSchema.methods.createResetPasswordToken = async function () {
   const resettoken = crypto.randomBytes(32).toString("hex");
   this.passwordResetToken = crypto
     .createHash("sha256")
@@ -109,4 +109,4 @@ userSchema.methods.createResetPasswordToken = async function () {
   return resettoken;
 };
 
-module.exports = mongoose.model("User", userSchema);
+module.exports = mongoose.model("Admin", adminSchema);

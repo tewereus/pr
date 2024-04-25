@@ -2,26 +2,26 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import { useNavigate, Link } from "react-router-dom";
-import { admin_login, messageClear } from "../../store/Reducers/authReducer";
+import { adminLogin, messageClear } from "../../features/auth/authSlice";
 const AdminLogin = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { loader, errorMessage, successMessage } = useSelector(
+  const { isLoading, isError, isSuccess } = useSelector(
     (state) => state.auth
   );
-  const [state, setSatate] = useState({
+  const [state, setState] = useState({
     email: "",
     password: "",
   });
   const inputHandle = (e) => {
-    setSatate({
+    setState({
       ...state,
       [e.target.name]: e.target.value,
     });
   };
   const submit = (e) => {
     e.preventDefault();
-    dispatch(admin_login(state));
+    dispatch(adminLogin(state));
   };
   const overrideStyle = {
     display: "flex",
@@ -31,16 +31,16 @@ const AdminLogin = () => {
     alignItems: "center",
   };
   useEffect(() => {
-    if (errorMessage) {
-      toast.error(errorMessage);
+    if (isError) {
+      toast.error("can't login");
       dispatch(messageClear());
     }
-    if (successMessage) {
-      toast.success(successMessage);
+    if (isSuccess) {
+      toast.success("successfull");
       dispatch(messageClear());
-      navigate("/");
+      navigate("/admin");
     }
-  }, [errorMessage, successMessage]);
+  }, [isError, isSuccess]);
   return (
     <div className="min-w-screen min-h-screen bg-[#161d31] flex justify-center items-center">
       <div className="w-[350px] text-[#d0d2d6] p-2">
@@ -82,11 +82,12 @@ const AdminLogin = () => {
               />
             </div>
             <button
-              disabled={loader ? true : false}
+              disabled={isLoading ? true : false}
               className="bg-blue-500 w-full hover:shadow-blue-500/50 hover:shadow-lg text-white rounded-md px-7 py-2 mb-3"
             >
-              {loader ? (
-                <PropagateLoader color="#fff" cssOverride={overrideStyle} />
+              {isLoading ? (
+                // <PropagateLoader color="#fff" cssOverride={overrideStyle} />
+                <div>Loading....</div>
               ) : (
                 "Login"
               )}

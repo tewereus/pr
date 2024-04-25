@@ -22,16 +22,26 @@ const login = async (user) => {
   return response.data;
 };
 
+const validateUser = async (data) => {
+  const response = await axios.post(`${base_url}/user/validate-user`, data);
+  return response.data;
+};
+
 const register = async (user) => {
   const response = await axios.post(`${base_url}/user/register`, user);
 
   return response.data;
 };
 
+const verifyEmail = async (email) => {
+  // console.log("sendOtp reached ")
+  const response = await axios.post(`${base_url}/otp/send-otp`, { email });
+  // console.log("message sent successfully")
+  return response.data;
+};
+
 const forgotPasswordToken = async (data) => {
-  console.log("executed");
   const response = await axios.post(`${base_url}/user/forgot-password`, data);
-  console.log("executed 2");
 
   if (response.data) {
     console.log(response.data);
@@ -55,7 +65,9 @@ const viewProfile = async () => {
 };
 const authService = {
   login,
+  validateUser,
   register,
+  verifyEmail,
   viewProfile,
   forgotPasswordToken,
   resetPassword,
