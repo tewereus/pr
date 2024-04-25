@@ -3,6 +3,8 @@
 // (!Solved! but check again) problem with validateUser as it validates everything not just the one i want to update, like if i change username it also checks for mobile, email...,
 
 const User = require("../models/userModel");
+const OTP = require("../models/otpModel");
+// const Admin = require("../models/adminModel");
 const asyncHandler = require("express-async-handler");
 const { generateToken } = require("../config/jwtToken");
 const validateMongoDbId = require("../utils/validateMongoDbId");
@@ -12,12 +14,114 @@ const bcrypt = require("bcryptjs");
 const sendEmail = require("./emailCtrl");
 const crypto = require("crypto");
 
+const validateUserRegister = asyncHandler(async (req, res) => {
+  const { fullname, username, mobile, email, password, confirmPassword } =
+    req.body;
+  if (
+    !fullname ||
+    !username ||
+    !mobile ||
+    !email ||
+    !password ||
+    !confirmPassword
+  ) {
+    res.status(400).json("All fields are required");
+  }
+
+  if (fullname && fullname.trim().length < 3) {
+    res.status(400).json("Full name must be at least 3 characters long");
+  }
+
+  const userExistsByUsername = await User.findOne({ username: username });
+  if (userExistsByUsername) {
+    res.status(400).json("Username already exists");
+  }
+  if (username && (username.length < 3 || username.length > 12)) {
+    res.status(400).json("Username must be between 3 and 12 characters long");
+  }
+
+  const userExistsByEmail = await User.findOne({ email: email });
+  if (userExistsByEmail) {
+    res.status(400).json("Email already exists");
+  }
+  if (email && !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+    res.status(400).json("Please input a valid email address");
+  }
+
+  const userExistsByMobile = await User.findOne({ mobile: mobile });
+  if (userExistsByMobile) {
+    res.status(400).json("Mobile is already registered");
+  }
+  if (mobile && !/^\d{9}$/.test(mobile)) {
+    res.status(400).json("Mobile number must contain exactly 9 digits");
+  }
+  if (
+    password &&
+    (password.length < 8 ||
+      !/[A-Z]/.test(password) ||
+      !/[a-z]/.test(password) ||
+      !/\d/.test(password) ||
+      !/[!@#$%^&*]/.test(password))
+  ) {
+    res
+      .status(400)
+      .json(
+        "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character"
+      );
+  }
+
+  if (password !== confirmPassword) {
+    res.status(400).json("Passwords do not match");
+  }
+  res.status(200).json("validation successfully passed");
+});
+
 const registerUser = asyncHandler(async (req, res) => {
-  const { email } = req.body;
+  const {
+    fullname,
+    username,
+    mobile,
+    email,
+    password,
+    confirmPassword,
+    otp,
+    profile,
+  } = req.body;
+  if (!fullname || !username || !mobile || !email || !password || !otp) {
+    return res.status(403).json({
+      success: false,
+      message: "All fields are required",
+    });
+  }
+  if (password !== confirmPassword) {
+    return res.status(403).json({
+      success: false,
+      message: "passwords do not match",
+    });
+  }
   try {
     const userExists = await User.findOne({ email: email });
     if (!userExists) {
-      const newUser = await User.create(req.body);
+      const response = await OTP.find({ email })
+        .sort({ createdAt: -1 })
+        .limit(1);
+      if (response.length === 0 || otp !== response[0].otp) {
+        return res.status(400).json({
+          success: false,
+          message: "The OTP is not valid",
+        });
+      }
+
+      const profilePic =
+        profile === "" ? `https://avatar.iran.liara.run/public/boy` : profile;
+      const newUser = await User.create({
+        fullname,
+        username,
+        email,
+        mobile,
+        password,
+        profile: profilePic,
+      });
       console.log(newUser);
       res.json(newUser);
     } else {
@@ -48,6 +152,7 @@ const loginUser = asyncHandler(async (req, res) => {
     );
     res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
+      sameSite: "strict",
       maxAge: 72 * 60 * 60 * 1000,
     });
     res.json({
@@ -57,6 +162,7 @@ const loginUser = asyncHandler(async (req, res) => {
       username: findUser?.username,
       email: findUser?.email,
       mobile: findUser?.mobile,
+      profile: findUser?.profile,
       token: generateToken(findUser?._id),
     });
   } else {
@@ -65,34 +171,35 @@ const loginUser = asyncHandler(async (req, res) => {
 });
 
 const loginAdmin = asyncHandler(async (req, res) => {
-   const { email, password } = req.body;
-   // check if user exists or not
-   const findAdmin = await User.findOne({ email });
-   if (findAdmin.role !== "admin") throw new Error("Not Authorized");
-   if (findAdmin && (await findAdmin.isPasswordMatched(password))) {
-      const refreshToken = await generateRefreshToken(findAdmin?._id);
-      const updateuser = await User.findByIdAndUpdate(
-         findAdmin.id,
-         {
-            refreshToken: refreshToken,
-         },
-         { new: true }
-      );
-      res.cookie("refreshToken", refreshToken, {
-         httpOnly: true,
-         maxAge: 72 * 60 * 60 * 1000,
-      });
-      res.json({
-         _id: findAdmin?._id,
-         firstname: findAdmin?.firstname,
-         lastname: findAdmin?.lastname,
-         email: findAdmin?.email,
-         mobile: findAdmin?.mobile,
-         token: generateToken(findAdmin?._id),
-      });
-   } else {
-      throw new Error("Invalid Credentials");
-   }
+  const { email, password } = req.body;
+  // check if user exists or not
+  const findAdmin = await User.findOne({ email });
+  // const findAdmin = await Admin.findOne({ email });
+  if (findAdmin.role !== "admin") throw new Error("Not Authorized");
+  if (findAdmin && (await findAdmin.isPasswordMatched(password))) {
+    const refreshToken = await generateRefreshToken(findAdmin?._id);
+    const updateuser = await User.findByIdAndUpdate(
+      findAdmin.id,
+      {
+        refreshToken: refreshToken,
+      },
+      { new: true }
+    );
+    res.cookie("refreshToken", refreshToken, {
+      httpOnly: true,
+      maxAge: 72 * 60 * 60 * 1000,
+    });
+    res.json({
+      _id: findAdmin?._id,
+      firstname: findAdmin?.firstname,
+      lastname: findAdmin?.lastname,
+      email: findAdmin?.email,
+      mobile: findAdmin?.mobile,
+      token: generateToken(findAdmin?._id),
+    });
+  } else {
+    throw new Error("Invalid Credentials");
+  }
 });
 
 const logout = asyncHandler(async (req, res) => {
@@ -281,13 +388,84 @@ const deleteAllUsers = asyncHandler(async (req, res) => {
 });
 
 const getAllUsers = asyncHandler(async (req, res) => {
+  // try {
+  //   const users = await User.find({ role: "user" });
+  //   res.json(users);
+  // } catch (err) {
+  //   throw new Error(err);
+  // }
   try {
-    const users = await User.find({ role: "user" });
-    res.json(users);
-  } catch (err) {
-    throw new Error(err);
+    //Filtering
+    const queryObj = { ...req.query };
+    const excludeFields = ["page", "sort", "limit", "fields", "role"];
+    excludeFields.forEach((el) => delete queryObj[el]);
+
+    let queryStr = JSON.stringify(queryObj);
+    queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`);
+
+    let query = User.find(JSON.parse(queryStr));
+
+    //Sorting
+    if (req.query.sort) {
+      const sortBy = req.query.sort.split(",").join(" ");
+      query = query.sort(sortBy);
+    } else {
+      query = query.sort("-createdAt");
+    }
+
+    // limiting the fields
+    if (req.query.fields) {
+      const fields = req.query.fields.split(",").join(" ");
+      query = query.select(fields);
+    } else {
+      query = query.select("-__v");
+    }
+
+    // pagination
+    const page = req.query.page;
+    const limit = req.query.limit;
+    const skip = (page - 1) * limit;
+    query = query.skip(skip).limit(limit);
+    if (req.query.page) {
+      const userCount = await User.countDocuments();
+      if (skip >= userCount) throw new Error("This Page does not exists");
+    }
+
+    const user = await query;
+    res.json(user);
+  } catch (error) {
+    throw new Error(error);
   }
 });
+
+// const getAllUsers = asyncHandler(async (req, res) => {
+//     let { page, searchValue, parPage } = req.query
+//     page = parseInt(page)
+//     parPage = parseInt(parPage)
+
+//     const skipPage = parPage * (page - 1)
+
+//     try {
+//         if (searchValue) {
+//             const users = await sellerModel.find({
+//                 $text: { $search: searchValue }
+//             }).skip(skipPage).limit(parPage).sort({ createdAt: -1 })
+
+//             const totalUsers = await sellerModel.find({
+//                 $text: { $search: searchValue }
+//             }).countDocuments()
+
+//             responseReturn(res, 200, { totalSeller, sellers })
+//         } else {
+//             const users = await sellerModel.find().skip(skipPage).limit(parPage).sort({ createdAt: -1 })
+//             const totalUsers = await sellerModel.find().countDocuments()
+//             responseReturn(res, 200, { totalSeller, sellers })
+//         }
+
+//     } catch (error) {
+//         console.log('active seller get ' + error.message)
+//     }
+// })
 
 const forgotPasswordToken = asyncHandler(async (req, res) => {
   const { email } = req.body;
@@ -326,7 +504,46 @@ const resetPassword = asyncHandler(async (req, res) => {
   res.json(user);
 });
 
+/*const forgotAdminPasswordToken = asyncHandler(async (req, res) => {
+  const { email } = req.body;
+  const admin = await Admin.findOne({ email: email });
+  if (!admin) throw new Error("No user found");
+  try {
+    const token = await admin.createResetPasswordToken();
+    await admin.save();
+    const resetUrl = `Hi please follow this link to reset your password. This link is valid for 10 minutes from now <a href='http://localhost:5000/api/v1/user/reset-password/${token}'>Click Here</a>`;
+    const data = {
+      to: email,
+      subject: "Forgot password Link",
+      text: "Hey admin",
+      htm: resetUrl,
+    };
+    sendEmail(data);
+    res.json(token);
+  } catch (error) {
+    throw new Error(error);
+  }
+});
+
+const resetAdminPassword = asyncHandler(async (req, res) => {
+  const { password } = req.body;
+  const { token } = req.params;
+  const hashedToken = crypto.createHash("sha256").update(token).digest("hex");
+  const admin = await Admin.findOne({
+    passwordResetToken: hashedToken,
+    passwordResetExpires: { $gt: Date.now() },
+  });
+  if (!admin) throw new Error("Token Expired, please try again later");
+  admin.password = password;
+  admin.passwordResetToken = undefined;
+  admin.passwordResetExpires = undefined;
+  await admin.save();
+  res.json(admin);
+});
+*/
+
 module.exports = {
+  validateUserRegister,
   registerUser,
   loginUser,
   loginAdmin,
@@ -342,5 +559,7 @@ module.exports = {
   deleteAllUsers,
   forgotPasswordToken,
   resetPassword,
+  // forgotAdminPasswordToken,
+  // resetAdminPassword,
   getAllUsers,
 };
