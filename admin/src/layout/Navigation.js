@@ -29,9 +29,7 @@ const Navigation = () => {
         {user ? (
           <>
             <button type="button">
-              <Link to="/profile">
-                {user.username}
-              </Link>
+              <Link to="/profile">{user.username}</Link>
             </button>
             <button onClick={handleLogout} type="button">
               Logout

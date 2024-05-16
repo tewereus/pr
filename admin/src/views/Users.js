@@ -1,107 +1,427 @@
-import React, {useState, useEffect} from 'react'
-import {useDispatch, useSelector} from 'react-redux'
-import { FaEdit, FaEye, FaTrash } from 'react-icons/fa'
-import Pagination from './Pagination'
-import { Link } from 'react-router-dom'
-import {getAllUsers} from '../features/users/userSlice'
+/*import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllUsers } from "../features/users/userSlice";
+import axios from "axios";
+import { base_url } from "../api/axiosConfig";
+import Table from "./components/Table";
+import Sort from "./components/Sort";
+import Pagination from "./components/Pagination";
+import Search from "./components/Search";
 
-const getTokenFromLocalStorage = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null
+function User() {
+  const [obj, setObj] = useState({});
+  const [sort, setSort] = useState({ sort: "name", order: "asc" });
+  const [filterGenre, setFilterGenre] = useState([]);
+  const [page, setPage] = useState(1);
+  const [search, setSearch] = useState("");
 
-const config = {
-   headers: {
-      'Authorization': `Bearer ${getTokenFromLocalStorage !== null ? getTokenFromLocalStorage.token : ""}`,
-      'Accept': 'application/json'
-   }
-}
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getAllUsers());
+  }, []);
 
-const Users = () => {
-    const dispatch = useDispatch()
-    const [currentPage, setCurrentPage] = useState(1)
-    const [searchValue, setSearchValue] = useState('')
-    const [parPage, setParPage] = useState(5)
-    const users = useSelector((state) => state.users.users)
-    useEffect(()=>{
-      dispatch(getAllUsers(config))
-    }, [])
-    console.log(users)
-    return (
-      <div className='px-2 lg:px-7 pt-5'>
-            <div className='w-full p-4  bg-[#283046] rounded-md'>
-                <div className='flex justify-between items-center'>
-                    <select onChange={(e) => setParPage(parseInt(e.target.value))} className='px-4 py-2 focus:border-indigo-500 outline-none bg-[#283046] border border-slate-700 rounded-md text-[#d0d2d6]'>
-                        <option value="5">5</option>
-                        <option value="5">15</option>
-                        <option value="5">25</option>
-                    </select>
-                    <h2 className='text-white font-bold text-lg' >Users</h2>
-                    <input onChange={e => setSearchValue(e.target.value)} value={searchValue} className='px-4 py-2 focus:border-indigo-500 outline-none bg-[#283046] border border-slate-700 rounded-md text-[#d0d2d6]' type="text" placeholder='search' />
-                </div>
-                <div className='relative overflow-x-auto'>
-                    <table className='w-full text-sm text-left text-[#d0d2d6]'>
-                        <thead className='text-xs text-[#d0d2d6] uppercase border-b border-slate-700'>
-                            <tr>
-                                <th scope='col' className='py-3 px-4'>No</th>
-                                <th scope='col' className='py-3 px-4'>Username</th>
-                                <th scope='col' className='py-3 px-4'>Full Name</th>
-                                <th scope='col' className='py-3 px-4'>Email</th>
-                                <th scope='col' className='py-3 px-4'>Mobile</th>
-                                <th scope='col' className='py-3 px-4'>Blocked</th>
-                                <th scope='col' className='py-3 px-4'>Created</th>
-                            </tr>
-                        </thead>
-                        <tbody className='text-sm font-normal'>
-                            {
-                                users.map((d, i) => {
-                                return(
-                                  <tr key={i}>
-                                    <td scope='row' className='py-1 px-4 font-medium whitespace-nowrap'>{i + 1}</td>
-                                    {/* <td scope='row' className='py-1 px-4 font-medium whitespace-nowrap'>
-                                        <img className='w-[45px] h-[45px]' src={`http://localhost:3000/images/category/${d.image}.jpg`} alt="" />
-                                    </td> */}
-                                    <td scope='row' className='py-1 px-4 font-medium whitespace-nowrap'>
-                                        <span>{d.username}</span>
-                                    </td>
-                                    <td scope='row' className='py-1 px-4 font-medium whitespace-nowrap'>
-                                        <span>{d.fullname}</span>
-                                    </td>
-                                    <td scope='row' className='py-1 px-4 font-medium whitespace-nowrap'>
-                                        <span>{d.email}</span>
-                                    </td>
-                                    <td scope='row' className='py-1 px-4 font-medium whitespace-nowrap'>
-                                        <span>{d.mobile}</span>
-                                    </td>
-                                    <td scope='row' className='py-1 px-4 font-medium whitespace-nowrap'>
-                                        <span>{d.isBlocked ? 'Blocked' : '---'}</span>
-                                    </td>
-                                    <td scope='row' className='py-1 px-4 font-medium whitespace-nowrap'>
-                                        <span>{d.createdAt}</span>
-                                    </td>
-                                    <td scope='row' className='py-1 px-4 font-medium whitespace-nowrap'>
-                                        <div className='flex justify-start items-center gap-4'>
-                                            <Link to={`/admin/dashboard/seller/details/${d._id}`} className='p-[6px] bg-green-500 rounded hover:shadow-lg hover:shadow-green-500/50'><FaEye /></Link>
-                                        </div>
-                                    </td>
-                                </tr>
-                               )
-                                })
-                            }
-                        </tbody>
-                    </table>
-                </div>
-                {/* {
-                    totalUsers <= parPage ? <div className='w-full flex justify-end mt-4 bottom-4 right-4'>
-                        <Pagination
-                            pageNumber={currentPage}
-                            setPageNumber={setCurrentPage}
-                            totalItem={totalUsers}
-                            parPage={parPage}
-                            showItem={4}
-                        />
-                    </div> : ""
-                } */}
+  const users = useSelector((state) => state.users.users);
+  console.log(users);
+  //   useEffect(() => {
+  // const getAllUsers = async () => {
+  //   try {
+  //     const url = `${base_url}/user/all-users?page=${page}&search=${search}`;
+  //     const { data } = await axios.get(url);
+  //     setObj(data);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
+
+  // getAllUsers();
+
+  //   }, [sort, page, search]);
+
+  return (
+    // <div className="wrapper">
+    //   <div className="container">
+    //     <div className="head">
+    //       <img src="./images/logo.png" alt="logo" className="logo" />
+    //       <Search setSearch={(search) => setSearch(search)} />
+    //     </div>
+    //     <div className="body">
+    //       <div className="table_container">
+    //         <Table users={obj.users ? obj.users : []} />
+    //         <Pagination
+    //           page={page}
+    //           limit={obj.limit ? obj.limit : 0}
+    //           total={obj.total ? obj.total : 0}
+    //           setPage={(page) => setPage(page)}
+    //         />
+    //       </div>
+    //       <div className="filter_container">
+    //         <Sort sort={sort} setSort={(sort) => setSort(sort)} /> 
+    //         <Genre
+    //           filterGenre={filterGenre}
+    //           genres={obj.genres ? obj.genres : []}
+    //           setFilterGenre={(genre) => setFilterGenre(genre)}
+    //         /> 
+    //       </div>
+    //     </div>
+    //   </div>
+    // </div>
+/*    <>
+      <div className="flex">
+        <h1> Full name </h1>
+        <h1> Username </h1>
+        <h1> Mobile </h1>
+        <h1> Email </h1>
+        <h1> Role </h1>
+        <h1> Blocked </h1>
+        <h1> Created Date </h1>
+      </div>
+      {users.map((user, index) => {
+        return (
+          <>
+            <div className="flex">
+              <div>
+                <h1> {user.username} </h1>
+              </div>
+              <div>
+                <h1> {user.fullname} </h1>
+              </div>
+              <div>
+                <h1> {user.mobile} </h1>
+              </div>
+              <div>
+                <h1> {user.email} </h1>
+              </div>
+              <div>
+                <h1> {user.role} </h1>
+              </div>
+              <div>
+                <h1> {user.isBlocked} </h1>
+              </div>
+              <div>
+                <h1> {user.createdAt} </h1>
+              </div>
             </div>
-        </div>
-    )
+          </>
+        );
+      })}
+    </>
+  );
 }
 
-export default Users
+export default User;
+*/
+
+import React, { useState, useEffect } from "react";
+import Table from "./components/Table";
+import {
+  getAllUsers,
+  getAllAdmins,
+  deleteUser,
+  deleteAllUsers,
+} from "../features/users/users/userSlice";
+import Search from "./components/Search";
+import { useSelector, useDispatch } from "react-redux";
+
+const UserList = () => {
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(5);
+  const [search, setSearch] = useState("");
+  const [blocked, setBlocked] = useState(false);
+  const [searchField, setSearchField] = useState("username"); // Add searchField state
+  const [role, setRole] = useState("users");
+  const [sort, setSort] = useState("-createdAt");
+  const [sortValue, setSortValue] = useState({
+    sortBy: "createdAt",
+    order: "asc",
+    blocked: "false",
+  });
+
+  const sortOptions = ["createdAt", "username", "fullname"];
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const obj = {
+      limit: parseInt(limit),
+      page: parseInt(page),
+      sort,
+      search,
+      searchField,
+      blocked,
+    };
+    if (role === "users") {
+      dispatch(getAllUsers(obj));
+    } else if (role === "admins") {
+      dispatch(
+        getAllAdmins({
+          limit: parseInt(limit),
+          page: parseInt(page),
+          sort,
+          search,
+          searchField,
+        })
+      );
+    }
+  }, [page, limit, sort, search, searchField, role, blocked]);
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (e.target.tagName !== "TD" && e.target.tagName !== "BUTTON") {
+        setSelectedUser(null);
+      }
+    };
+
+    document.body.addEventListener("click", handleClickOutside);
+
+    return () => {
+      document.body.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
+
+  const { users, totalUsers, isLoading } = useSelector((state) => state.users);
+
+  const onLimitChange = (e) => {
+    if (e.key === "Enter") {
+      const value = parseInt(e.target.value, 10);
+      if (!isNaN(value)) {
+        setLimit(value);
+      } else {
+        setLimit(10); // Set a default value if the input is not a valid number
+      }
+    }
+  };
+  const handleSearchChange = (e) => {
+    if (e.key === "Enter") {
+      setSearch(e.target.value);
+    }
+  };
+
+  const handleSort = () => {
+    if (sortValue.order === "asc") {
+      setSort(sortValue.sortBy);
+    } else if (sortValue.order === "desc") {
+      setSort(() => {
+        return "-" + sortValue.sortBy;
+      });
+    }
+  };
+
+  const handleBlockChange = () => {
+    setBlocked((prevOption) => {
+      return !prevOption;
+    });
+  };
+
+  const handleRowSelect = (user) => {
+    setSelectedUser(user);
+  };
+
+  const handleEdit = () => {
+    if (selectedUser) {
+      // Execute API code for editing
+      console.log("Editing user:", selectedUser.username);
+    } else {
+      console.log("No user selected for editing");
+    }
+  };
+
+  const handleUpdate = () => {
+    if (selectedUser) {
+      // Execute API code for updating
+      console.log("Updating user:", selectedUser.username);
+    } else {
+      console.log("No user selected for updating");
+    }
+  };
+
+  const handleDelete = () => {
+    // if (selectedUser) {
+    //   dispatch(deleteUser(selectedUser._id))
+    //     .then(() => {
+    //       console.log("User deleted successfully:", selectedUser.username);
+    //       const obj = {
+    //         limit: parseInt(limit),
+    //         page: parseInt(page),
+    //         sort,
+    //         search,
+    //         searchField,
+    //         blocked,
+    //       };
+    //       if (role === "users") {
+    //         dispatch(getAllUsers(obj));
+    //       } else if (role === "admins") {
+    //         dispatch(
+    //           getAllAdmins({
+    //             limit: parseInt(limit),
+    //             page: parseInt(page),
+    //             sort,
+    //             search,
+    //             searchField,
+    //           })
+    //         );
+    //       }
+    //     })
+    //     .catch((error) => {
+    //       console.error("Error deleting user:", error);
+    //     });
+    // } else {
+    //   console.log("No user selected for deleting");
+    // }
+  };
+
+  const deleteEveryUsers = () => {
+    // dispatch(deleteAllUsers())
+    //   .then(() => {
+    //     const obj = {
+    //       limit: parseInt(limit),
+    //       page: parseInt(page),
+    //       sort,
+    //       search,
+    //       searchField,
+    //       blocked,
+    //     };
+    //     if (role === "users") {
+    //       dispatch(getAllUsers(obj));
+    //     } else if (role === "admins") {
+    //       dispatch(
+    //         getAllAdmins({
+    //           limit: parseInt(limit),
+    //           page: parseInt(page),
+    //           sort,
+    //           search,
+    //           searchField,
+    //         })
+    //       );
+    //     }
+    //   })
+    //   .catch((error) => {
+    //     console.error("Error deleting user:", error);
+    //   });
+  };
+
+  return (
+    <div>
+      <div className="flex justify-between">
+        <h1>Users</h1>
+        <select onChange={(e) => setRole(e.target.value)}>
+          <option value="users">Users</option>
+          <option value="admins">Admins</option>
+        </select>
+      </div>
+      <div className="search-container h-200 pb-30 mb-20 border-3">
+        <input
+          type="text"
+          placeholder="Search users..."
+          // value={search}
+          onKeyDown={handleSearchChange}
+        />
+        <select onChange={(e) => setSearchField(e.target.value)}>
+          <option value="username">Username</option>
+          <option value="fullname">Full Name</option>
+          <option value="mobile">Mobile</option>
+          <option value="email">Email</option>
+        </select>
+      </div>
+
+      <div className="border-2 border-blue-400">
+        <select
+          onChange={(e) =>
+            setSortValue({ ...sortValue, sortBy: e.target.value })
+          }
+        >
+          {sortOptions.map((option) => (
+            <option key={option} value={option}>
+              {option}
+            </option>
+          ))}
+        </select>
+        <select
+          onChange={(e) =>
+            setSortValue({ ...sortValue, order: e.target.value })
+          }
+        >
+          <option value="asc">asc</option>
+          <option value="desc">desc</option>
+        </select>
+        <button onClick={handleSort}>Sort</button>
+
+        <button className="ml-10" onClick={deleteEveryUsers}>
+          Delete all users
+        </button>
+      </div>
+
+      {/* {isLoading ? <p>Loading....</p> : <Table users={users} />} */}
+      <table>
+        <thead>
+          <tr>
+            <th>Username</th>
+            <th>Full Name</th>
+            <th>Email</th>
+            <th>Mobile</th>
+            <th>
+              isBlocked <button onClick={handleBlockChange}>◘</button>
+            </th>
+            <th>Created At</th>
+          </tr>
+        </thead>
+        <tbody>
+          {isLoading ? (
+            <tr>
+              <td colSpan="6" align="center">
+                Loading
+              </td>
+            </tr>
+          ) : totalUsers > 0 ? (
+            users.map((user) => (
+              <tr key={user._id} onClick={() => handleRowSelect(user)}>
+                <td>{user.username}</td>
+                <td>{user.fullname}</td>
+                <td>{user.email}</td>
+                <td>{user.mobile}</td>
+                <td>{user.isBlocked ? "Blocked" : "Not Blocked"}</td>
+                <td>{new Date(user.createdAt).toLocaleString()}</td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan="6" align="center">
+                No user found
+              </td>
+            </tr>
+          )}
+        </tbody>
+      </table>
+      <div className="pagination">
+        <button onClick={() => setPage(page - 1)} disabled={page === 1}>
+          Previous
+        </button>
+        <span>
+          Page {page} of {Math.ceil(totalUsers / limit)}
+        </span>
+        <button
+          onClick={() => setPage(page + 1)}
+          disabled={page === Math.ceil(totalUsers / limit)}
+        >
+          Next
+        </button>
+      </div>
+      <div className="limit">
+        <label htmlFor="limit">Limit: </label>
+        <span>
+          <input
+            type="number"
+            placeholder={`current limit: ${limit}`}
+            onKeyDown={onLimitChange}
+            min="1"
+          />
+        </span>
+      </div>
+      <div>
+        <button onClick={handleEdit}>Edit</button>
+        <button onClick={handleUpdate}>Update</button>
+        <button onClick={handleDelete}>Delete</button>
+      </div>
+    </div>
+  );
+};
+
+export default UserList;

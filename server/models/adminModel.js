@@ -14,7 +14,7 @@ const adminSchema = mongoose.Schema(
     fullname: {
       type: String,
       required: [true, "full name is required"],
-      trim: true
+      trim: true,
     },
     email: {
       type: String,
@@ -55,19 +55,13 @@ const adminSchema = mongoose.Schema(
           `Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character`,
       },
     },
+
     profile: {
       type: String,
     },
     role: {
       type: String,
-      default: "user",
-    },
-    isBlocked: {
-      type: Boolean,
-      default: false,
-    },
-    address: {
-      type: String,
+      default: "administrator",
     },
     refreshToken: { type: String },
     passwordChangedAt: Date,
