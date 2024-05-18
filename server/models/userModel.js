@@ -66,6 +66,11 @@ const userSchema = mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    preference: {
+      type: String,
+      enum: ["default", "dark"],
+      default: "default",
+    },
     address: {
       type: String,
     },
