@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
-import { register, messageClear } from "../features/auth/authSlice";
+import {
+  register,
+  verifyEmail,
+  messageClear,
+} from "../features/auth/authSlice";
 import toast from "react-hot-toast";
 
 const VerifyEmail = () => {
@@ -41,25 +45,34 @@ const VerifyEmail = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label htmlFor="otp">OTP</label>
-      <input
-        type="number"
-        value={enteredOTP}
-        onChange={handleOTPChange}
-        id="otp"
-        name="otp"
-        required
-      />
-      <button>Verify</button>
-      <p
+    <>
+      <form onSubmit={handleSubmit}>
+        <label htmlFor="otp">OTP</label>
+        <input
+          type="number"
+          value={enteredOTP}
+          onChange={handleOTPChange}
+          id="otp"
+          name="otp"
+          required
+        />
+        <button>Verify</button>
+        <p
+          onClick={() => {
+            console.log(authState);
+          }}
+        >
+          click
+        </p>
+      </form>
+      <button
         onClick={() => {
-          console.log(authState);
+          dispatch(verifyEmail(enteredValue.email));
         }}
       >
-        click
-      </p>
-    </form>
+        Resend Otp
+      </button>
+    </>
   );
 };
 
