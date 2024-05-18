@@ -70,7 +70,7 @@ const VerifyEmail = () => {
           dispatch(verifyEmail(enteredValue.email));
         }}
       >
-        Resend Otp
+        Resend Ot
       </button>
     </>
   );
