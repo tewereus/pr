@@ -57,6 +57,14 @@ const userSchema = mongoose.Schema(
     },
     profile: {
       type: String,
+      validate: {
+        validator: function (v) {
+          // Validate that the profile picture meets certain criteria
+          return /\.(jpg|jpeg|png|gif)$/.test(v); // Ensure the file type is valid
+        },
+        message: (props) =>
+          `${props.value} is not a valid profile picture format!`,
+      },
     },
     role: {
       type: String,
@@ -80,6 +88,7 @@ const userSchema = mongoose.Schema(
     },
     address: {
       type: String,
+      set: (v) => v.trim().replace(/\s+/g, " "), // Trim and normalize address
     },
     refreshToken: { type: String },
     passwordChangedAt: Date,
