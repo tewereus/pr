@@ -57,6 +57,15 @@ const userSchema = mongoose.Schema(
     },
     profile: {
       type: String,
+      size: {
+        type: Number,
+        validate: {
+          validator: function (v) {
+            return v < 1000000; // Validate that the file size is less than 1MB (in bytes)
+          },
+          message: (props) => `${props.value} is larger than 1MB!`,
+        },
+      },
       validate: {
         validator: function (v) {
           // Validate that the profile picture meets certain criteria
@@ -90,6 +99,7 @@ const userSchema = mongoose.Schema(
       type: String,
       set: (v) => v.trim().replace(/\s+/g, " "), // Trim and normalize address
     },
+
     refreshToken: { type: String },
     passwordChangedAt: Date,
     passwordResetToken: String,
