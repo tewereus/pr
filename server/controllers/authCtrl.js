@@ -13,6 +13,8 @@ const validateUser = require("../middlewares/validateUser");
 const bcrypt = require("bcryptjs");
 const sendEmail = require("./emailCtrl");
 const crypto = require("crypto");
+const speakeasy = require("speakeasy");
+const qrcode = require("qrcode");
 
 const validateUserRegister = asyncHandler(async (req, res) => {
   const { fullname, username, mobile, email, password, confirmPassword } =
@@ -175,6 +177,18 @@ const loginUser = asyncHandler(async (req, res) => {
   }
 });
 
+const enableTwoFactorAuth = asyncHandler(async (req, res) => {
+  const { id } = req.user;
+  try {
+    const user = await User.findById(id);
+    if (user) {
+      console.log("Found");
+    }
+  } catch (error) {
+    throw new Error(error);
+  }
+});
+
 const logout = asyncHandler(async (req, res) => {
   const cookie = req.cookies;
   if (!cookie?.refreshToken) throw new Error("No Refresh Token in Cookies");
@@ -314,6 +328,7 @@ module.exports = {
   validateUserRegister,
   registerUser,
   loginUser,
+  enableTwoFactorAuth,
   logout,
   viewProfile,
   updateUser,
