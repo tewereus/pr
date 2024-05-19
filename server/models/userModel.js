@@ -99,6 +99,14 @@ const userSchema = mongoose.Schema(
       type: String,
       set: (v) => v.trim().replace(/\s+/g, " "), // Trim and normalize address
     },
+    twoFactorAuth: {
+      enabled: {
+        type: Boolean,
+        default: false,
+      },
+      secret: String,
+      backupCodes: [String],
+    },
 
     refreshToken: { type: String },
     passwordChangedAt: Date,
