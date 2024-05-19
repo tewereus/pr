@@ -67,9 +67,16 @@ const userSchema = mongoose.Schema(
       default: false,
     },
     preference: {
-      type: String,
-      enum: ["default", "dark"],
-      default: "default",
+      mode: {
+        type: String,
+        enum: ["light", "dark"],
+        default: "light",
+      },
+      language: {
+        type: String,
+        enum: ["en", "amh"],
+        default: "en",
+      },
     },
     address: {
       type: String,
