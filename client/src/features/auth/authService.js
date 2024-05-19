@@ -40,6 +40,16 @@ const verifyEmail = async (email) => {
   return response.data;
 };
 
+const enableTwoFactorAuth = async () => {
+  try {
+    const response = await axios.post("/api/users/enable-two-factor-auth");
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+
 const forgotPasswordToken = async (data) => {
   const response = await axios.post(`${base_url}/user/forgot-password`, data);
 
@@ -71,6 +81,7 @@ const authService = {
   viewProfile,
   forgotPasswordToken,
   resetPassword,
+  enableTwoFactorAuth,
 };
 
 export default authService;
