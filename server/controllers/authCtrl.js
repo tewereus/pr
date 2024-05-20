@@ -119,15 +119,13 @@ const registerUser = asyncHandler(async (req, res) => {
         });
       }
 
-      const profilePic =
-        profile === "" ? `https://avatar.iran.liara.run/public/boy` : profile;
       const newUser = await User.create({
         fullname,
         username,
         email,
         mobile,
         password,
-        profile: profilePic,
+        profile,
       });
       console.log(newUser);
       res.json(newUser);
@@ -174,37 +172,6 @@ const loginUser = asyncHandler(async (req, res) => {
     });
   } else {
     throw new Error("Incorrect email or password");
-  }
-});
-
-const enableTwoFactorAuth = asyncHandler(async (req, res) => {
-  const { id } = req.user;
-  try {
-    const user = await User.findById(id);
-    if (user) {
-      if (user.twoFactorAuth.enabled) {
-        return res
-          .status(400)
-          .json({ message: "Two-factor authentication is already enabled" });
-      }
-
-      // Generate a secret key for two-factor authentication
-      const secret = speakeasy.generateSecret({ length: 20 });
-
-      // Set the user's two-factor authentication details
-      user.twoFactorAuth.enabled = true;
-      user.twoFactorAuth.secret = secret.base32;
-
-      // Generate a QR code for the user to scan with their authenticator app
-      const qrCodeUrl = await qrcode.toDataURL(secret.otpauth_url);
-
-      // Save the updated user
-      await user.save();
-
-      res.status(200).json({ qrCodeUrl });
-    }
-  } catch (error) {
-    throw new Error(error);
   }
 });
 
@@ -347,7 +314,6 @@ module.exports = {
   validateUserRegister,
   registerUser,
   loginUser,
-  enableTwoFactorAuth,
   logout,
   viewProfile,
   updateUser,

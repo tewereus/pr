@@ -8,7 +8,6 @@ const getUserfromLocalStorage = localStorage.getItem("user")
 
 const initialState = {
   user: getUserfromLocalStorage,
-  twoFactorAuthQrCode: null,
   isError: false,
   isLoading: false,
   isSuccess: false,
@@ -52,18 +51,6 @@ export const verifyEmail = createAsyncThunk(
       return await authService.verifyEmail(email);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
-    }
-  }
-);
-
-export const enableTwoFactorAuth = createAsyncThunk(
-  "auth/enableTwoFactorAuth",
-  async (_, thunkAPI) => {
-    try {
-      const response = await authService.enableTwoFactorAuth();
-      return response;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.response.data);
     }
   }
 );
@@ -206,22 +193,7 @@ export const authSlice = createSlice({
           toast.error(action.payload.response.data.message);
         }
       })
-      .addCase(enableTwoFactorAuth.pending, (state) => {
-        state.isLoading = true;
-      })
-      .addCase(enableTwoFactorAuth.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.isError = false;
-        state.isSuccess = true;
-        state.message = "success";
-        state.twoFactorAuthQrCode = action.payload.qrCodeUrl;
-      })
-      .addCase(enableTwoFactorAuth.rejected, (state, action) => {
-        state.isLoading = false;
-        state.isSuccess = false;
-        state.message = "success";
-        state.isError = action.payload.msg;
-      })
+
       .addCase(forgotPasswordToken.pending, (state) => {
         state.isLoading = true;
       })

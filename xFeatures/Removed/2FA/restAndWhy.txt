@@ -1,0 +1,162 @@
+This is a two factor authentication that has a qe code authenticater that is not needed for the time being because
+for one no user would have an authenticater chrome extension installed or authenticater app installed, 
+and another is it has a bad user exprience to have two factor authentication everytime they login,
+maybe use for admin for security purposes
+
+
+
+server
+------------------------//-------------------------
+userModel
+
+twoFactorAuth: {
+      enabled: {
+        type: Boolean,
+        default: false,
+      },
+      secret: String,
+      backupCodes: [String],
+    }
+-------------//---------------
+authCtrl
+
+const enableTwoFactorAuth = asyncHandler(async (req, res) => {
+  const { id } = req.user;
+  try {
+    const user = await User.findById(id);
+    if (user) {
+      if (user.twoFactorAuth.enabled) {
+        return res
+          .status(400)
+          .json({ message: "Two-factor authentication is already enabled" });
+      }
+
+      // Generate a secret key for two-factor authentication
+      const secret = speakeasy.generateSecret({ length: 20 });
+
+      // Set the user's two-factor authentication details
+      user.twoFactorAuth.enabled = true;
+      user.twoFactorAuth.secret = secret.base32;
+
+      // Generate a QR code for the user to scan with their authenticator app
+      const qrCodeUrl = await qrcode.toDataURL(secret.otpauth_url);
+
+      // Save the updated user
+      await user.save();
+
+      res.status(200).json({ qrCodeUrl });
+    }
+  } catch (error) {
+    throw new Error(error);
+  }
+});
+
+------------------//-----------------------
+authRoutes
+
+router.post("/enable-two-factor-auth", authMiddleware, enableTwoFactorAuth);
+
+-----------------//------------------------
+
+client
+----------------//--------------------------
+
+authServices
+
+const enableTwoFactorAuth = async () => {
+  try {
+    const response = await axios.post(
+      `${base_url}/user/enable-two-factor-auth`,
+      null,
+      config
+    );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+-----------------------//------------------------------
+
+authSlice
+
+const initialState = {
+  twoFactorAuthQrCode: null,
+}
+
+export const enableTwoFactorAuth = createAsyncThunk(
+  "auth/enableTwoFactorAuth",
+  async (_, thunkAPI) => {
+    try {
+      const response = await authService.enableTwoFactorAuth();
+      return response;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
+
+.addCase(enableTwoFactorAuth.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(enableTwoFactorAuth.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isSuccess = true;
+        state.message = "success";
+        state.twoFactorAuthQrCode = action.payload.qrCodeUrl;
+      })
+      .addCase(enableTwoFactorAuth.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = false;
+        state.message = "success";
+        state.isError = action.payload.msg;
+      })
+----------------------//-----------------------------
+
+TwoFactor.js
+
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { enableTwoFactorAuth } from "../../client/src/features/auth/authSlice";
+
+const TwoFactorAuth = () => {
+  const [twoFactor, setTwoFactor] = useState(false);
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.auth);
+
+  console.log(user);
+  const handleEnableTwoFactorAuth = () => {
+    dispatch(enableTwoFactorAuth());
+    setTwoFactor(true);
+  };
+
+  return (
+    <div>
+      <h2>Two-Factor Authentication</h2>
+      {/* {isError && <div className="error">{isError}</div>} */}
+      {twoFactor ? (
+        <div>
+          <img
+            src={user.twoFactorAuthQrCode}
+            alt="Two-Factor Authentication QR Code"
+          />
+          <p>
+            Scan this QR code with your authenticator app to enable two-factor
+            authentication.
+          </p>
+        </div>
+      ) : (
+        <button onClick={handleEnableTwoFactorAuth}>
+          Enable Two-Factor Authentication
+        </button>
+      )}
+    </div>
+  );
+};
+
+export default TwoFactorAuth;
+
+
+-------------------//---------------------------
+\end

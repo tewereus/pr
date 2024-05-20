@@ -57,23 +57,23 @@ const userSchema = mongoose.Schema(
     },
     profile: {
       type: String,
-      // size: {
-      //   type: Number,
-      //   validate: {
-      //     validator: function (v) {
-      //       return v < 1000000; // Validate that the file size is less than 1MB (in bytes)
-      //     },
-      //     message: (props) => `${props.value} is larger than 1MB!`,
-      //   },
-      // },
-      // validate: {
-      //   validator: function (v) {
-      //     // Validate that the profile picture meets certain criteria
-      //     return /\.(jpg|jpeg|png|gif)$/.test(v); // Ensure the file type is valid
-      //   },
-      //   message: (props) =>
-      //     `${props.value} is not a valid profile picture format!`,
-      // },
+      size: {
+        type: Number,
+        validate: {
+          validator: function (v) {
+            return v < 1000000; // Validate that the file size is less than 1MB (in bytes)
+          },
+          message: (props) => `${props.value} is larger than 1MB!`,
+        },
+      },
+      validate: {
+        validator: function (v) {
+          // Validate that the profile picture meets certain criteria
+          return /\.(jpg|jpeg|png|gif)$/.test(v); // Ensure the file type is valid
+        },
+        message: (props) =>
+          `${props.value} is not a valid profile picture format!`,
+      },
     },
     role: {
       type: String,
@@ -91,21 +91,13 @@ const userSchema = mongoose.Schema(
       },
       language: {
         type: String,
-        enum: ["en", "amh"],
+        enum: ["en", "am"],
         default: "en",
       },
     },
     address: {
       type: String,
       set: (v) => v.trim().replace(/\s+/g, " "), // Trim and normalize address
-    },
-    twoFactorAuth: {
-      enabled: {
-        type: Boolean,
-        default: false,
-      },
-      secret: String,
-      backupCodes: [String],
     },
 
     refreshToken: { type: String },
