@@ -18,7 +18,7 @@ const { authMiddleware, authorize } = require("../middlewares/authMiddleware");
 router.post("/validate-user", validateUserRegister);
 router.post("/login", loginUser);
 router.post("/register", registerUser);
-router.post("/enable-two-factor-auth", enableTwoFactorAuth);
+router.post("/enable-two-factor-auth", authMiddleware, enableTwoFactorAuth);
 router.post("/logout", authMiddleware, logout);
 
 router.get("/profile", authMiddleware, viewProfile);

@@ -42,13 +42,16 @@ const verifyEmail = async (email) => {
 
 const enableTwoFactorAuth = async () => {
   try {
-    const response = await axios.post("/api/users/enable-two-factor-auth");
+    const response = await axios.post(
+      `${base_url}/user/enable-two-factor-auth`,
+      null,
+      config
+    );
     return response.data;
   } catch (error) {
     throw error;
   }
 };
-
 
 const forgotPasswordToken = async (data) => {
   const response = await axios.post(`${base_url}/user/forgot-password`, data);

@@ -182,7 +182,26 @@ const enableTwoFactorAuth = asyncHandler(async (req, res) => {
   try {
     const user = await User.findById(id);
     if (user) {
-      console.log("Found");
+      if (user.twoFactorAuth.enabled) {
+        return res
+          .status(400)
+          .json({ message: "Two-factor authentication is already enabled" });
+      }
+
+      // Generate a secret key for two-factor authentication
+      const secret = speakeasy.generateSecret({ length: 20 });
+
+      // Set the user's two-factor authentication details
+      user.twoFactorAuth.enabled = true;
+      user.twoFactorAuth.secret = secret.base32;
+
+      // Generate a QR code for the user to scan with their authenticator app
+      const qrCodeUrl = await qrcode.toDataURL(secret.otpauth_url);
+
+      // Save the updated user
+      await user.save();
+
+      res.status(200).json({ qrCodeUrl });
     }
   } catch (error) {
     throw new Error(error);

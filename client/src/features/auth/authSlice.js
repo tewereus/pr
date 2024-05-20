@@ -68,7 +68,6 @@ export const enableTwoFactorAuth = createAsyncThunk(
   }
 );
 
-
 export const forgotPasswordToken = createAsyncThunk(
   "auth/forgot-password",
   async (data, thunkAPI) => {
@@ -90,7 +89,6 @@ export const resetPassword = createAsyncThunk(
     }
   }
 );
-
 
 export const viewProfile = createAsyncThunk(
   "auth/profile",
@@ -209,7 +207,7 @@ export const authSlice = createSlice({
         }
       })
       .addCase(enableTwoFactorAuth.pending, (state) => {
-        state.loading = true;
+        state.isLoading = true;
       })
       .addCase(enableTwoFactorAuth.fulfilled, (state, action) => {
         state.isLoading = false;
