@@ -99,7 +99,14 @@ const userSchema = mongoose.Schema(
       type: String,
       set: (v) => v.trim().replace(/\s+/g, " "), // Trim and normalize address
     },
-
+    lastLoginIp: String, // Store the last login IP address
+    lastLoginAt: Date, // Store the last login timestamp
+    loginAttempts: {
+      type: Number,
+      default: 0,
+      select: false, // Hide this field by default
+    },
+    lockUntil: Date, // Store the lock expiration date
     refreshToken: { type: String },
     passwordChangedAt: Date,
     passwordResetToken: String,
