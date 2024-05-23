@@ -6,7 +6,6 @@ import AdminLogin from "./views/auth/AdminLogin";
 import MainLayout from "./views/MainLayout";
 import Dashboard from "./views/Dashboard";
 import Users from "./views/Users";
-import Admin from "./views/Admin";
 // import Signup from "./views/Signup";
 // import Profile from "./views/Profile";
 // import ForgotPassword from "./views/ForgotPassword";
@@ -34,7 +33,6 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <Dashboard /> },
       { path: "users", element: <Users /> },
-      { path: "admin", element: <Admin /> },
     ],
   },
   // errorElement: <ErrorPage />,

@@ -1,5 +1,5 @@
 //problem: on pagnation, going to another page(page 2) and then setting the limit produces " this page does not exist error"
-import { base_url, config } from "../../../api/axiosConfig";
+import { base_url, config } from "../../api/axiosConfig";
 import axios from "axios";
 
 const getAllUsers = async ({
