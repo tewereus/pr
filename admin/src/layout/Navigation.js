@@ -1,16 +1,18 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 // import logo from "./onPrintz-removebg-preview.png";
 import { useSelector, useDispatch } from "react-redux";
 // import {user_reset} from "../features/auth/authSlice"
 
 const Navigation = () => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { user } = useSelector((state) => state.auth);
 
   const handleLogout = () => {
     localStorage.clear();
     // dispatch(user_reset())
+    navigate("/");
     window.location.reload();
     console.log(user);
   };

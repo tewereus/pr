@@ -1,0 +1,1 @@
+when the user/admin who is already logged in redirects to login from the url(localhost:3000/login) redirect to homepage or do nothing
