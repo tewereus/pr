@@ -1,6 +1,6 @@
-const User = require("userModel");
-const Product = require("productModel");
-const ProdType = require("prodTypeModel");
+const User = require("../models/userModel");
+const Product = require("../models/productModel");
+const ProdType = require("../models/prodTypeModel");
 const asyncHandler = require("express-async-handler");
 const slugify = require("slugify");
 
