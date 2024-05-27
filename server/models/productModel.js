@@ -5,24 +5,33 @@ const productSchema = new mongoose.Schema(
     title: {
       type: String,
       required: true,
+      trim: true,
     },
-
+    slug: {
+      type: String,
+      required: true,
+      unique: true,
+      lowercase: true,
+    },
     description: {
       type: String,
       required: true,
+      trim: true,
     },
-    product_type: {
+    productType: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "prodType",
       required: true,
     },
-    base_price: {
+    basePrice: {
       type: Number,
       required: true,
+      min: 0,
     },
     sold: {
       type: Number,
       default: 0,
+      min: 0,
     },
     image: {
       type: String,
