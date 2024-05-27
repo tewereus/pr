@@ -10,6 +10,7 @@ const { errorHandler, notFound } = require("./middlewares/errorHandler");
 const authRouter = require("./routes/authRoutes");
 const otpRouter = require("./routes/otpRoutes");
 const adminRouter = require("./routes/adminRoutes");
+const productRouter = require("./routes/productRoutes");
 
 const PORT = process.env.PORT || 9001;
 
@@ -30,6 +31,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/api/v1/user", authRouter);
 app.use("/api/v1/otp", otpRouter);
 app.use("/api/v1/admin", adminRouter);
+app.use("/api/v1/product", productRouter);
 
 app.use(notFound);
 app.use(errorHandler);
