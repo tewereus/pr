@@ -26,7 +26,19 @@ const getAllCategories = asyncHandler(async (req, res) => {
   }
 });
 
+const getaCategory = asyncHandler(async (req, res) => {
+  const {id} = req.params
+  try {
+    const category = await Category.findById(id);
+    res.status(200).json(category);
+  } catch (error) {
+    throw new Error(error);
+  }
+});
+
+
 module.exports = {
   createCategory,
   getAllCategories,
+  getaCategory
 };

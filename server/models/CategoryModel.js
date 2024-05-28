@@ -21,7 +21,7 @@ const CategorySchema = new mongoose.Schema(
     productType: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "ProductType",
-      required: true,
+      // required: true,
     },
     basePrice: {
       type: Number,
@@ -35,7 +35,7 @@ const CategorySchema = new mongoose.Schema(
     },
     image: {
       type: String,
-      required: true,
+      // required: true,
     },
   },
   { timestamps: true }
