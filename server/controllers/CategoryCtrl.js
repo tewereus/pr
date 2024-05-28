@@ -2,10 +2,13 @@ const User = require("../models/userModel");
 const Category = require("../models/CategoryModel");
 const ProductType = require("../models/productTypeModel");
 const asyncHandler = require("express-async-handler");
+const validateMongoDbId = require("../utils/validateMongoDbId");
+
 const slugify = require("slugify");
 
 const createCategory = asyncHandler(async (req, res) => {
   const { id } = req.user;
+  validateMongoDbId(id)
   try {
     if (req.body.title) {
       req.body.slug = slugify(req.body.title);
