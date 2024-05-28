@@ -1,1 +1,2 @@
-when the user/admin who is already logged in redirects to login from the url(localhost:3000/login) redirect to homepage or do nothing
+=> when the user/admin who is already logged in redirects to login from the url(localhost:3000/login) redirect to homepage or do nothing
+=> profile image is not added to logged in users(maybe use cloudinary)

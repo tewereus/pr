@@ -1,6 +1,3 @@
 => Save for Later, add a Work Model to save a user progress when editing so that they can continue later
 => Add logging and others to track user activity for security purposes
-<<<<<<< HEAD
-=> 
-=======
->>>>>>> 3f58b41cfd8d3d0a41d2b163bafc2c4ce4e4ba1e
+=> add recommeded(based on recent purchases or favorites ) and Based on recent search
