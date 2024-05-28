@@ -39,6 +39,9 @@ const getaCategory = asyncHandler(async (req, res) => {
 const updateCategory = asyncHandler(async (req, res) => {
   const {id} = req.params
   try {
+    if (req.body.title) {
+         req.body.slug = slugify(req.body.title);
+      }
     const category = await Category.findByIdAndUpdate(id, req.body, {new: true});
     res.status(200).json(category);
   } catch (error) {
