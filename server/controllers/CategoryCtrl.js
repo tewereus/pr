@@ -46,10 +46,20 @@ const updateCategory = asyncHandler(async (req, res) => {
   }
 });
 
+const deleteAllCategories = asyncHandler(async (req, res) => {
+  try {
+    const category = await Category.deleteMany();
+    res.status(200).json(category);
+  } catch (error) {
+    throw new Error(error);
+  }
+});
+
 
 module.exports = {
   createCategory,
   getAllCategories,
   getaCategory,
-  updateCategory
+  updateCategory,
+  deleteAllCategories
 };
