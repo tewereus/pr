@@ -39,7 +39,7 @@ const getaCategory = asyncHandler(async (req, res) => {
 const updateCategory = asyncHandler(async (req, res) => {
   const {id} = req.params
   try {
-    const category = await Category.findByIdAndUpdate(id, {req.body}, {new: true});
+    const category = await Category.findByIdAndUpdate(id, req.body, {new: true});
     res.status(200).json(category);
   } catch (error) {
     throw new Error(error);
