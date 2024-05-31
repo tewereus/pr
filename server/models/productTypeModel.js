@@ -8,6 +8,10 @@ const productTypeSchema = new mongoose.Schema(
       unique: true,
       index: true,
     },
+    fabric: {
+      type: String,
+      enum: ["cotton", "poly"],
+    },
     sold: {
       type: Number,
       default: 0,
