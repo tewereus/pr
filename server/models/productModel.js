@@ -28,6 +28,9 @@ const productSchema = new mongoose.Schema(
       required: true,
       min: 0,
     },
+    color:{
+      type: String
+    },
     sold: {
       type: Number,
       default: 0,
