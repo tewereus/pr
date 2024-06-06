@@ -39,13 +39,6 @@ const deleteAllProducts = async () => {
   return response.data;
 };
 
-// router.post("/create-product", adminAuthMiddleware, createCategory);
-// router.get("/all-products", adminAuthMiddleware, getAllCategories);
-// router.get("/:id", adminAuthMiddleware, getaCategory);
-// router.put("/:id", adminAuthMiddleware, updateCategory);
-// router.delete("/:id", adminAuthMiddleware, deleteCategory);
-// router.delete("/delete-all", adminAuthMiddleware, deleteAllCategories);
-
 const productService = {
   createProduct,
   getAllProducts,
