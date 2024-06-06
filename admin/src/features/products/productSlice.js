@@ -21,6 +21,61 @@ const createProduct = asyncThunkCreator(
   }
 );
 
+const getAllProducts = asyncThunkCreator(
+  "product/all-products",
+  async (thunkAPI) => {
+    try {
+      return await productService.getAllProducts();
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+const getProduct = asyncThunkCreator(
+  "product/get-product",
+  async (id, thunkAPI) => {
+    try {
+      return await productService.getProduct(id);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+const updateProduct = asyncThunkCreator(
+  "product/update-product",
+  async (id, thunkAPI) => {
+    try {
+      return await productService.updateProduct(id);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+const deleteProduct = asyncThunkCreator(
+  "product/delete-product",
+  async (id, thunkAPI) => {
+    try {
+      return await productService.deleteProduct(id);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+const deleteAllProducts = asyncThunkCreator(
+  "product/delete-products",
+  async (thunkAPI) => {
+    try {
+      return await productService.deleteAllProducts();
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 export const productSlice = createSlice({
   name: "products",
   initialState,
