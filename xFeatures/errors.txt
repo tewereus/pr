@@ -1,1 +1,7 @@
-error: "Cannot read properties of undefined (reading 'data')" => database(mongodb) not connected
+=> error: "Cannot read properties of undefined (reading 'data')" => database(mongodb) not connected
+
+=> on git (error: bad signature 0x00000000
+            fatal: index file corrupt) is solved by (del .git/index
+                                                     git reset)
+  
+=> builder.addCase` cannot be called with two reducers for the same action type 'music/update-music/pending' this error means on the slice there are multiple who have same reducer name on the createAsyncThunk
