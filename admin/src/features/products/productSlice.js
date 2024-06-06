@@ -103,6 +103,113 @@ export const productSlice = createSlice({
         if (state.isError === true) {
           toast.error(action.payload.response.data.message);
         }
+      })
+      .addCase(getAllProducts.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getAllProducts.fulfilled, (state) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isSuccess = true;
+        state.message = "";
+        state.products = action.payload;
+        if (state.isSuccess === true) {
+          toast.success("Product added Successfully");
+        }
+      })
+      .addCase(getAllProducts.rejected, (state) => {
+        state.isLoading = false;
+        state.isSuccess = false;
+        state.isError = true;
+        state.message = action.error;
+        if (state.isError === true) {
+          toast.error(action.payload.response.data.message);
+        }
+      })
+      .addCase(getProduct.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getProduct.fulfilled, (state) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isSuccess = true;
+        state.message = "";
+      })
+      .addCase(getProduct.rejected, (state) => {
+        state.isLoading = false;
+        state.isSuccess = false;
+        state.isError = true;
+        state.message = action.error;
+        if (state.isError === true) {
+          toast.error(action.payload.response.data.message);
+        }
+      })
+      .addCase(updateProduct.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(updateProduct.fulfilled, (state) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isSuccess = true;
+        state.message = "";
+        state.products = action.payload;
+        if (state.isSuccess === true) {
+          toast.success("Product updated Successfully");
+        }
+      })
+      .addCase(updateProduct.rejected, (state) => {
+        state.isLoading = false;
+        state.isSuccess = false;
+        state.isError = true;
+        state.message = action.error;
+        if (state.isError === true) {
+          toast.error(action.payload.response.data.message);
+        }
+      })
+      .addCase(deleteProduct.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(deleteProduct.fulfilled, (state) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isSuccess = true;
+        state.message = "";
+        state.products = action.payload;
+        // state.totalUsers = action.payload.totalUsers;
+        if (state.isSuccess === true) {
+          toast.success("Product Deleted Successfully");
+        }
+      })
+      .addCase(deleteProduct.rejected, (state) => {
+        state.isLoading = false;
+        state.isSuccess = false;
+        state.isError = true;
+        state.message = action.error;
+        if (state.isError === true) {
+          toast.error(action.payload.response.data.message);
+        }
+      })
+      .addCase(deleteAllProducts.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(deleteAllProducts.fulfilled, (state) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isSuccess = true;
+        state.message = "";
+        state.products = action.payload;
+        if (state.isSuccess === true) {
+          toast.success("All Product Deleted Successfully");
+        }
+      })
+      .addCase(deleteAllProducts.rejected, (state) => {
+        state.isLoading = false;
+        state.isSuccess = false;
+        state.isError = true;
+        state.message = action.error;
+        if (state.isError === true) {
+          toast.error(action.payload.response.data.message);
+        }
       });
   },
 });
