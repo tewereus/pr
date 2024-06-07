@@ -1,5 +1,6 @@
-import { createSlice, asyncThunkCreator } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import productService from "./productService";
+import toast from "react-hot-toast";
 
 const initialState = {
   products: [],
@@ -10,7 +11,7 @@ const initialState = {
   message: "",
 };
 
-const createProduct = asyncThunkCreator(
+export const createProduct = createAsyncThunk(
   "product/create-product",
   async (data, thunkAPI) => {
     try {
@@ -21,7 +22,7 @@ const createProduct = asyncThunkCreator(
   }
 );
 
-const getAllProducts = asyncThunkCreator(
+export const getAllProducts = createAsyncThunk(
   "product/all-products",
   async (thunkAPI) => {
     try {
@@ -32,7 +33,7 @@ const getAllProducts = asyncThunkCreator(
   }
 );
 
-const getProduct = asyncThunkCreator(
+export const getProduct = createAsyncThunk(
   "product/get-product",
   async (id, thunkAPI) => {
     try {
@@ -43,7 +44,7 @@ const getProduct = asyncThunkCreator(
   }
 );
 
-const updateProduct = asyncThunkCreator(
+export const updateProduct = createAsyncThunk(
   "product/update-product",
   async (id, thunkAPI) => {
     try {
@@ -54,7 +55,7 @@ const updateProduct = asyncThunkCreator(
   }
 );
 
-const deleteProduct = asyncThunkCreator(
+export const deleteProduct = createAsyncThunk(
   "product/delete-product",
   async (id, thunkAPI) => {
     try {
@@ -65,7 +66,7 @@ const deleteProduct = asyncThunkCreator(
   }
 );
 
-const deleteAllProducts = asyncThunkCreator(
+export const deleteAllProducts = createAsyncThunk(
   "product/delete-products",
   async (thunkAPI) => {
     try {
@@ -85,7 +86,7 @@ export const productSlice = createSlice({
       .addCase(createProduct.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(createProduct.fulfilled, (state) => {
+      .addCase(createProduct.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isError = false;
         state.isSuccess = true;
@@ -95,7 +96,7 @@ export const productSlice = createSlice({
           toast.success("Product added Successfully");
         }
       })
-      .addCase(createProduct.rejected, (state) => {
+      .addCase(createProduct.rejected, (state, action) => {
         state.isLoading = false;
         state.isSuccess = false;
         state.isError = true;
@@ -107,7 +108,7 @@ export const productSlice = createSlice({
       .addCase(getAllProducts.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(getAllProducts.fulfilled, (state) => {
+      .addCase(getAllProducts.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isError = false;
         state.isSuccess = true;
@@ -117,7 +118,7 @@ export const productSlice = createSlice({
           toast.success("Product added Successfully");
         }
       })
-      .addCase(getAllProducts.rejected, (state) => {
+      .addCase(getAllProducts.rejected, (state, action) => {
         state.isLoading = false;
         state.isSuccess = false;
         state.isError = true;
@@ -135,7 +136,7 @@ export const productSlice = createSlice({
         state.isSuccess = true;
         state.message = "";
       })
-      .addCase(getProduct.rejected, (state) => {
+      .addCase(getProduct.rejected, (state, action) => {
         state.isLoading = false;
         state.isSuccess = false;
         state.isError = true;
@@ -147,7 +148,7 @@ export const productSlice = createSlice({
       .addCase(updateProduct.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(updateProduct.fulfilled, (state) => {
+      .addCase(updateProduct.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isError = false;
         state.isSuccess = true;
@@ -157,7 +158,7 @@ export const productSlice = createSlice({
           toast.success("Product updated Successfully");
         }
       })
-      .addCase(updateProduct.rejected, (state) => {
+      .addCase(updateProduct.rejected, (state, action) => {
         state.isLoading = false;
         state.isSuccess = false;
         state.isError = true;
@@ -169,7 +170,7 @@ export const productSlice = createSlice({
       .addCase(deleteProduct.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(deleteProduct.fulfilled, (state) => {
+      .addCase(deleteProduct.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isError = false;
         state.isSuccess = true;
@@ -180,7 +181,7 @@ export const productSlice = createSlice({
           toast.success("Product Deleted Successfully");
         }
       })
-      .addCase(deleteProduct.rejected, (state) => {
+      .addCase(deleteProduct.rejected, (state, action) => {
         state.isLoading = false;
         state.isSuccess = false;
         state.isError = true;
@@ -192,7 +193,7 @@ export const productSlice = createSlice({
       .addCase(deleteAllProducts.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(deleteAllProducts.fulfilled, (state) => {
+      .addCase(deleteAllProducts.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isError = false;
         state.isSuccess = true;
@@ -202,7 +203,7 @@ export const productSlice = createSlice({
           toast.success("All Product Deleted Successfully");
         }
       })
-      .addCase(deleteAllProducts.rejected, (state) => {
+      .addCase(deleteAllProducts.rejected, (state, action) => {
         state.isLoading = false;
         state.isSuccess = false;
         state.isError = true;

@@ -1,25 +1,30 @@
 import React, { useState } from "react";
-import { createProduct } from "./apiClient";
+import { createProduct } from "../../features/products/productSlice";
+import { useDispatch } from "react-redux";
 
 const Products = () => {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [price, setPrice] = useState(0);
+  const dispatch = useDispatch();
   const [productState, setProductState] = useState({
     title: "",
     description: "",
-    price: 0,
+    basePrice: 0,
   });
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  const handleChange = (e) => {
+    setProductState({
+      ...productState,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     const data = {
       title: productState.title,
       description: productState.description,
-      price: productState.price,
+      basePrice: productState.basePrice,
     };
-    const response = await createProduct(data);
-    console.log(response);
+    dispatch(createProduct(data));
   };
 
   return (
@@ -28,23 +33,26 @@ const Products = () => {
         Title:
         <input
           type="text"
-          value={title}
-          onChange={(event) => productState.title(event.target.value)}
+          value={productState.title}
+          name="title"
+          onChange={handleChange}
         />
       </label>
       <label>
         Description:
         <textarea
-          value={description}
-          onChange={(event) => productState.description(event.target.value)}
+          value={productState.description}
+          name="description"
+          onChange={handleChange}
         />
       </label>
       <label>
         Price:
         <input
           type="number"
-          value={price}
-          onChange={(event) => productState.price(event.target.value)}
+          value={productState.basePrice}
+          name="basePrice"
+          onChange={handleChange}
         />
       </label>
       <button type="submit">Create Product</button>

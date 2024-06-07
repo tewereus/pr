@@ -4,8 +4,8 @@ import axios from "axios";
 const createProduct = async (data) => {
   const response = await axios.post(
     `${base_url}/product/create-product`,
-    data,
-    config
+    data
+    // config
   );
   return response.data;
 };

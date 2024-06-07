@@ -7,8 +7,8 @@ const validateMongoDbId = require("../utils/validateMongoDbId");
 const slugify = require("slugify");
 
 const createProduct = asyncHandler(async (req, res) => {
-  const { id } = req.user;
-  validateMongoDbId(id);
+  // const { id } = req.user;
+  // validateMongoDbId(id);
   try {
     if (req.body.title) {
       req.body.slug = slugify(req.body.title);
