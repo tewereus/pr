@@ -8,7 +8,7 @@ const slugify = require("slugify");
 
 const createProduct = asyncHandler(async (req, res) => {
   const { id } = req.user;
-  validateMongoDbId(id)
+  validateMongoDbId(id);
   try {
     if (req.body.title) {
       req.body.slug = slugify(req.body.title);
@@ -29,8 +29,8 @@ const getAllProducts = asyncHandler(async (req, res) => {
   }
 });
 
-const getaProduct = asyncHandler(async (req, res) => {
-  const {id} = req.params
+const getProduct = asyncHandler(async (req, res) => {
+  const { id } = req.params;
   try {
     const product = await Product.findById(id);
     res.status(200).json(product);
@@ -40,12 +40,14 @@ const getaProduct = asyncHandler(async (req, res) => {
 });
 
 const updateProduct = asyncHandler(async (req, res) => {
-  const {id} = req.params
+  const { id } = req.params;
   try {
     if (req.body.title) {
-         req.body.slug = slugify(req.body.title);
-      }
-    const product = await Product.findByIdAndUpdate(id, req.body, {new: true});
+      req.body.slug = slugify(req.body.title);
+    }
+    const product = await Product.findByIdAndUpdate(id, req.body, {
+      new: true,
+    });
     res.status(200).json(product);
   } catch (error) {
     throw new Error(error);
@@ -53,7 +55,7 @@ const updateProduct = asyncHandler(async (req, res) => {
 });
 
 const deleteProduct = asyncHandler(async (req, res) => {
-  const {id} = req.params
+  const { id } = req.params;
   try {
     const product = await Product.findByIdAndDelete(id);
     res.status(200).json(product);
@@ -71,12 +73,11 @@ const deleteAllProducts = asyncHandler(async (req, res) => {
   }
 });
 
-
 module.exports = {
   createProduct,
   getAllProducts,
-  getaProduct,
+  getProduct,
   updateProduct,
   deleteProduct,
-  deleteAllProducts
+  deleteAllProducts,
 };

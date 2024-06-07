@@ -1,14 +1,20 @@
 const express = require("express");
 const router = express.Router();
-const { createCategory, getAllCategories,getaCategory, updateCategory, deleteAllCategories, deleteCategory } = require("../controllers/CategoryCtrl");
+const {
+  createProduct,
+  getAllProducts,
+  getProduct,
+  updateProduct,
+  deleteAllProducts,
+  deleteProduct,
+} = require("../controllers/productCtrl");
 const { adminAuthMiddleware } = require("../middlewares/authMiddleware");
 
-router.post("/create-product", adminAuthMiddleware, createCategory);
-router.get("/all-products", adminAuthMiddleware, getAllCategories);
-router.get("/:id", adminAuthMiddleware, getaCategory);
-router.put("/:id", adminAuthMiddleware, updateCategory);
-router.delete("/:id", adminAuthMiddleware, deleteCategory);
-router.delete("/delete-all", adminAuthMiddleware, deleteAllCategories);
-
+router.post("/create-product", adminAuthMiddleware, createProduct);
+router.get("/all-products", adminAuthMiddleware, getAllProducts);
+router.get("/:id", adminAuthMiddleware, getProduct);
+router.put("/:id", adminAuthMiddleware, updateProduct);
+router.delete("/:id", adminAuthMiddleware, deleteProduct);
+router.delete("/delete-all", adminAuthMiddleware, deleteAllProducts);
 
 module.exports = router;
