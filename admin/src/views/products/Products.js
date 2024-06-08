@@ -15,6 +15,8 @@ const Products = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isDeleteAll, setIsDeleteAll] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [selectedProducts, setSelectedProducts] = useState([]);
   useEffect(() => {
     dispatch(getAllProducts());
   }, []);
@@ -23,12 +25,46 @@ const Products = () => {
     setIsOpen(true);
   };
 
+  const handleSelect = (product) => {
+    setSelectedProducts([...selectedProducts, product]);
+    setSelectedProduct(product);
+    console.log(selectedProducts);
+  };
+
+  useEffect(() => {
+    const handleOutsideClick = (e) => {
+      if (e.target.closest(".product") === null) {
+        setSelectedProduct(null);
+      }
+    };
+
+    document.addEventListener("click", handleOutsideClick);
+
+    return () => {
+      document.removeEventListener("click", handleOutsideClick);
+    };
+  }, []);
+
   return (
     <>
-      <div>
+      <div style={{ display: "flex" }}>
         {products.map((product) => {
           return (
-            <div key={product._id}>
+            <div
+              key={product._id}
+              className="product"
+              style={{
+                backgroundColor:
+                  selectedProduct && selectedProduct._id === product._id
+                    ? "#555"
+                    : "#fff",
+                color:
+                  selectedProduct && selectedProduct._id === product._id
+                    ? "#fff"
+                    : "#000",
+              }}
+              onClick={() => handleSelect(product)}
+            >
               <p>{product.title}</p>
               <p>{product.basePrice}</p>
             </div>
@@ -61,6 +97,8 @@ const Products = () => {
         onClick={() => {
           setIsEdit(true);
         }}
+        disabled={selectedProduct ? false : true}
+        style={{ backgroundColor: "#080", color: "#bbb" }}
       >
         Edit Product
       </button>
