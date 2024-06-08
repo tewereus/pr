@@ -18,7 +18,7 @@ const DeleteAllProducts = ({ setDeleteModal }) => {
 
   const handleDeleteAll = () => {
     dispatch(deleteAllProducts());
-    setDeleteModal(true);
+    setDeleteModal(false);
   };
 
   return (

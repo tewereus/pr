@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Modal from "react-modal";
 import AddProduct from "./AddProduct";
 import DeleteAllProducts from "./DeleteAllProducts";
+import EditProduct from "./EditProduct";
 
 Modal.setAppElement("#root");
 
@@ -13,6 +14,7 @@ const Products = () => {
   // const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const [isDeleteAll, setIsDeleteAll] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
   useEffect(() => {
     dispatch(getAllProducts());
   }, []);
@@ -53,6 +55,22 @@ const Products = () => {
           contentLabel="Delete All Products"
         >
           <DeleteAllProducts setDeleteModal={setIsDeleteAll} />
+        </Modal>
+      )}
+      <button
+        onClick={() => {
+          setIsEdit(true);
+        }}
+      >
+        Edit Product
+      </button>
+      {isEdit && (
+        <Modal
+          isOpen={isEdit}
+          onRequestClose={() => setIsEdit(false)}
+          contentLabel="Update Product"
+        >
+          <EditProduct setEditModal={setIsEdit} />
         </Modal>
       )}
     </>

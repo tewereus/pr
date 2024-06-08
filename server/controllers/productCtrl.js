@@ -67,19 +67,13 @@ const deleteProduct = asyncHandler(async (req, res) => {
 const deleteAllProducts = asyncHandler(async (req, res) => {
   try {
     const deletedProducts = await Product.deleteMany();
-    res.status(200).json(deletedProducts);
-    //   if (deletedProducts.deletedCount === 0) {
-    //     res.status(404).json({ message: "No products found to delete" });
-    //   } else {
-    //     res
-    //       .status(200)
-    //       .json({ message: `${deletedProducts.deletedCount} products deleted` });
-    //   }
-    // } catch (error) {
-    //   res
-    //     .status(500)
-    //     .json({ message: "Error deleting products", error: error.message });
-    // }
+    if (deletedProducts.deletedCount === 0) {
+      res.json({ message: "No products found to delete" });
+    } else {
+      res
+        .status(200)
+        .json({ message: `${deletedProducts.deletedCount} products deleted` });
+    }
   } catch (error) {
     throw new Error(error);
   }
