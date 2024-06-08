@@ -67,7 +67,7 @@ export const deleteProduct = createAsyncThunk(
 );
 
 export const deleteAllProducts = createAsyncThunk(
-  "product/delete-products",
+  "product/delete-allproducts",
   async (thunkAPI) => {
     try {
       return await productService.deleteAllProducts();
@@ -80,7 +80,15 @@ export const deleteAllProducts = createAsyncThunk(
 export const productSlice = createSlice({
   name: "products",
   initialState,
-  reducers: {},
+  reducers: {
+    messageClear: (state) => {
+      state.isSuccess = false;
+      state.isError = false;
+    },
+    user_reset: (state) => {
+      state.user = "";
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(createProduct.pending, (state) => {
@@ -190,7 +198,7 @@ export const productSlice = createSlice({
       .addCase(deleteAllProducts.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(deleteAllProducts.fulfilled, (state, action) => {
+      .addCase(deleteAllProducts.fulfilled, (state) => {
         state.isLoading = false;
         state.isError = false;
         state.isSuccess = true;
@@ -210,5 +218,7 @@ export const productSlice = createSlice({
       });
   },
 });
+
+export const { messageClear, user_reset } = productSlice.actions;
 
 export default productSlice.reducer;

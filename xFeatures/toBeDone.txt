@@ -2,3 +2,4 @@
 => profile image is not added to logged in users(maybe use cloudinary)
 => on updateUser make it so that it can't change email or make it's own auth
 => configure authMiddleware to work on client side it says "invalid or expired token"
+=> DeleteAllProducts is not working

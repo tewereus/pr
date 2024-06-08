@@ -18,18 +18,13 @@ const productSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
-    productType: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "ProductType",
-      // required: true,
-    },
     basePrice: {
       type: Number,
       required: true,
       min: 0,
     },
-    color:{
-      type: String
+    color: {
+      type: String,
     },
     sold: {
       type: Number,

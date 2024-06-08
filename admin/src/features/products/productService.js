@@ -35,7 +35,9 @@ const deleteProduct = async (id) => {
 };
 
 const deleteAllProducts = async () => {
+  console.log("i am here");
   const response = await axios.delete(`${base_url}/product/delete-all`);
+  console.log("i am here again");
   console.log(response.data);
   return response.data;
 };

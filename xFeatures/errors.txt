@@ -5,3 +5,9 @@
                                                      git reset)
   
 => builder.addCase` cannot be called with two reducers for the same action type 'music/update-music/pending' this error means on the slice there are multiple who have same reducer name on the createAsyncThunk
+
+=> "CastError: Cast to ObjectId failed for value \"delete-all\" (type string) at path \"_id\" for model \"Product\"", this error occured because it executed another route 
+        ( router.delete("/:id, deleteProduct) and router.delete("/delete-all, deleteAllProducts) in this example 
+        it was executing the first one and it was missing the ID so the solution is 1. to make delete-all above it or 
+        2. change the "/:id" to something that doesn't clash like "/delete/:id" 
+        REMEMBER this occurs for same methods like when both are delete or put or others)

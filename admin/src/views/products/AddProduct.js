@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { createProduct } from "../../features/products/productSlice";
+import {
+  createProduct,
+  messageClear,
+} from "../../features/products/productSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 const AddProduct = ({ setIsOpen }) => {
@@ -31,6 +34,7 @@ const AddProduct = ({ setIsOpen }) => {
   useEffect(() => {
     if (createdProduct && isSuccess) {
       setIsOpen(false);
+      dispatch(messageClear());
       //   setTimeout(() => {
       //     window.location.reload();
       //   }, 2000);

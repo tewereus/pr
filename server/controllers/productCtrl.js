@@ -66,7 +66,8 @@ const deleteProduct = asyncHandler(async (req, res) => {
 
 const deleteAllProducts = asyncHandler(async (req, res) => {
   try {
-    const deletedProducts = await Product.deleteMany({});
+    const deletedProducts = await Product.deleteMany();
+    res.status(200).json(deletedProducts);
     //   if (deletedProducts.deletedCount === 0) {
     //     res.status(404).json({ message: "No products found to delete" });
     //   } else {

@@ -6,9 +6,6 @@ const DeleteAllProducts = ({ setDeleteModal }) => {
   const dispatch = useDispatch();
   const [disabled, setDisabled] = useState(true);
   const [checkDelete, setCheckDelete] = useState(false);
-  useEffect(() => {
-    dispatch(deleteAllProducts());
-  }, []);
   const handleDelete = () => {
     setCheckDelete(true);
   };
