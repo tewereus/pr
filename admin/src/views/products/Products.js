@@ -26,9 +26,9 @@ const Products = () => {
   };
 
   const handleSelect = (product) => {
-    setSelectedProducts([...selectedProducts, product]);
+    // setSelectedProducts([...selectedProducts, product]);
     setSelectedProduct(product);
-    console.log(selectedProducts);
+    // console.log(selectedProducts);
   };
 
   useEffect(() => {
