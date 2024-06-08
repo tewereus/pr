@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 // import { useNavigate } from "react-router-dom";
 import Modal from "react-modal";
 import AddProduct from "./AddProduct";
+import DeleteAllProducts from "./DeleteAllProducts";
 
 Modal.setAppElement("#root");
 
@@ -11,6 +12,7 @@ const Products = () => {
   const dispatch = useDispatch();
   // const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
+  const [isDeleteAll, setIsDeleteAll] = useState(false);
   useEffect(() => {
     dispatch(getAllProducts());
   }, []);
@@ -18,6 +20,7 @@ const Products = () => {
   const handleAddProduct = () => {
     setIsOpen(true);
   };
+
   return (
     <>
       <div>
@@ -38,10 +41,19 @@ const Products = () => {
             onRequestClose={() => setIsOpen(false)}
             contentLabel="Add Product"
           >
-            <AddProduct />
-            <button onClick={() => setIsOpen(false)}>Close Modal</button>
+            <AddProduct setIsOpen={setIsOpen} />
           </Modal>
         </>
+      )}
+      <button onClick={() => setIsDeleteAll(true)}>Delete All</button>
+      {isDeleteAll && (
+        <Modal
+          isOpen={isDeleteAll}
+          onRequestClose={() => setIsDeleteAll(false)}
+          contentLabel="Delete All Products"
+        >
+          <DeleteAllProducts setIsDeleteAll={setIsDeleteAll} />
+        </Modal>
       )}
     </>
   );

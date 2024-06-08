@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { createProduct } from "../../features/products/productSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
-const AddProduct = () => {
+const AddProduct = ({ setIsOpen }) => {
   const dispatch = useDispatch();
   const [productState, setProductState] = useState({
     title: "",
@@ -25,8 +25,17 @@ const AddProduct = () => {
       basePrice: productState.basePrice,
     };
     dispatch(createProduct(data));
+    // setIsOpen(false);
   };
-
+  const { isSuccess, createdProduct } = useSelector((state) => state.products);
+  useEffect(() => {
+    if (createdProduct && isSuccess) {
+      setIsOpen(false);
+      //   setTimeout(() => {
+      //     window.location.reload();
+      //   }, 2000);
+    }
+  }, [isSuccess]);
   return (
     <form onSubmit={handleSubmit}>
       <label>
@@ -56,6 +65,9 @@ const AddProduct = () => {
         />
       </label>
       <button type="submit">Add Product</button>
+      <button type="button" onClick={() => setIsOpen(false)}>
+        Close Modal
+      </button>
     </form>
   );
 };
