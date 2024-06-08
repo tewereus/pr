@@ -114,9 +114,6 @@ export const productSlice = createSlice({
         state.isSuccess = true;
         state.message = "";
         state.products = action.payload;
-        if (state.isSuccess === true) {
-          toast.success("Product added Successfully");
-        }
       })
       .addCase(getAllProducts.rejected, (state, action) => {
         state.isLoading = false;
@@ -200,7 +197,7 @@ export const productSlice = createSlice({
         state.message = "";
         state.products = action.payload;
         if (state.isSuccess === true) {
-          toast.success("All Product Deleted Successfully");
+          toast.success("All Products Deleted Successfully");
         }
       })
       .addCase(deleteAllProducts.rejected, (state, action) => {
