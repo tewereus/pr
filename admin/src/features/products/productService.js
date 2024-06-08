@@ -12,30 +12,31 @@ const createProduct = async (data) => {
 
 const getAllProducts = async () => {
   const response = await axios.get(
-    `${base_url}/product/all-products`,
-    null,
-    config
+    `${base_url}/product/all-products`
+    // null,
+    // config
   );
   return response.data;
 };
 
 const getProduct = async (id) => {
-  const response = await axios.get(`${base_url}/product/${id}`, config);
+  const response = await axios.get(`${base_url}/product/${id}`);
   return response.data;
 };
 
 const updateProduct = async (id) => {
-  const response = await axios.put(`${base_url}/product/${id}`, config);
+  const response = await axios.put(`${base_url}/product/${id}`);
   return response.data;
 };
 
 const deleteProduct = async (id) => {
-  const response = await axios.delete(`${base_url}/product/${id}`, config);
+  const response = await axios.delete(`${base_url}/product/${id}`);
   return response.data;
 };
 
 const deleteAllProducts = async () => {
-  const response = await axios.delete(`${base_url}/product/delete-all`, config);
+  const response = await axios.delete(`${base_url}/product/delete-all`);
+  console.log(response.data);
   return response.data;
 };
 

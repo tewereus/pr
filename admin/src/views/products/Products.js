@@ -52,7 +52,7 @@ const Products = () => {
           onRequestClose={() => setIsDeleteAll(false)}
           contentLabel="Delete All Products"
         >
-          <DeleteAllProducts setIsDeleteAll={setIsDeleteAll} />
+          <DeleteAllProducts setDeleteModal={setIsDeleteAll} />
         </Modal>
       )}
     </>
