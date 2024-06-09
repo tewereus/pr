@@ -16,7 +16,7 @@ const Products = () => {
   const [isDeleteAll, setIsDeleteAll] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
-  const [selectedProducts, setSelectedProducts] = useState([]);
+  // const [selectedProducts, setSelectedProducts] = useState([]);
   useEffect(() => {
     dispatch(getAllProducts());
   }, []);
@@ -26,6 +26,7 @@ const Products = () => {
   };
 
   const handleSelect = (product) => {
+    console.log(product);
     // setSelectedProducts([...selectedProducts, product]);
     setSelectedProduct(product);
     // console.log(selectedProducts);
@@ -33,7 +34,10 @@ const Products = () => {
 
   useEffect(() => {
     const handleOutsideClick = (e) => {
-      if (e.target.closest(".product") === null) {
+      if (
+        e.target.closest(".product") === null &&
+        !e.target.closest(".modify-product") === null
+      ) {
         setSelectedProduct(null);
       }
     };
@@ -54,14 +58,20 @@ const Products = () => {
               key={product._id}
               className="product"
               style={{
+                margin: "20px",
+                padding: "20px",
                 backgroundColor:
                   selectedProduct && selectedProduct._id === product._id
-                    ? "#555"
+                    ? "#ddd"
                     : "#fff",
                 color:
                   selectedProduct && selectedProduct._id === product._id
                     ? "#fff"
                     : "#000",
+                border:
+                  selectedProduct && selectedProduct._id === product._id
+                    ? "1px solid #007"
+                    : "none",
               }}
               onClick={() => handleSelect(product)}
             >
@@ -98,19 +108,24 @@ const Products = () => {
           setIsEdit(true);
         }}
         disabled={selectedProduct ? false : true}
-        style={{ backgroundColor: "#080", color: "#bbb" }}
+        style={{ backgroundColor: "#080", color: "#bbb", cursor: "disabled" }}
       >
         Edit Product
       </button>
-      {isEdit && (
-        <Modal
-          isOpen={isEdit}
-          onRequestClose={() => setIsEdit(false)}
-          contentLabel="Update Product"
-        >
-          <EditProduct setEditModal={setIsEdit} />
-        </Modal>
-      )}
+      <div className="modify-product">
+        {isEdit && (
+          <Modal
+            isOpen={isEdit}
+            onRequestClose={() => setIsEdit(false)}
+            contentLabel="Update Product"
+          >
+            <EditProduct
+              setEditModal={setIsEdit}
+              selectedProduct={selectedProduct}
+            />
+          </Modal>
+        )}
+      </div>
     </>
   );
 };

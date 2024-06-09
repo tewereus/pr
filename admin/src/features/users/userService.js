@@ -23,7 +23,6 @@ const getAllAdmins = async ({ page, limit, search, sort, searchField }) => {
     `${base_url}/admin/all-admins?page=${page}&limit=${limit}&sort=${sort}&search=${search}&searchField=${searchField}`,
     config
   );
-  // console.log(response.data);
   return response.data;
 };
 

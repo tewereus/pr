@@ -24,8 +24,8 @@ const getProduct = async (id) => {
   return response.data;
 };
 
-const updateProduct = async (id) => {
-  const response = await axios.put(`${base_url}/product/${id}`);
+const updateProduct = async (data) => {
+  const response = await axios.put(`${base_url}/product/${data.id}`, data.data);
   return response.data;
 };
 
@@ -35,10 +35,7 @@ const deleteProduct = async (id) => {
 };
 
 const deleteAllProducts = async () => {
-  console.log("i am here");
   const response = await axios.delete(`${base_url}/product/delete-all`);
-  console.log("i am here again");
-  console.log(response.data);
   return response.data;
 };
 

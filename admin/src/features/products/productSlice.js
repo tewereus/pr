@@ -46,9 +46,9 @@ export const getProduct = createAsyncThunk(
 
 export const updateProduct = createAsyncThunk(
   "product/update-product",
-  async (id, thunkAPI) => {
+  async (data, thunkAPI) => {
     try {
-      return await productService.updateProduct(id);
+      return await productService.updateProduct(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -158,10 +158,9 @@ export const productSlice = createSlice({
         state.isError = false;
         state.isSuccess = true;
         state.message = "";
-        state.products = action.payload;
-        if (state.isSuccess === true) {
-          toast.success("Product updated Successfully");
-        }
+        state.products = state.products.map((product) =>
+          product._id === action.payload._id ? action.payload : product
+        );
       })
       .addCase(updateProduct.rejected, (state, action) => {
         state.isLoading = false;
