@@ -30,7 +30,7 @@ const updateProduct = async (data) => {
 };
 
 const deleteProduct = async (id) => {
-  const response = await axios.delete(`${base_url}/product/${id}`);
+  const response = await axios.delete(`${base_url}/product/delete/${id}`);
   return response.data;
 };
 

@@ -100,6 +100,8 @@ export const productSlice = createSlice({
         state.isSuccess = true;
         state.message = "";
         state.createdProduct = action.payload;
+        state.products = [...state.products, action.payload];
+
         if (state.isSuccess === true) {
           toast.success("Product added Successfully");
         }
@@ -179,8 +181,9 @@ export const productSlice = createSlice({
         state.isError = false;
         state.isSuccess = true;
         state.message = "";
-        state.products = action.payload;
-        // state.totalUsers = action.payload.totalUsers;
+        state.products = state.products.filter(
+          (product) => product._id !== action.payload._id
+        );
         if (state.isSuccess === true) {
           toast.success("Product Deleted Successfully");
         }
@@ -211,6 +214,7 @@ export const productSlice = createSlice({
         state.isSuccess = false;
         state.isError = true;
         state.message = action.error;
+        state.products = [];
         if (state.isError === true) {
           toast.error(action.payload.response.data.message);
         }

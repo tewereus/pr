@@ -6,6 +6,7 @@ import Modal from "react-modal";
 import AddProduct from "./AddProduct";
 import DeleteAllProducts from "./DeleteAllProducts";
 import EditProduct from "./EditProduct";
+import DeleteProduct from "./DeleteProduct";
 
 Modal.setAppElement("#root");
 
@@ -15,6 +16,7 @@ const Products = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isDeleteAll, setIsDeleteAll] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
+  const [isDelete, setIsDelete] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
   // const [selectedProducts, setSelectedProducts] = useState([]);
   useEffect(() => {
@@ -51,36 +53,40 @@ const Products = () => {
 
   return (
     <>
-      <div style={{ display: "flex" }}>
-        {products.map((product) => {
-          return (
-            <div
-              key={product._id}
-              className="product"
-              style={{
-                margin: "20px",
-                padding: "20px",
-                backgroundColor:
-                  selectedProduct && selectedProduct._id === product._id
-                    ? "#ddd"
-                    : "#fff",
-                color:
-                  selectedProduct && selectedProduct._id === product._id
-                    ? "#fff"
-                    : "#000",
-                border:
-                  selectedProduct && selectedProduct._id === product._id
-                    ? "1px solid #007"
-                    : "none",
-              }}
-              onClick={() => handleSelect(product)}
-            >
-              <p>{product.title}</p>
-              <p>{product.basePrice}</p>
-            </div>
-          );
-        })}
-      </div>
+      {products.length > 0 ? (
+        <div style={{ display: "flex" }}>
+          {products.map((product) => {
+            return (
+              <div
+                key={product._id}
+                className="product"
+                style={{
+                  margin: "20px",
+                  padding: "20px",
+                  backgroundColor:
+                    selectedProduct && selectedProduct._id === product._id
+                      ? "#ddd"
+                      : "#fff",
+                  color:
+                    selectedProduct && selectedProduct._id === product._id
+                      ? "#fff"
+                      : "#000",
+                  border:
+                    selectedProduct && selectedProduct._id === product._id
+                      ? "1px solid #007"
+                      : "none",
+                }}
+                onClick={() => handleSelect(product)}
+              >
+                <p>{product.title}</p>
+                <p>{product.basePrice}</p>
+              </div>
+            );
+          })}
+        </div>
+      ) : (
+        <p>No products found.</p>
+      )}
       <button onClick={handleAddProduct}>Add Product</button>
       {isOpen && (
         <>
@@ -121,6 +127,30 @@ const Products = () => {
           >
             <EditProduct
               setEditModal={setIsEdit}
+              selectedProduct={selectedProduct}
+            />
+          </Modal>
+        )}
+      </div>
+
+      <button
+        onClick={() => {
+          setIsDelete(true);
+        }}
+        disabled={selectedProduct ? false : true}
+        style={{ backgroundColor: "#800", color: "#bbb", cursor: "disabled" }}
+      >
+        Delete Product
+      </button>
+      <div className="modify-product">
+        {isDelete && (
+          <Modal
+            isOpen={isDelete}
+            onRequestClose={() => setIsDelete(false)}
+            contentLabel="Delete Product"
+          >
+            <DeleteProduct
+              setDeleteModal={setIsDelete}
               selectedProduct={selectedProduct}
             />
           </Modal>

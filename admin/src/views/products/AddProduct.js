@@ -30,16 +30,16 @@ const AddProduct = ({ setIsOpen }) => {
     dispatch(createProduct(data));
     // setIsOpen(false);
   };
-  const { isSuccess, createdProduct } = useSelector((state) => state.products);
-  useEffect(() => {
-    if (createdProduct && isSuccess) {
-      setIsOpen(false);
-      dispatch(messageClear());
-      //   setTimeout(() => {
-      //     window.location.reload();
-      //   }, 2000);
-    }
-  }, [isSuccess]);
+  // const { isSuccess, createdProduct } = useSelector((state) => state.products);
+  // useEffect(() => {
+  //   if (createdProduct && isSuccess) {
+  //     setIsOpen(false);
+  //     dispatch(messageClear());
+  //     //   setTimeout(() => {
+  //     //     window.location.reload();
+  //     //   }, 2000);
+  //   }
+  // }, [isSuccess]);
   return (
     <form onSubmit={handleSubmit}>
       <label>
