@@ -39,6 +39,10 @@ const deleteAllProducts = async () => {
   return response.data;
 };
 
+const addProductType = async (data) => {
+  const response = await axios.post(`${base_url}/product/add-product-type`);
+};
+
 const productService = {
   createProduct,
   getAllProducts,
@@ -46,6 +50,7 @@ const productService = {
   updateProduct,
   deleteProduct,
   deleteAllProducts,
+  addProductType,
 };
 
 export default productService;

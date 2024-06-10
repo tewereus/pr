@@ -7,6 +7,7 @@ const {
   updateProduct,
   deleteAllProducts,
   deleteProduct,
+  addProductType,
 } = require("../controllers/productCtrl");
 const { adminAuthMiddleware } = require("../middlewares/authMiddleware");
 
@@ -16,5 +17,6 @@ router.get("/:id", getProduct);
 router.put("/:id", updateProduct);
 router.delete("/delete/:id", deleteProduct);
 router.delete("/delete-all", deleteAllProducts);
+router.post("/add-product-type", addProductType);
 
 module.exports = router;

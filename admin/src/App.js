@@ -7,6 +7,7 @@ import MainLayout from "./views/MainLayout";
 import Dashboard from "./views/Dashboard";
 import Users from "./views/Users";
 import Products from "./views/products/Products";
+import ProductTypes from "./views/prodTypes/ProductTypes";
 // import Signup from "./views/Signup";
 // import Profile from "./views/Profile";
 // import ForgotPassword from "./views/ForgotPassword";
@@ -35,6 +36,7 @@ const router = createBrowserRouter([
       { index: true, element: <Dashboard /> },
       { path: "users", element: <Users /> },
       { path: "products", element: <Products /> },
+      { path: "product-types", element: <ProductTypes /> },
     ],
   },
   // errorElement: <ErrorPage />,

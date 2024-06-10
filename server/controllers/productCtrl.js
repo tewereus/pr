@@ -79,6 +79,15 @@ const deleteAllProducts = asyncHandler(async (req, res) => {
   }
 });
 
+const addProductType = asyncHandler(async (req, res) => {
+  try {
+    const productType = await ProductType.create(req.body);
+    res.status(200).json(product);
+  } catch (error) {
+    throw new Error(error);
+  }
+});
+
 module.exports = {
   createProduct,
   getAllProducts,
@@ -86,4 +95,5 @@ module.exports = {
   updateProduct,
   deleteProduct,
   deleteAllProducts,
+  addProductType,
 };

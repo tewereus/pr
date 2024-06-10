@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { updateProduct } from "../../features/products/productSlice";
 import { useDispatch } from "react-redux";
-import axios from "axios";
 
 const EditProduct = ({ setEditModal, selectedProduct }) => {
   const dispatch = useDispatch();
