@@ -23,6 +23,7 @@ const ProductTypes = () => {
         </tr>
         <tr>
           <td></td>
+          <td></td>
         </tr>
       </table>
       {isAdd && (
@@ -34,6 +35,8 @@ const ProductTypes = () => {
           <AddProductType setIsAdd={setIsAdd} />
         </Modal>
       )}
+      <button>Edit</button>
+      <button>Delete</button>
     </>
   );
 };
