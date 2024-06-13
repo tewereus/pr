@@ -41,6 +41,12 @@ const deleteAllProducts = async () => {
 
 const addProductType = async (data) => {
   const response = await axios.post(`${base_url}/product/add-product-type`);
+  return response.data;
+};
+
+const getAllProdTypes = async () => {
+  const response = await axios.get(`${base_url}/product/get-product-types`);
+  return response.data;
 };
 
 const productService = {
@@ -51,6 +57,7 @@ const productService = {
   deleteProduct,
   deleteAllProducts,
   addProductType,
+  getAllProdTypes,
 };
 
 export default productService;

@@ -82,7 +82,16 @@ const deleteAllProducts = asyncHandler(async (req, res) => {
 const addProductType = asyncHandler(async (req, res) => {
   try {
     const productType = await ProductType.create(req.body);
-    res.status(200).json(product);
+    res.status(200).json(productType);
+  } catch (error) {
+    throw new Error(error);
+  }
+});
+
+const getAllProdTypes = asyncHandler(async (req, res) => {
+  try {
+    const productType = await ProductType.find();
+    res.status(200).json(productType);
   } catch (error) {
     throw new Error(error);
   }
@@ -96,4 +105,5 @@ module.exports = {
   deleteProduct,
   deleteAllProducts,
   addProductType,
+  getAllProdTypes,
 };
