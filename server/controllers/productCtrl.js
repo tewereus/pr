@@ -1,6 +1,6 @@
 const User = require("../models/userModel");
-const Product = require("../models/productModel");
 const ProductType = require("../models/productTypeModel");
+const Product = require("../models/productModel");
 const asyncHandler = require("express-async-handler");
 const validateMongoDbId = require("../utils/validateMongoDbId");
 
@@ -90,8 +90,8 @@ const addProductType = asyncHandler(async (req, res) => {
 
 const getAllProdTypes = asyncHandler(async (req, res) => {
   try {
-    const productType = await ProductType.find();
-    res.status(200).json(productType);
+    const product = await ProductType.find();
+    res.status(200).json(product);
   } catch (error) {
     throw new Error(error);
   }

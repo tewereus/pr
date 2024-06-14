@@ -21,6 +21,9 @@ const ProductTypes = () => {
           <th>fabric</th>
           <th>actions</th>
         </tr>
+        <tr>
+          <td></td>
+        </tr>
       </table>
       {isAdd && (
         <Modal
