@@ -18,6 +18,7 @@ const Products = () => {
   const [isEdit, setIsEdit] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const [modifyProduct, setModifyProduct] = useState(null);
   // const [selectedProducts, setSelectedProducts] = useState([]);
   useEffect(() => {
     dispatch(getAllProducts());
@@ -29,17 +30,21 @@ const Products = () => {
 
   const handleSelect = (product) => {
     console.log(product);
-    // setSelectedProducts([...selectedProducts, product]);
     setSelectedProduct(product);
-    // console.log(selectedProducts);
+  };
+  const handleEdit = () => {
+    setModifyProduct(selectedProduct);
+    setIsEdit(true);
+  };
+
+  const handleDelete = () => {
+    setModifyProduct(selectedProduct);
+    setIsDelete(true);
   };
 
   useEffect(() => {
     const handleOutsideClick = (e) => {
-      if (
-        e.target.closest(".product") === null &&
-        !e.target.closest(".modify-product") === null
-      ) {
+      if (e.target.closest(".product") === null) {
         setSelectedProduct(null);
       }
     };
@@ -110,15 +115,14 @@ const Products = () => {
         </Modal>
       )}
       <button
-        onClick={() => {
-          setIsEdit(true);
-        }}
+        onClick={handleEdit}
         disabled={selectedProduct ? false : true}
         style={{ backgroundColor: "#080", color: "#bbb", cursor: "disabled" }}
+        className="product"
       >
         Edit Product
       </button>
-      <div className="modify-product">
+      <div>
         {isEdit && (
           <Modal
             isOpen={isEdit}
@@ -127,22 +131,21 @@ const Products = () => {
           >
             <EditProduct
               setEditModal={setIsEdit}
-              selectedProduct={selectedProduct}
+              selectedProduct={modifyProduct}
             />
           </Modal>
         )}
       </div>
 
       <button
-        onClick={() => {
-          setIsDelete(true);
-        }}
+        className="product"
+        onClick={handleDelete}
         disabled={selectedProduct ? false : true}
         style={{ backgroundColor: "#800", color: "#bbb", cursor: "disabled" }}
       >
         Delete Product
       </button>
-      <div className="modify-product">
+      <div>
         {isDelete && (
           <Modal
             isOpen={isDelete}
@@ -151,7 +154,7 @@ const Products = () => {
           >
             <DeleteProduct
               setDeleteModal={setIsDelete}
-              selectedProduct={selectedProduct}
+              selectedProduct={modifyProduct}
             />
           </Modal>
         )}

@@ -61,6 +61,9 @@ const EditProduct = ({ setEditModal, selectedProduct }) => {
             onChange={handleChange}
           />
           <button type="submit">Edit Product</button>
+          <button type="button" onClick={() => setEditModal(false)}>
+            Cancel Edit
+          </button>
         </>
       ) : (
         <p>Loading...</p>

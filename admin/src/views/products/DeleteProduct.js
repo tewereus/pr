@@ -23,7 +23,9 @@ const DeleteProduct = ({ setDeleteModal, selectedProduct }) => {
 
   return (
     <div>
-      <button onClick={handleDel}>delete</button>
+      <h2>Are you sure you want to delete? </h2>
+      <button onClick={handleDel}>confirm</button>
+      <button onClick={() => setDeleteModal(false)}>Cancel</button>
       {checkDelete && (
         <>
           <h2>
@@ -33,6 +35,7 @@ const DeleteProduct = ({ setDeleteModal, selectedProduct }) => {
           <button disabled={disabled} onClick={handleDelete}>
             Confirm Delete
           </button>
+          <button onClick={() => setDeleteModal(false)}>Cancel Delete</button>
         </>
       )}
     </div>
