@@ -18,7 +18,5 @@ router.get("/:id", getProduct);
 router.put("/:id", updateProduct);
 router.delete("/delete/:id", deleteProduct);
 router.delete("/delete-all", deleteAllProducts);
-router.post("/add-product-type", addProductType);
-router.get("/get-product-types", getAllProdTypes);
 
 module.exports = router;
