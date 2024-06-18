@@ -29,8 +29,21 @@ const deleteProdType = asyncHandler(async (req, res) => {
   }
 });
 
+const updateProdType = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  try {
+    const product = await ProductType.findByIdAndUpdate(id, req.body, {
+      new: true,
+    });
+    res.status(200).json(product);
+  } catch (error) {
+    throw new Error(error);
+  }
+});
+
 module.exports = {
   addProductType,
   getAllProdTypes,
   deleteProdType,
+  updateProdType,
 };
