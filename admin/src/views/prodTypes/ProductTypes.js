@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { getAllProdTypes } from "../../features/products/productSlice";
+import { getAllProdTypes } from "../../features/productType/prodTypeSlice";
 import { useDispatch, useSelector } from "react-redux";
 import Modal from "react-modal";
 import AddProductType from "./AddProductType";
@@ -104,7 +104,8 @@ const ProductTypes = () => {
           onRequestClose={() => setIsEdit(false)}
           contentLabel="Edit product type"
         >
-          <EditProductType setIsEdit={setIsEdit} />
+          {/* <EditProductType setIsEdit={setIsEdit} /> */}
+          <p>Edit</p>
         </Modal>
       )}
       {isDelete && (
@@ -113,7 +114,8 @@ const ProductTypes = () => {
           onRequestClose={() => setIsDelete(false)}
           contentLabel="Delete product table"
         >
-          <DeleteProductType setIsDelete={setIsDelete} />
+          {/* <DeleteProductType setIsDelete={setIsDelete} /> */}
+          <p>Delete</p>
         </Modal>
       )}
       <button onClick={() => setIsEdit(true)}>Edit</button>
