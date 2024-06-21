@@ -3,6 +3,7 @@ import { getAllProdTypes } from "../../features/productType/prodTypeSlice";
 import { useDispatch, useSelector } from "react-redux";
 import Modal from "react-modal";
 import AddProductType from "./AddProductType";
+import EditProductType from "./EditProductType";
 
 const ProductTypes = () => {
   const dispatch = useDispatch();
@@ -104,8 +105,7 @@ const ProductTypes = () => {
           onRequestClose={() => setIsEdit(false)}
           contentLabel="Edit product type"
         >
-          {/* <EditProductType setIsEdit={setIsEdit} /> */}
-          <p>Edit</p>
+          <EditProductType setIsEdit={setIsEdit} />
         </Modal>
       )}
       {isDelete && (
