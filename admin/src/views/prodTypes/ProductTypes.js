@@ -105,7 +105,8 @@ const ProductTypes = () => {
           onRequestClose={() => setIsEdit(false)}
           contentLabel="Edit product type"
         >
-          <EditProductType setIsEdit={setIsEdit} />
+          {/* <EditProductType setIsEdit={setIsEdit} /> */}
+          <p>Edit</p>
         </Modal>
       )}
       {isDelete && (

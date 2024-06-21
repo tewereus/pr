@@ -8,6 +8,14 @@ const addProductType = async (data) => {
   return response.data;
 };
 
+const updateProdType = async (data) => {
+  const response = await axios.put(
+    `${base_url}/product-type/${data.id}`,
+    data.data
+  );
+  return response.data;
+};
+
 const getAllProdTypes = async () => {
   const response = await axios.get(
     `${base_url}/product-type/get-product-types`
@@ -17,6 +25,7 @@ const getAllProdTypes = async () => {
 
 const prodTypeService = {
   addProductType,
+  updateProdType,
   getAllProdTypes,
 };
 
