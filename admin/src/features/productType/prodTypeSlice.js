@@ -90,6 +90,6 @@ export const prodTypeSlice = createSlice({
   },
 });
 
-export const { messageClear, user_reset } = productSlice.actions;
+export const { messageClear, user_reset } = prodTypeSlice.actions;
 
 export default prodTypeSlice.reducer;
