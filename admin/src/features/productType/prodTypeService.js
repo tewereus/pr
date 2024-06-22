@@ -3,7 +3,8 @@ import axios from "axios";
 
 const addProductType = async (data) => {
   const response = await axios.post(
-    `${base_url}/product-type/add-product-type`
+    `${base_url}/product-type/add-product-type`,
+    data
   );
   return response.data;
 };

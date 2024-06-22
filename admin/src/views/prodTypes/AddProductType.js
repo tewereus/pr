@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { addProductType } from "../../features/products/productSlice";
+import { addProductType } from "../../features/productType/prodTypeSlice";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 
@@ -21,10 +21,9 @@ const AddProductType = () => {
     e.preventDefault();
     const data = {
       productName: productType.productName,
-      fabric: productType.fabric,
     };
     const response = await axios.post(
-      `http://localhost:3773/api/v1/product/add-product-type`,
+      `http://localhost:3773/api/v1/product-type/add-product-type`,
       data
     );
   };

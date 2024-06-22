@@ -45,12 +45,12 @@ const ProductTypes = () => {
     };
   }, []);
 
-  const { products } = useSelector((state) => state.products);
+  const { productTypes } = useSelector((state) => state.productTypes);
   return (
     <>
-      {products.length > 0 ? (
+      {productTypes.length > 0 ? (
         <div style={{ display: "flex" }}>
-          {products.map((product) => {
+          {productTypes.map((product) => {
             return (
               <div
                 key={product._id}
@@ -80,16 +80,10 @@ const ProductTypes = () => {
           })}
         </div>
       ) : (
-        <p>No products found.</p>
+        <p>No product types found.</p>
       )}
       <button onClick={() => setIsAdd(true)}>Add New</button>
-      <table>
-        <tr>
-          <th>Name</th>
-          <th>actions</th>
-        </tr>
-        {}
-      </table>
+
       {isAdd && (
         <Modal
           isOpen={isAdd}
