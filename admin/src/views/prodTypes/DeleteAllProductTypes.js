@@ -1,18 +1,44 @@
 import React, { useEffect, useState } from "react";
 import { deleteAllProdTypes } from "../../features/productType/prodTypeSlice";
-import { useDispatch } from "react-redux";
+import { checkAdminPass } from "../../features/auth/authSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 const DeleteAllProductTypes = ({ setIsDeleteAll }) => {
   const dispatch = useDispatch();
   const [disabled, setDisabled] = useState(true);
   const [checkDelete, setCheckDelete] = useState(false);
+  const [userState, setuserState] = useState({
+    email: "",
+    password: "",
+  });
+  const { user, message } = useSelector((state) => state.auth);
   const handleDelete = () => {
     setCheckDelete(true);
   };
 
+  //   const handleCheckInput = (e) => {
+  //     if (e.target.value === "Delete Everything") {
+  //       setDisabled(false);
+  //     }
+  //   };
+
   const handleCheckInput = (e) => {
-    if (e.target.value === "Delete Everything") {
-      setDisabled(false);
+    if (user.role === "administrator") {
+      console.log(user);
+      const data = { email: user.email, password: e.target.value };
+      dispatch(checkAdminPass(data))
+        .then(() => {
+          if ((message = "success")) {
+            setDisabled(false);
+          }
+          console.log(message);
+        })
+        .catch((error) => {
+          setDisabled(true);
+          console.log("incorrect password", error);
+        });
+    } else {
+      setDisabled(true);
     }
   };
 
@@ -28,11 +54,17 @@ const DeleteAllProductTypes = ({ setIsDeleteAll }) => {
       <button onClick={() => setIsDeleteAll(false)}>Cancel</button>
       {checkDelete && (
         <>
-          <h2>
-            type "<b>Delete Everything</b>" to make sure to delete
-          </h2>
-          <input type="text" onChange={handleCheckInput} />
-          <button disabled={disabled} onClick={handleDeleteAll}>
+          <h2>Enter the admin password to delete all product types:</h2>
+          <input type="password" onChange={handleCheckInput} />
+          <button
+            className={`product ml-5 bg-red-600 p-[10px] rounded-[12px] ${
+              disabled
+                ? "text-gray-300 opacity-80 cursor-not-allowed"
+                : "text-white opacity-100 cursor-pointer"
+            }`}
+            disabled={disabled}
+            onClick={handleDeleteAll}
+          >
             Delete Everything
           </button>
         </>

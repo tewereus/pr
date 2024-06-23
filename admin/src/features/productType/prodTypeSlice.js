@@ -87,12 +87,10 @@ export const prodTypeSlice = createSlice({
         state.isError = false;
         state.isSuccess = true;
         state.message = "";
-        state.currentType = action.payload;
-        state.productTypes = [...state.productTypes, action.payload];
-
         if (state.isSuccess === true) {
           toast.success("Product Type Added Successfully");
         }
+        state.productTypes = [...state.productTypes, action.payload];
       })
       .addCase(addProductType.rejected, (state, action) => {
         state.isLoading = false;
@@ -114,6 +112,9 @@ export const prodTypeSlice = createSlice({
         state.productTypes = state.productTypes.map((product) =>
           product._id === action.payload._id ? action.payload : product
         );
+        if (state.isSuccess === true) {
+          toast.success("Product Type updated Successfully");
+        }
       })
       .addCase(updateProdType.rejected, (state, action) => {
         state.isLoading = false;

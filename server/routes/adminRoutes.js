@@ -15,6 +15,7 @@ const {
   resetPassword,
   getAllUsers,
   getAllAdmins,
+  checkAdminPass,
 } = require("../controllers/adminCtrl");
 
 const { adminAuthMiddleware } = require("../middlewares/authMiddleware");
@@ -33,4 +34,5 @@ router.post("/forgot-password", forgotPasswordToken);
 router.put("/reset-password/:token", resetPassword);
 router.get("/all-users", getAllUsers);
 router.get("/all-admins", getAllAdmins);
+router.post("/check-admin", checkAdminPass);
 module.exports = router;

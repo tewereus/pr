@@ -32,6 +32,17 @@ export const allUsers = createAsyncThunk("auth/get-users", async (thunkAPI) => {
   }
 });
 
+export const checkAdminPass = createAsyncThunk(
+  "auth/check-admin",
+  async (data, thunkAPI) => {
+    try {
+      return await authService.checkAdminPass(data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 export const authSlice = createSlice({
   name: "auth",
   initialState,
@@ -72,6 +83,22 @@ export const authSlice = createSlice({
         state.message = "success";
       })
       .addCase(allUsers.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = false;
+        state.isError = true;
+        state.message = action.error;
+      })
+      .addCase(checkAdminPass.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(checkAdminPass.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.isError = false;
+        state.message = "success";
+        console.log("password verified");
+      })
+      .addCase(checkAdminPass.rejected, (state, action) => {
         state.isLoading = false;
         state.isSuccess = false;
         state.isError = true;

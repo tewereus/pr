@@ -74,6 +74,7 @@ const loginAdmin = asyncHandler(async (req, res) => {
       _id: findAdmin?._id,
       firstname: findAdmin?.firstname,
       lastname: findAdmin?.lastname,
+      role: findAdmin?.role,
       email: findAdmin?.email,
       mobile: findAdmin?.mobile,
       token: generateToken(findAdmin?._id),
@@ -460,6 +461,26 @@ const resetPassword = asyncHandler(async (req, res) => {
   res.json(user);
 });
 
+const checkAdminPass = asyncHandler(async (req, res) => {
+  const { email, password } = req.body;
+  // check if user exists or not
+  const findAdmin = await Admin.findOne({ email });
+  if (findAdmin.role !== "administrator") throw new Error("Not Authorized");
+  if (findAdmin && (await findAdmin.isPasswordMatched(password))) {
+    res.json({
+      _id: findAdmin?._id,
+      firstname: findAdmin?.firstname,
+      lastname: findAdmin?.lastname,
+      role: findAdmin?.role,
+      email: findAdmin?.email,
+      mobile: findAdmin?.mobile,
+      token: generateToken(findAdmin?._id),
+    });
+  } else {
+    throw new Error("Invalid Credentials");
+  }
+});
+
 module.exports = {
   // registerUser,
   loginAdmin,
@@ -476,4 +497,5 @@ module.exports = {
   resetPassword,
   getAllUsers,
   getAllAdmins,
+  checkAdminPass,
 };

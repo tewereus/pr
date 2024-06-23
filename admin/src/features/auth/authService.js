@@ -15,9 +15,15 @@ const allUsers = async (data) => {
   return response.data;
 };
 
+const checkAdminPass = async (data) => {
+  const response = await axios.post(`${base_url}/admin/check-admin`, data);
+  return response.data;
+};
+
 const authService = {
   adminLogin,
   allUsers,
+  checkAdminPass,
 };
 
 export default authService;
