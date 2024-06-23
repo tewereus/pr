@@ -2,11 +2,12 @@ import { base_url, config } from "../../api/axiosConfig";
 import axios from "axios";
 
 const addProductType = async (data) => {
-  console.log("response.data");
+  console.log(data);
 
   const response = await axios.post(
     `${base_url}/product-type/add-product-type`,
     data
+    // config
   );
   console.log(response.data);
   return response.data;

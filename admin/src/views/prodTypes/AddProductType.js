@@ -16,9 +16,12 @@ const AddProductType = () => {
     });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    const data = "productType.productName";
+    const data = {
+      productName: productType.productName,
+    };
+
     dispatch(addProductType(data));
   };
 

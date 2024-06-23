@@ -7,8 +7,6 @@ const {
   updateProduct,
   deleteAllProducts,
   deleteProduct,
-  addProductType,
-  getAllProdTypes,
 } = require("../controllers/productCtrl");
 const { adminAuthMiddleware } = require("../middlewares/authMiddleware");
 

@@ -10,7 +10,7 @@ const { adminAuthMiddleware } = require("../middlewares/authMiddleware");
 
 router.post("/add-product-type", addProductType);
 router.get("/get-product-types", getAllProdTypes);
-router.delete("/delete-product-types/:id", deleteProdType);
-router.put("/edit-product-types/:id", updateProdType);
+router.delete("/:id", deleteProdType);
+router.put("/:id", updateProdType);
 
 module.exports = router;

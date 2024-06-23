@@ -54,23 +54,11 @@ const ProductTypes = () => {
             return (
               <div
                 key={product._id}
-                className="product"
-                style={{
-                  margin: "20px",
-                  padding: "20px",
-                  backgroundColor:
-                    selectedProduct && selectedProduct._id === product._id
-                      ? "#ddd"
-                      : "#fff",
-                  color:
-                    selectedProduct && selectedProduct._id === product._id
-                      ? "#fff"
-                      : "#000",
-                  border:
-                    selectedProduct && selectedProduct._id === product._id
-                      ? "1px solid #007"
-                      : "none",
-                }}
+                className={`product m-[20px] p-[20px] cursor-pointer ${
+                  selectedProduct && selectedProduct._id === product._id
+                    ? "bg-gray-200 text-gray-800 border border-gray-400"
+                    : "bg-white-700 text-black border-none"
+                }`}
                 onClick={() => handleSelect(product)}
               >
                 <p>{product.productName}</p>
@@ -81,7 +69,12 @@ const ProductTypes = () => {
       ) : (
         <p>No product types found.</p>
       )}
-      <button onClick={() => setIsAdd(true)}>Add New</button>
+      <button
+        className={`ml-5 bg-blue-700 p-[10px] text-white rounded-[12px] cursor-pointer`}
+        onClick={() => setIsAdd(true)}
+      >
+        Add New
+      </button>
 
       {isAdd && (
         <Modal
@@ -92,16 +85,41 @@ const ProductTypes = () => {
           <AddProductType setIsAdd={setIsAdd} />
         </Modal>
       )}
+      <button
+        className={`product ml-5 bg-green-700 p-[10px] rounded-[12px] ${
+          selectedProduct
+            ? "text-white opacity-100 cursor-pointer"
+            : "text-gray-300 opacity-80 cursor-not-allowed "
+        }`}
+        onClick={handleEdit}
+        disabled={selectedProduct ? false : true}
+      >
+        Edit Product
+      </button>
       {isEdit && (
         <Modal
           isOpen={isEdit}
           onRequestClose={() => setIsEdit(false)}
           contentLabel="Edit product type"
         >
-          {/* <EditProductType setIsEdit={setIsEdit} /> */}
+          <EditProductType
+            setIsEdit={setIsEdit}
+            selectedProduct={modifyProduct}
+          />
           <p>Edit</p>
         </Modal>
       )}
+      <button
+        className={`product ml-5 bg-red-600 p-[10px] rounded-[12px] ${
+          selectedProduct
+            ? "text-white opacity-100 cursor-pointer"
+            : "text-gray-300 opacity-80 cursor-not-allowed"
+        }`}
+        onClick={handleDelete}
+        disabled={selectedProduct ? false : true}
+      >
+        Delete Product
+      </button>
       {isDelete && (
         <Modal
           isOpen={isDelete}
@@ -112,8 +130,6 @@ const ProductTypes = () => {
           <p>Delete</p>
         </Modal>
       )}
-      <button onClick={() => setIsEdit(true)}>Edit</button>
-      <button onClick={() => setIsDelete(true)}>Delete</button>
     </>
   );
 };

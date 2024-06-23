@@ -4,9 +4,9 @@ const productTypeSchema = new mongoose.Schema(
   {
     productName: {
       type: String,
-      required: true,
-      unique: true,
-      index: true,
+      // required: true,
+      // unique: true,
+      // index: true,
     },
     sold: {
       type: Number,
