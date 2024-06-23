@@ -18,6 +18,20 @@ const getAllProdTypes = asyncHandler(async (req, res) => {
     throw new Error(error);
   }
 });
+const deleteAllProdTypes = asyncHandler(async (req, res) => {
+  try {
+    const deletedProducts = await ProductType.deleteMany();
+    if (deletedProducts.deletedCount === 0) {
+      res.json({ message: "No product Types found to delete" });
+    } else {
+      res
+        .status(200)
+        .json({ message: `${deletedProducts.deletedCount} products deleted` });
+    }
+  } catch (error) {
+    throw new Error(error);
+  }
+});
 
 const deleteProdType = asyncHandler(async (req, res) => {
   const { id } = req.params;
@@ -46,4 +60,5 @@ module.exports = {
   getAllProdTypes,
   deleteProdType,
   updateProdType,
+  deleteAllProdTypes,
 };

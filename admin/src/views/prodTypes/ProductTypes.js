@@ -5,12 +5,14 @@ import Modal from "react-modal";
 import AddProductType from "./AddProductType";
 import EditProductType from "./EditProductType";
 import DeleteProductType from "./DeleteProductType";
+import DeleteAllProductTypes from "./DeleteAllProductTypes";
 
 const ProductTypes = () => {
   const dispatch = useDispatch();
   const [isAdd, setIsAdd] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
+  const [isDeleteAll, setIsDeleteAll] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [modifyProduct, setModifyProduct] = useState(null);
 
@@ -30,6 +32,10 @@ const ProductTypes = () => {
   const handleDelete = () => {
     setModifyProduct(selectedProduct);
     setIsDelete(true);
+  };
+
+  const handleDeleteAll = () => {
+    setIsDeleteAll(true);
   };
 
   useEffect(() => {
@@ -130,6 +136,25 @@ const ProductTypes = () => {
             setIsDelete={setIsDelete}
             selectedProduct={modifyProduct}
           />
+        </Modal>
+      )}
+      <button
+        className={`product ml-5 bg-red-600 p-[10px] rounded-[12px] ${
+          productTypes.length > 0
+            ? "text-white opacity-100 cursor-pointer"
+            : "text-gray-300 opacity-80 cursor-not-allowed"
+        }`}
+        onClick={handleDeleteAll}
+      >
+        Delete All
+      </button>
+      {isDeleteAll && (
+        <Modal
+          isOpen={isDeleteAll}
+          onRequestClose={() => setIsDeleteAll(false)}
+          contentLabel="Delete All product type"
+        >
+          <DeleteAllProductTypes setIsDeleteAll={setIsDeleteAll} />
         </Modal>
       )}
     </>

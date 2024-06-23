@@ -2,14 +2,11 @@ import { base_url, config } from "../../api/axiosConfig";
 import axios from "axios";
 
 const addProductType = async (data) => {
-  console.log(data);
-
   const response = await axios.post(
     `${base_url}/product-type/add-product-type`,
     data
     // config
   );
-  console.log(response.data);
   return response.data;
 };
 
@@ -33,10 +30,18 @@ const getAllProdTypes = async () => {
   return response.data;
 };
 
+const deleteAllProdTypes = async () => {
+  const response = await axios.delete(
+    `${base_url}/product-type/delete-product-types`
+  );
+  return response.data;
+};
+
 const prodTypeService = {
   addProductType,
   updateProdType,
   deleteProdType,
+  deleteAllProdTypes,
   getAllProdTypes,
 };
 

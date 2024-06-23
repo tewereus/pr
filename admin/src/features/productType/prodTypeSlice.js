@@ -54,6 +54,17 @@ export const getAllProdTypes = createAsyncThunk(
   }
 );
 
+export const deleteAllProdTypes = createAsyncThunk(
+  "product/delete-productTypes",
+  async (thunkAPI) => {
+    try {
+      return await prodTypeService.deleteAllProdTypes();
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 export const prodTypeSlice = createSlice({
   name: "productType",
   initialState,
@@ -76,7 +87,7 @@ export const prodTypeSlice = createSlice({
         state.isError = false;
         state.isSuccess = true;
         state.message = "";
-        // state.currentType = action.payload;
+        state.currentType = action.payload;
         state.productTypes = [...state.productTypes, action.payload];
 
         if (state.isSuccess === true) {
@@ -129,6 +140,28 @@ export const prodTypeSlice = createSlice({
         }
       })
       .addCase(deleteProdType.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = false;
+        state.isError = true;
+        state.message = action.error;
+        if (state.isError === true) {
+          toast.error(action.payload.response.data.message);
+        }
+      })
+      .addCase(deleteAllProdTypes.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(deleteAllProdTypes.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isSuccess = true;
+        state.message = "";
+        state.productTypes = [];
+        if (state.isSuccess === true) {
+          toast.success("All Products Deleted Successfully");
+        }
+      })
+      .addCase(deleteAllProdTypes.rejected, (state, action) => {
         state.isLoading = false;
         state.isSuccess = false;
         state.isError = true;
