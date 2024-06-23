@@ -76,7 +76,9 @@ export const prodTypeSlice = createSlice({
         state.isError = false;
         state.isSuccess = true;
         state.message = "";
-        state.currentType = action.payload;
+        // state.currentType = action.payload;
+        state.productTypes = [...state.productTypes, action.payload];
+
         if (state.isSuccess === true) {
           toast.success("Product Type Added Successfully");
         }
@@ -103,6 +105,30 @@ export const prodTypeSlice = createSlice({
         );
       })
       .addCase(updateProdType.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = false;
+        state.isError = true;
+        state.message = action.error;
+        if (state.isError === true) {
+          toast.error(action.payload.response.data.message);
+        }
+      })
+      .addCase(deleteProdType.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(deleteProdType.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isSuccess = true;
+        state.message = "";
+        state.productTypes = state.productTypes.filter(
+          (product) => product._id !== action.payload._id
+        );
+        if (state.isSuccess === true) {
+          toast.success("Product Deleted Successfully");
+        }
+      })
+      .addCase(deleteProdType.rejected, (state, action) => {
         state.isLoading = false;
         state.isSuccess = false;
         state.isError = true;

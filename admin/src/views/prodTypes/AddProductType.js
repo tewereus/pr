@@ -1,41 +1,48 @@
-import React, { useState } from "react";
-import { addProductType } from "../../features/productType/prodTypeSlice";
+import React, { useEffect, useState } from "react";
+import {
+  addProductType,
+  messageClear,
+} from "../../features/productType/prodTypeSlice";
 import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
 
-const AddProductType = () => {
+const AddProduct = ({ setIsAdd }) => {
   const dispatch = useDispatch();
-  const [productType, setProductType] = useState({
+  const [productState, setProductState] = useState({
     productName: "",
   });
 
   const handleChange = (e) => {
-    setProductType({
-      ...productType,
+    setProductState({
+      ...productState,
       [e.target.name]: e.target.value,
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const data = {
-      productName: productType.productName,
+      productName: productState.productName,
     };
-
     dispatch(addProductType(data));
+    // setIsOpen(false);
   };
-
   return (
     <form onSubmit={handleSubmit}>
-      <input
-        type="text"
-        value={productType.productName}
-        name="productName"
-        onChange={handleChange}
-      />
-      <button type="submit">Add Product Type</button>
+      <label>
+        Type:
+        <input
+          type="text"
+          value={productState.productName}
+          name="productName"
+          onChange={handleChange}
+        />
+      </label>
+      <button type="submit">Add Product</button>
+      <button type="button" onClick={() => setIsAdd(false)}>
+        Close Modal
+      </button>
     </form>
   );
 };
 
-export default AddProductType;
+export default AddProduct;

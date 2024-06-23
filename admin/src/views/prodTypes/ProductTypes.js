@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Modal from "react-modal";
 import AddProductType from "./AddProductType";
 import EditProductType from "./EditProductType";
+import DeleteProductType from "./DeleteProductType";
 
 const ProductTypes = () => {
   const dispatch = useDispatch();
@@ -106,7 +107,6 @@ const ProductTypes = () => {
             setIsEdit={setIsEdit}
             selectedProduct={modifyProduct}
           />
-          <p>Edit</p>
         </Modal>
       )}
       <button
@@ -124,10 +124,12 @@ const ProductTypes = () => {
         <Modal
           isOpen={isDelete}
           onRequestClose={() => setIsDelete(false)}
-          contentLabel="Delete product table"
+          contentLabel="Delete product type"
         >
-          {/* <DeleteProductType setIsDelete={setIsDelete} /> */}
-          <p>Delete</p>
+          <DeleteProductType
+            setIsDelete={setIsDelete}
+            selectedProduct={modifyProduct}
+          />
         </Modal>
       )}
     </>
