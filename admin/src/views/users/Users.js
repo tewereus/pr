@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-import Table from "./components/Table";
+import Table from "../components/Table";
 import {
   getAllUsers,
   getAllAdmins,
   deleteUser,
   deleteAllUsers,
-} from "../features/users/userSlice";
-import Search from "./components/Search";
+} from "../../features/users/userSlice";
+import Search from "../components/Search";
 import { useSelector, useDispatch } from "react-redux";
 
 const UserList = () => {

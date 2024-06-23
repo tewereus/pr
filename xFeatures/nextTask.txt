@@ -1,1 +1,1 @@
-handle th eedit and delete functionality of product types
+modify the users(Users, userService anduserSlice ), make it like products (not callig getAllUsers everytime a change is made) 
