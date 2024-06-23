@@ -7,7 +7,6 @@ const AddProductType = () => {
   const dispatch = useDispatch();
   const [productType, setProductType] = useState({
     productName: "",
-    fabric: "",
   });
 
   const handleChange = (e) => {
@@ -19,13 +18,8 @@ const AddProductType = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const data = {
-      productName: productType.productName,
-    };
-    const response = await axios.post(
-      `http://localhost:3773/api/v1/product-type/add-product-type`,
-      data
-    );
+    const data = "productType.productName";
+    dispatch(addProductType(data));
   };
 
   return (
@@ -34,12 +28,6 @@ const AddProductType = () => {
         type="text"
         value={productType.productName}
         name="productName"
-        onChange={handleChange}
-      />
-      <input
-        type="text"
-        value={productType.fabric}
-        name="fabric"
         onChange={handleChange}
       />
       <button type="submit">Add Product Type</button>

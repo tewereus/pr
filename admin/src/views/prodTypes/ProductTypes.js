@@ -73,8 +73,7 @@ const ProductTypes = () => {
                 }}
                 onClick={() => handleSelect(product)}
               >
-                <p>{product.title}</p>
-                <p>{product.basePrice}</p>
+                <p>{product.productName}</p>
               </div>
             );
           })}
