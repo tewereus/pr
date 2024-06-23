@@ -32,6 +32,17 @@ export const updateProdType = createAsyncThunk(
   }
 );
 
+export const deleteProdType = createAsyncThunk(
+  "product/delete-product",
+  async (id, thunkAPI) => {
+    try {
+      return await prodTypeService.deleteProdType(id);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 export const getAllProdTypes = createAsyncThunk(
   "product/get-productTypes",
   async (thunkAPI) => {

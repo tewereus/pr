@@ -21,6 +21,11 @@ const updateProdType = async (data) => {
   return response.data;
 };
 
+const deleteProdType = async (id) => {
+  const response = await axios.delete(`${base_url}/product-type/${id}`);
+  return response.data;
+};
+
 const getAllProdTypes = async () => {
   const response = await axios.get(
     `${base_url}/product-type/get-product-types`
@@ -31,6 +36,7 @@ const getAllProdTypes = async () => {
 const prodTypeService = {
   addProductType,
   updateProdType,
+  deleteProdType,
   getAllProdTypes,
 };
 
