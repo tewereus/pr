@@ -28,14 +28,12 @@ const DeleteAllProductTypes = ({ setIsDeleteAll }) => {
       const data = { email: user.email, password: e.target.value };
       dispatch(checkAdminPass(data))
         .then(() => {
-          if ((message = "success")) {
-            setDisabled(false);
-          }
-          console.log(message);
+          console.log("here");
+          setDisabled(false);
         })
         .catch((error) => {
           setDisabled(true);
-          console.log("incorrect password", error);
+          consol.log("incorrect password");
         });
     } else {
       setDisabled(true);
