@@ -95,7 +95,7 @@ export const authSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = true;
         state.isError = false;
-        state.message = "success";
+        state.message = "Password verified";
         console.log("password verified");
       })
       .addCase(checkAdminPass.rejected, (state, action) => {

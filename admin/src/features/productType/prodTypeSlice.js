@@ -156,7 +156,7 @@ export const prodTypeSlice = createSlice({
         state.isLoading = false;
         state.isError = false;
         state.isSuccess = true;
-        state.message = "";
+        state.message = "success";
         state.productTypes = [];
         if (state.isSuccess === true) {
           toast.success("All Products Deleted Successfully");
