@@ -108,6 +108,16 @@ const ProductTypes = () => {
           isOpen={isEdit}
           onRequestClose={() => setIsEdit(false)}
           contentLabel="Edit product type"
+          // className="w-[30%] h-auto fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+          style={{
+            content: {
+              width: "30%",
+              height: "auto",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+            },
+          }}
         >
           <EditProductType
             setIsEdit={setIsEdit}

@@ -235,9 +235,8 @@ const UserList = () => {
           Delete all users
         </button>
       </div>
-
-      {/* {isLoading ? <p>Loading....</p> : <Table users={users} />} */}
-      <table>
+      <Table users={users} totalUsers={totalUsers} isLoading={isLoading} />
+      {/* <table>
         <thead>
           <tr>
             <th>Username</th>
@@ -276,7 +275,7 @@ const UserList = () => {
             </tr>
           )}
         </tbody>
-      </table>
+      </table> */}
       <div className="pagination">
         <button onClick={() => setPage(page - 1)} disabled={page === 1}>
           Previous
