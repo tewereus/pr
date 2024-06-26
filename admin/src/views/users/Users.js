@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Table from "../components/Table";
+import Pagination from "../components/Pagination";
 import {
   getAllUsers,
   getAllAdmins,
@@ -235,7 +236,12 @@ const UserList = () => {
           Delete all users
         </button>
       </div>
-      <Table users={users} totalUsers={totalUsers} isLoading={isLoading} />
+      <Table
+        users={users}
+        totalUsers={totalUsers}
+        isLoading={isLoading}
+        setSelectedUser={setSelectedUser}
+      />
       {/* <table>
         <thead>
           <tr>
@@ -276,7 +282,7 @@ const UserList = () => {
           )}
         </tbody>
       </table> */}
-      <div className="pagination">
+      {/* <div className="pagination">
         <button onClick={() => setPage(page - 1)} disabled={page === 1}>
           Previous
         </button>
@@ -289,7 +295,13 @@ const UserList = () => {
         >
           Next
         </button>
-      </div>
+      </div> */}
+      <Pagination
+        totalUsers={totalUsers}
+        limit={limit}
+        page={page}
+        setPage={setPage}
+      />
       <div className="limit">
         <label htmlFor="limit">Limit: </label>
         <span>
