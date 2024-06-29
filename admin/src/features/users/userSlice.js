@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import userService from "./userService";
-
+import toast from "react-hot-toast";
 const initialState = {
   users: [],
   admins: [],
@@ -106,17 +106,22 @@ export const userSlice = createSlice({
       })
       .addCase(deleteUser.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.isSuccess = true;
         state.isError = false;
-        state.users = action.payload.users;
-        state.totalUsers = action.payload.totalUsers;
-        state.message = "success";
+        state.isSuccess = true;
+        state.message = "User deleted successfully";
+        state.users = state.users.filter(
+          (user) => user._id !== action.payload._id
+        );
+        state.totalUsers = state.totalUsers - 1;
       })
       .addCase(deleteUser.rejected, (state, action) => {
         state.isLoading = false;
         state.isSuccess = false;
         state.isError = true;
-        state.message = action.error;
+        state.message = action.error.message;
+        if (state.isError === true) {
+          toast.error(action.error.message);
+        }
       });
   },
 });

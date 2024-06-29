@@ -1,2 +1,3 @@
+test the deleteUser on userSlice
 setSelectedUser is not working on Table component for Users
 modify the users(Users, userService anduserSlice ), make it like products (not callig getAllUsers everytime a change is made) 
