@@ -8,10 +8,18 @@ import {
   deleteAllUsers,
 } from "../../features/users/userSlice";
 import Search from "../components/Search";
+import Modal from "react-modal";
 import { useSelector, useDispatch } from "react-redux";
+import DeleteUser from "./DeleteUser";
 
 const UserList = () => {
   const [selectedUser, setSelectedUser] = useState(null);
+  const [isOpen, setIsOpen] = useState({
+    edit: false,
+    delete: false,
+    deleteAll: false,
+  });
+  const [modifyUser, setModifyUser] = useState(null);
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(5);
   const [search, setSearch] = useState("");
@@ -101,11 +109,12 @@ const UserList = () => {
 
   const handleRowSelect = (user) => {
     setSelectedUser(user);
+    console.log(user);
   };
 
   const handleEdit = () => {
     if (selectedUser) {
-      // Execute API code for editing
+      setModifyUser(selectedUser);
       console.log("Editing user:", selectedUser.username);
     } else {
       console.log("No user selected for editing");
@@ -114,14 +123,33 @@ const UserList = () => {
 
   const handleUpdate = () => {
     if (selectedUser) {
+      setModifyUser(selectedUser);
       // Execute API code for updating
+      setIsOpen((prevState) => ({
+        ...prevState,
+        edit: true,
+      }));
       console.log("Updating user:", selectedUser.username);
+      console.log("total users: ", totalUsers);
     } else {
       console.log("No user selected for updating");
     }
   };
 
   const handleDelete = () => {
+    if (selectedUser) {
+      setModifyUser(selectedUser);
+
+      // Execute API code for updating
+      setIsOpen((prevState) => ({
+        ...prevState,
+        delete: true,
+      }));
+      console.log("Deleting user:", selectedUser.username);
+      console.log("total users: ", totalUsers);
+    } else {
+      console.log("No user selected for Deleting");
+    }
     // if (selectedUser) {
     //   dispatch(deleteUser(selectedUser._id))
     //     .then(() => {
@@ -318,6 +346,20 @@ const UserList = () => {
         <button onClick={handleUpdate}>Update</button>
         <button onClick={handleDelete}>Delete</button>
       </div>
+      {isOpen.delete && (
+        <Modal
+          isOpen={isOpen.delete}
+          onRequestClose={() =>
+            setIsOpen((prevState) => ({
+              ...prevState,
+              delete: false,
+            }))
+          }
+          contentLabel="Delete User"
+        >
+          <DeleteUser setIsOpen={setIsOpen} selectedUser={modifyUser} />
+        </Modal>
+      )}
     </div>
   );
 };
