@@ -10,4 +10,13 @@ const addToWishlist = asyncHandler(async (req, res) => {
   }
 }); //unfinshed
 
-module.exports = { addToWishlist };
+const getWishlist = asyncHandler(async (req, res) => {
+  const { _id } = req.user;
+  try {
+    const wishlist = await Wishlist.find({ userId: _id });
+    res.status(200).json(wishlist);
+  } catch (error) {
+    throw new Error(error);
+  }
+});
+module.exports = { addToWishlist, getWishlist };
