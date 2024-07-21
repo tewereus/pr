@@ -1,10 +1,17 @@
 const asyncHandler = require("express-async-handler");
 const Wishlist = require("../models/wishlistModel");
+const User = require("../models/userModel");
 
+//not finished
 const addToWishlist = asyncHandler(async (req, res) => {
   const { _id } = req.user;
   const { prodId } = req.body;
   try {
+    const user = await User.findById(_id)
+    const alreadyAdded = await Wishlist.find((id) => id.toString === prodId)
+    if(alreadyAdded){
+      let user = await Wishlist.findByIdAndUpdate()
+    }
   } catch (error) {
     throw new Error(error);
   }
