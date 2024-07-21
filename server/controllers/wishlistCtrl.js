@@ -30,4 +30,14 @@ const removeWishlist = asyncHandler(async (req, res) => {
     throw new Error(error)
   }
 })
-module.exports = { addToWishlist, getWishlist, removeWishlist };
+
+const clearWishlist = asyncHandler(async (req, res) => {
+  const {_id} = req.user
+  try {
+    const removeWishlists = await Wishlist.deleteMany()
+    res.status(200).json({message: "All favourites cleared", removeWishlists})
+  } catch (error) {
+    throw new Error(error)
+  }
+})
+module.exports = { addToWishlist, getWishlist, removeWishlist, clearWishlist };
