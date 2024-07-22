@@ -41,7 +41,12 @@ const orderSchema = mongoose.Schema(
     },
     total: {
         type: Number
-    }
+    },
+    totalOrdered: {
+        type: Number,
+        default: 0,
+        min: 0,
+      },
   },
   {
     timestamps: true,

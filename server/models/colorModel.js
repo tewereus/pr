@@ -6,7 +6,12 @@ const colorSchema = mongoose.Schema(
         type: String,
         required: true,
         unique: true
-    }
+    },
+    sold: {
+        type: Number,
+        default: 0,
+        min: 0,
+      },
   },
   {
     timestamps: true,
