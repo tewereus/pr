@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 
-const {addToWishlist, getWishlists, removeWishlist, clearWishlist} = require('../controllers/wishlistCtrl')
+const {addToWishlist, getWishlists, removeWishlist, clearWishlist} = require("../controllers/wishlistCtrl")
 const { authMiddleware } = require("../middlewares/authMiddleware");
 
 
@@ -10,4 +10,4 @@ router.get("/", authMiddleware,getWishlists)
 router.delete("/:prodId", authMiddleware,removeWishlist)
 router.delete("/clear-all", authMiddleware,clearWishlist)
 
-export default router;
+module.exports = router;

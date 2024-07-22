@@ -4,3 +4,4 @@
 => configure authMiddleware to work on client side it says "invalid or expired token"
 => slight problem on otp verification, when i sign up users conscutively the previos otp is displayd for first click and then show the new one after another click
 => make getWishlist like getAllUsers/getAllProducts(not all features but limit and skip and maybe sort if needed)
+=> on Coupon model the catagory on discount modify this to get productTypes and also make it multiselectable and also has all choice if the coupon applies to all or some from productTypes 
