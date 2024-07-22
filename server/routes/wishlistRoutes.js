@@ -1,12 +1,12 @@
 const express = require('express')
 const router = express.Router()
 
-const {addToWishlist, getWishlist, removeWishlist, clearWishlist} = require('../controllers/wishlistCtrl')
-const { authMiddleware, authorize } = require("../middlewares/authMiddleware");
+const {addToWishlist, getWishlists, removeWishlist, clearWishlist} = require('../controllers/wishlistCtrl')
+const { authMiddleware } = require("../middlewares/authMiddleware");
 
 
 router.post("/addToWishlist",authMiddleware, addToWishlist)
-router.get("/", authMiddleware,getWishlist)
+router.get("/", authMiddleware,getWishlists)
 router.delete("/:prodId", authMiddleware,removeWishlist)
 router.delete("/clear-all", authMiddleware,clearWishlist)
 

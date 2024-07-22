@@ -23,7 +23,7 @@ const addToWishlist = asyncHandler(async (req, res) => {
   }
 });
 
-const getWishlist = asyncHandler(async (req, res) => {
+const getWishlists = asyncHandler(async (req, res) => {
   const { _id } = req.user;
   validateMongoDbId(_id)
   try {
@@ -57,4 +57,4 @@ const clearWishlist = asyncHandler(async (req, res) => {
     throw new Error(error)
   }
 })
-module.exports = { addToWishlist, getWishlist, removeWishlist, clearWishlist };
+module.exports = { addToWishlist, getWishlists, removeWishlist, clearWishlist };
