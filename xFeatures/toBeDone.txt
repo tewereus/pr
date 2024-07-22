@@ -3,3 +3,4 @@
 => on updateUser make it so that it can't change email or make it's own auth
 => configure authMiddleware to work on client side it says "invalid or expired token"
 => slight problem on otp verification, when i sign up users conscutively the previos otp is displayd for first click and then show the new one after another click
+=> make getWishlist like getAllUsers/getAllProducts(not all features but limit and skip and maybe sort if needed)

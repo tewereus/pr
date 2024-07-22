@@ -1,11 +1,13 @@
 const asyncHandler = require("express-async-handler");
 const Wishlist = require("../models/wishlistModel");
 const User = require("../models/userModel");
+const validateMongoDbId = require("../utils/validateMongoDbId");
 
-//not finished
+//  check if it needs to be (validateMongoDbId(id) or validateMongoDbId(_id)) or simply check if it needs to be const{_id} or const {id} from req.user  
 const addToWishlist = asyncHandler(async (req, res) => {
   const { _id } = req.user;
   const { prodId } = req.body;
+  validateMongoDbId(_id)
   try {
     const user = await User.findById(_id)
     const alreadyAdded = await Wishlist.find((id) => id.toString === prodId)
@@ -19,10 +21,11 @@ const addToWishlist = asyncHandler(async (req, res) => {
   } catch (error) {
     throw new Error(error);
   }
-}); //unfinshed
+});
 
 const getWishlist = asyncHandler(async (req, res) => {
   const { _id } = req.user;
+  validateMongoDbId(_id)
   try {
     const wishlist = await Wishlist.find({ userId: _id });
     res.status(200).json(wishlist);
@@ -33,6 +36,7 @@ const getWishlist = asyncHandler(async (req, res) => {
 
 const removeWishlist = asyncHandler(async (req, res) => {
   const {_id} = req.user;
+  validateMongoDbId(_id)
   const { prodId} = req.params
   try {
     const removedWishlist = await Wishlist.findByIdAndDelete(prodId)
@@ -44,6 +48,8 @@ const removeWishlist = asyncHandler(async (req, res) => {
 
 const clearWishlist = asyncHandler(async (req, res) => {
   const {_id} = req.user
+  validateMongoDbId(_id)
+  validate
   try {
     const removeWishlists = await Wishlist.deleteMany()
     res.status(200).json({message: "All favourites cleared", removeWishlists})
