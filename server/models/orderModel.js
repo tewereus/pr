@@ -6,14 +6,18 @@ const orderSchema = mongoose.Schema(
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
     },
-    products:[ {
+    // the products down below should go to some saved work model that consists the product, color, image
+    products:[{
       product: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Product" // this should not be from Product instead some saved work that consists the product, color, image
+        ref: "Product"
       },
+      color: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Color"
+        },
       count: Number,
-      color: String // maybe bring color from Color model if there is
-    },],
+    }],
     address: {
         // type: [mongoose.Schema.Types.Mixed]   // check this out
         type: String,
