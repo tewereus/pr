@@ -4,7 +4,8 @@ const couponSchema = mongoose.Schema(
   {
     name: {
       type: String,
-      required: true
+      required: true,
+      uppercase: true
     },
     expiry: {
         type: Date,
@@ -14,12 +15,14 @@ const couponSchema = mongoose.Schema(
       type: Number,
       required: true,
     },
-    category: {
+    category: [{
       // type: String,
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "ProductTypes",
-      enum:["All", "tshirt", "hoodie"] // see problem in tobeDone file
-    },
+      product: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "ProductTypes",
+        default: "All" // not checked, check if this code works
+      },
+    },],
     limit: {
       type: Number,
     }
