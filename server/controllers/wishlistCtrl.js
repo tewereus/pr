@@ -10,7 +10,11 @@ const addToWishlist = asyncHandler(async (req, res) => {
     const user = await User.findById(_id)
     const alreadyAdded = await Wishlist.find((id) => id.toString === prodId)
     if(alreadyAdded){
-      let user = await Wishlist.findByIdAndUpdate()
+      let wishlist = await Wishlist.findByIdAndDelete(prodId)
+      res.status(201).json(wishlist)
+    }else{
+      let wishlist = await Wishlist.create(prodId) // maybe make it Wishlist.create(req.body) if the first one doesn't work
+      res.status(201).json(wishlist)
     }
   } catch (error) {
     throw new Error(error);
