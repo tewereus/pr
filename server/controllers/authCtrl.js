@@ -13,8 +13,8 @@ const validateUser = require("../middlewares/validateUser");
 const bcrypt = require("bcryptjs");
 const sendEmail = require("./emailCtrl");
 const crypto = require("crypto");
-const speakeasy = require("speakeasy");
-const qrcode = require("qrcode");
+// const speakeasy = require("speakeasy");
+// const qrcode = require("qrcode");
 
 const validateUserRegister = asyncHandler(async (req, res) => {
   const { fullname, username, mobile, email, password, confirmPassword } =
