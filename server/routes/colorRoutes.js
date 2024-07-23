@@ -4,7 +4,7 @@ const {createColor, getAllColors, updateColor, deleteColor, deleteAllColors} = r
 
 router.post("/create-color", createColor)
 router.get("/all-colors", getAllColors)
-router.put("/update/:id", updateColor)
+router.put("/:id", updateColor)
 router.delete("/delete/:id", deleteColor)
 router.delete("/delete-all", deleteAllColors)
 

@@ -4,7 +4,7 @@ const {createCoupon, getAllCoupons, updateCoupon, deleteCoupon, deleteAllCoupons
 
 router.post("/create-coupon", createCoupon)
 router.get("/all-coupons", getAllCoupons)
-router.put("/update/:id", updateCoupon)
+router.put("/:id", updateCoupon)
 router.delete("/delete/:id", deleteCoupon)
 router.delete("/delete-all", deleteAllCoupons)
 
