@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
 
-const imgCategorySchema = mongoose.Schema(
+const imageType = mongoose.Schema(
   {
-    image_category: {
+    image_type: {
         type: String,
         required: true,
         unique: true
@@ -18,4 +18,4 @@ const imgCategorySchema = mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model("ImgCategory", imgCategorySchema);
+module.exports = mongoose.model("ImageType", imageType);
