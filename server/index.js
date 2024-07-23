@@ -16,6 +16,7 @@ const wishlistRouter = require("./routes/wishlistRoutes");
 const couponRouter = require("./routes/couponRoutes");
 const colorRouter = require("./routes/colorRoutes");
 const imageTypeRouter = require("./routes/imageTypeRoutes");
+const imageCategoryRouter = require("./routes/imageCategoryRoutes");
 
 const PORT = process.env.PORT || 9001;
 
@@ -41,6 +42,7 @@ app.use("/api/v1/product-type", prodTypeRouter);
 app.use("/api/v1/favourites", wishlistRouter);
 app.use("/api/v1/coupons", couponRouter);
 app.use("/api/v1/colors", colorRouter);
+app.use("/api/v1/image-types", imageCategoryRouter);
 app.use("/api/v1/image-types", imageTypeRouter);
 
 app.use(notFound);
