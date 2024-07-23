@@ -14,6 +14,7 @@ const productRouter = require("./routes/productRoutes");
 const prodTypeRouter = require("./routes/prodTypeRoutes");
 const wishlistRouter = require("./routes/wishlistRoutes");
 const couponRouter = require("./routes/couponRoutes");
+const colorRouter = require("./routes/colorRoutes");
 
 const PORT = process.env.PORT || 9001;
 
@@ -38,6 +39,7 @@ app.use("/api/v1/product", productRouter);
 app.use("/api/v1/product-type", prodTypeRouter);
 app.use("/api/v1/favourites", wishlistRouter);
 app.use("/api/v1/coupons", couponRouter);
+app.use("/api/v1/colors", colorRouter);
 
 app.use(notFound);
 app.use(errorHandler);
