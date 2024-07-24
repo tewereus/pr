@@ -2,15 +2,15 @@
 // in updateUser it should follow the rules of the user schema like usernam should have minlength of 3 and mobile should be 9 digits long...
 // (!Solved! but check again) problem with validateUser as it validates everything not just the one i want to update, like if i change username it also checks for mobile, email...,
 
-const Admin = require("../models/adminModel");
-const User = require("../models/userModel");
+const Admin = require("../../models/users/adminModel");
+const User = require("../../models/users/userModel");
 const asyncHandler = require("express-async-handler");
-const { generateToken } = require("../config/jwtToken");
-const validateMongoDbId = require("../utils/validateMongoDbId");
-const { generateRefreshToken } = require("../config/refreshtoken");
-const validateUser = require("../middlewares/validateUser");
+const { generateToken } = require("../../config/jwtToken");
+const validateMongoDbId = require("../../utils/validateMongoDbId");
+const { generateRefreshToken } = require("../../config/refreshtoken");
+const validateUser = require("../../middlewares/validateUser");
 const bcrypt = require("bcryptjs");
-const sendEmail = require("./emailCtrl");
+const sendEmail = require("../emailCtrl");
 const crypto = require("crypto");
 
 // const registerUser = asyncHandler(async (req, res) => {

@@ -1,8 +1,8 @@
-const User = require("../models/userModel");
-const ProductType = require("../models/productTypeModel");
-const Product = require("../models/productModel");
+const User = require("../../models/users/userModel");
+const ProductType = require("../../models/product/productTypeModel");
+const Product = require("../../models/product/productModel");
 const asyncHandler = require("express-async-handler");
-const validateMongoDbId = require("../utils/validateMongoDbId");
+const validateMongoDbId = require("../../utils/validateMongoDbId");
 
 const slugify = require("slugify");
 

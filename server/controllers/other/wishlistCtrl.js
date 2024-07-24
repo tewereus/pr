@@ -1,7 +1,7 @@
 const asyncHandler = require("express-async-handler");
-const Wishlist = require("../models/wishlistModel");
-const User = require("../models/userModel");
-const validateMongoDbId = require("../utils/validateMongoDbId");
+const Wishlist = require("../../models/other/wishlistModel");
+const User = require("../../models/users/userModel");
+const validateMongoDbId = require("../../utils/validateMongoDbId");
 
 //  check if it needs to be (validateMongoDbId(id) or validateMongoDbId(_id)) or simply check if it needs to be const{_id} or const {id} from req.user  
 const addToWishlist = asyncHandler(async (req, res) => {

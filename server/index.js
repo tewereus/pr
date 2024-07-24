@@ -7,16 +7,16 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const morgan = require("morgan");
 const { errorHandler, notFound } = require("./middlewares/errorHandler");
-const authRouter = require("./routes/authRoutes");
-const otpRouter = require("./routes/otpRoutes");
-const adminRouter = require("./routes/adminRoutes");
-const productRouter = require("./routes/productRoutes");
-const prodTypeRouter = require("./routes/prodTypeRoutes");
-const wishlistRouter = require("./routes/wishlistRoutes");
-const couponRouter = require("./routes/couponRoutes");
-const colorRouter = require("./routes/colorRoutes");
-const imageTypeRouter = require("./routes/imageTypeRoutes");
-const imageCategoryRouter = require("./routes/imageCategoryRoutes");
+const authRouter = require("./routes/users/authRoutes");
+const otpRouter = require("./routes/utils/otpRoutes");
+const adminRouter = require("./routes/users/adminRoutes");
+const productRouter = require("./routes/product/productRoutes");
+const prodTypeRouter = require("./routes/product/prodTypeRoutes");
+const colorRouter = require("./routes/product/colorRoutes");
+const wishlistRouter = require("./routes/other/wishlistRoutes");
+const couponRouter = require("./routes/other/couponRoutes");
+const imageTypeRouter = require("./routes/image/imageTypeRoutes");
+const imageCategoryRouter = require("./routes/image/imageCategoryRoutes");
 
 const PORT = process.env.PORT || 9001;
 

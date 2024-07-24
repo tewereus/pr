@@ -1,5 +1,5 @@
-const ImageType = require("../models/imageTypeModel")
-const validateMongoDbId = require("../utils/validateMongoDbId");
+const ImageType = require("../../models/image/imageTypeModel")
+const validateMongoDbId = require("../../utils/validateMongoDbId");
 const asyncHandler = require("express-async-handler")
 
 const createImageType = asyncHandler(async(req, res) => {

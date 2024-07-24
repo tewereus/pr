@@ -12,8 +12,8 @@ const {
   forgotPasswordToken,
   resetPassword,
   logout,
-} = require("../controllers/authCtrl");
-const { authMiddleware, authorize } = require("../middlewares/authMiddleware");
+} = require("../../controllers/users/authCtrl");
+const { authMiddleware, authorize } = require("../../middlewares/authMiddleware");
 
 router.post("/validate-user", validateUserRegister);
 router.post("/login", loginUser);

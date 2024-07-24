@@ -7,8 +7,8 @@ const {
   updateProduct,
   deleteAllProducts,
   deleteProduct,
-} = require("../controllers/productCtrl");
-const { adminAuthMiddleware } = require("../middlewares/authMiddleware");
+} = require("../../controllers/product/productCtrl");
+const { adminAuthMiddleware } = require("../../middlewares/authMiddleware");
 
 router.post("/create-product", createProduct);
 router.get("/all-products", getAllProducts);

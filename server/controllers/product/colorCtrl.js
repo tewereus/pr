@@ -1,5 +1,5 @@
-const Color = require("../models/colorModel")
-const validateMongoDbId = require("../utils/validateMongoDbId");
+const Color = require("../../models/product/colorModel")
+const validateMongoDbId = require("../../utils/validateMongoDbId");
 const asyncHandler = require("express-async-handler")
 
 const createColor = asyncHandler(async(req, res) => {

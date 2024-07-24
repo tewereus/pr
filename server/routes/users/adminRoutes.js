@@ -16,9 +16,9 @@ const {
   getAllUsers,
   getAllAdmins,
   checkAdminPass,
-} = require("../controllers/adminCtrl");
+} = require("../../controllers/users/adminCtrl");
 
-const { adminAuthMiddleware } = require("../middlewares/authMiddleware");
+const { adminAuthMiddleware } = require("../../middlewares/authMiddleware");
 
 // router.post("/registerAdmin", registerUser);
 router.post("/login", loginAdmin);

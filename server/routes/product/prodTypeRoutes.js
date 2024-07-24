@@ -6,8 +6,8 @@ const {
   deleteAllProdTypes,
   deleteProdType,
   updateProdType,
-} = require("../controllers/prodTypeCtrl");
-const { adminAuthMiddleware } = require("../middlewares/authMiddleware");
+} = require("../../controllers/product/prodTypeCtrl");
+const { adminAuthMiddleware } = require("../../middlewares/authMiddleware");
 
 router.post("/add-product-type", addProductType);
 router.get("/get-product-types", getAllProdTypes);

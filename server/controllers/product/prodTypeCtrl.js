@@ -1,4 +1,4 @@
-const ProductType = require("../models/productTypeModel");
+const ProductType = require("../../models/product/productTypeModel");
 const asyncHandler = require("express-async-handler");
 
 const addProductType = asyncHandler(async (req, res) => {

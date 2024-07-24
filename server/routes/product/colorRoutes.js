@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const {createColor, getAllColors, updateColor, deleteColor, deleteAllColors} = require("../controllers/colorCtrl")
+const {createColor, getAllColors, updateColor, deleteColor, deleteAllColors} = require("../../controllers/product/colorCtrl")
 
 router.post("/create-color", createColor)
 router.get("/all-colors", getAllColors)
