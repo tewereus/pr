@@ -16,6 +16,7 @@ const {
   getAllUsers,
   getAllAdmins,
   checkAdminPass,
+  addManager
 } = require("../../controllers/users/adminCtrl");
 
 const { adminAuthMiddleware } = require("../../middlewares/authMiddleware");
@@ -35,4 +36,7 @@ router.put("/reset-password/:token", resetPassword);
 router.get("/all-users", getAllUsers);
 router.get("/all-admins", getAllAdmins);
 router.post("/check-admin", checkAdminPass);
+router.post("/add-manager", addManager)
+
+
 module.exports = router;

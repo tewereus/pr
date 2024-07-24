@@ -4,14 +4,16 @@
 
 const Admin = require("../../models/users/adminModel");
 const User = require("../../models/users/userModel");
+const AddManager = require("../../models/utils/addManagerModel")
 const asyncHandler = require("express-async-handler");
 const { generateToken } = require("../../config/jwtToken");
 const validateMongoDbId = require("../../utils/validateMongoDbId");
 const { generateRefreshToken } = require("../../config/refreshtoken");
 const validateUser = require("../../middlewares/validateUser");
 const bcrypt = require("bcryptjs");
-const sendEmail = require("../emailCtrl");
+const sendEmail = require("../utils/emailCtrl");
 const crypto = require("crypto");
+const Manager = require("../../models/users/managerModel");
 
 // const registerUser = asyncHandler(async (req, res) => {
 //   const { fullname, username, mobile, email, password,   profile } = req.body;
@@ -481,6 +483,41 @@ const checkAdminPass = asyncHandler(async (req, res) => {
   }
 });
 
+const addManager = asyncHandler(async(req, res) => {
+  const {id} = req.user
+  const {mobile, email} = req.body
+  try {
+    const isAdmin = await Admin.findById(id)
+    if(isAdmin){
+      const manager = await AddManager.findOne({mobile})
+      if(!manager){
+        try {
+          const token = await manager.createManagerMessageToken()
+          await manager.save();
+          const messageUrl = `Hi please follow this link to start your journey as a manager. This link is valid for 1 hour from now <a href='http://localhost:5000/api/v1/manager/verify-message/${token}'>Click Here</a>`;
+          const data = {
+            to: email,
+            subject: "Verify Account",
+            text: "Hey future manager",
+            htm: messageUrl,
+          };
+          sendEmail(data);
+          res.json(token);
+        } catch (error) {
+          throw new Error(error);
+        }
+      }else{
+        throw new Error("Manager with this mobile already registered")
+      }
+    }else{
+      throw new Error("Not Authorized")
+    }
+    
+  } catch (error) {
+    throw new Error(error)
+  }
+})
+
 module.exports = {
   // registerUser,
   loginAdmin,
@@ -498,4 +535,5 @@ module.exports = {
   getAllUsers,
   getAllAdmins,
   checkAdminPass,
+  addManager
 };
