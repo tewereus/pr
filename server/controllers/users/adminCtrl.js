@@ -4,7 +4,6 @@
 
 const Admin = require("../../models/users/adminModel");
 const User = require("../../models/users/userModel");
-const AddManager = require("../../models/utils/addManagerModel")
 const asyncHandler = require("express-async-handler");
 const { generateToken } = require("../../config/jwtToken");
 const validateMongoDbId = require("../../utils/validateMongoDbId");
@@ -484,35 +483,57 @@ const checkAdminPass = asyncHandler(async (req, res) => {
 });
 
 const addManager = asyncHandler(async(req, res) => {
+  // const {id} = req.user
+  // const {mobile, email} = req.body
+  // try {
+  //   const isAdmin = await Admin.findById(id)
+  //   if(isAdmin){
+  //     const manager = await AddManager.findOne({mobile})
+  //     if(!manager){
+  //       try {
+  //         const token = await manager.createManagerMessageToken()
+  //         await manager.save();
+  //         const messageUrl = `Hi please follow this link to start your journey as a manager. This link is valid for 1 hour from now <a href='http://localhost:5000/api/v1/manager/verify-message/${token}'>Click Here</a>`;
+  //         const data = {
+  //           to: email,
+  //           subject: "Verify Account",
+  //           text: "Hey future manager",
+  //           htm: messageUrl,
+  //         };
+  //         sendEmail(data);
+  //         res.json(token);
+  //       } catch (error) {
+  //         throw new Error(error);
+  //       }
+  //     }else{
+  //       throw new Error("Manager with this mobile already registered")
+  //     }
+  //   }else{
+  //     throw new Error("Not Authorized")
+  //   }
+    
+  // } catch (error) {
+  //   throw new Error(error)
+  // }
+
   const {id} = req.user
   const {mobile, email} = req.body
   try {
-    const isAdmin = await Admin.findById(id)
-    if(isAdmin){
-      const manager = await AddManager.findOne({mobile})
-      if(!manager){
-        try {
-          const token = await manager.createManagerMessageToken()
-          await manager.save();
-          const messageUrl = `Hi please follow this link to start your journey as a manager. This link is valid for 1 hour from now <a href='http://localhost:5000/api/v1/manager/verify-message/${token}'>Click Here</a>`;
-          const data = {
-            to: email,
-            subject: "Verify Account",
-            text: "Hey future manager",
-            htm: messageUrl,
-          };
-          sendEmail(data);
-          res.json(token);
-        } catch (error) {
-          throw new Error(error);
-        }
-      }else{
-        throw new Error("Manager with this mobile already registered")
-      }
-    }else{
-      throw new Error("Not Authorized")
-    }
-    
+    const manager = await Manager.findOne({mobile})
+    if(manager) throw new Error("Manager with this mobile already exists")
+      const token = await manager.createManagerToken()
+      await manager.save();
+      const messageUrl = `Hi please follow this link to start your journey as a manager. This link is valid for 1 hour from now <a href='http://localhost:5000/api/v1/manager/verify-message/${token}'>Click Here</a>`;
+      const data = {
+        to: email,
+        subject: "Verify Account",
+        text: "Hey future manager",
+        htm: messageUrl,
+      };
+      sendEmail(data);
+      res.json(token);
+    const newManager = await Manager.create({mobile, email})
+    res.json(newManager)
   } catch (error) {
     throw new Error(error)
   }

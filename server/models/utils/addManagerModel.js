@@ -42,5 +42,4 @@ addManagerSchema.methods.createManagerMessageToken = async function () {
   };
   
 
-//Export the model
 module.exports = mongoose.model('AddManager', addManagerSchema);

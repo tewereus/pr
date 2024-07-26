@@ -1,10 +1,23 @@
-const AddManager = require("../../models/utils/addManagerModel")
 const Manager = require("../../models/users/managerModel")
 const asyncHandler = require("express-async-handler")
-const OTP = require("../../models/utils/otpModel");
-const sendEmail = require("../utils/emailCtrl");
+// const url = require('url')
 
-
-const registerAccount = asyncHandler(async(req, res) => {
-
+const verifyManagerToken = asyncHandler(async(req, res) => {
+    const {token} = req.params
+    try {
+        const manager = await Manager.findOne({token})
+        if(!manager) throw new Error(error)
+        if(manager.main_status === "inactive"){
+            const currentUrl = new URL.parse(req.originalUrl)
+            const redirectUrl = `${currentUrl.protocol}//${currentUrl.host}${currentUrl.pathname}/register`
+            res.redirect(redirectUrl)
+        }
+        
+    } catch (error) {
+        throw new Error(error)
+    }
 })
+
+module.exports = {
+    verifyManagerToken
+}
