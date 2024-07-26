@@ -532,7 +532,7 @@ const addManager = asyncHandler(async(req, res) => {
       };
       sendEmail(data);
       res.json(token);
-    const newManager = await Manager.create({mobile, email})
+    const newManager = await Manager.create({mobile, email}) // check if it can be added with await manager.save()
     res.json(newManager)
   } catch (error) {
     throw new Error(error)
