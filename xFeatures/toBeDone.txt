@@ -1,3 +1,4 @@
+=> problem within npm install telling me to run npm audit fix --force but not working maybe run create-react-app and migrate all files
 => when the user/admin who is already logged in redirects to login from the url(localhost:3000/login) redirect to homepage or do nothing
 => profile image is not added to logged in users(maybe use cloudinary) and use the model(commented) part to validate image
 => on updateUser make it so that it can't change email or make it's own auth

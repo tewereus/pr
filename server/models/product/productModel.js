@@ -23,9 +23,10 @@ const productSchema = new mongoose.Schema(
       required: true,
       min: 0,
     },
-    color: {
-      type: String,
-    },
+    color: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Color"
+    }],
     sold: {
       type: Number,
       default: 0,
