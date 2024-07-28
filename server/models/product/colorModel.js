@@ -11,10 +11,10 @@ const colorSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    product_type: {
+    product_type: [{
       type: String,
       required: true
-    },
+    }], // in array because it can be added for multiple product types like new color come into play
     sold: {
         type: Number,
         default: 0,

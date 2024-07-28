@@ -26,6 +26,34 @@ const verifyManagerToken = asyncHandler(async(req, res) => {
     }
 })
 
+
+const registerManager = asyncHandler(async(req, res) => {
+
+})
+
+
+const loginManager = asyncHandler(async(req, res) => {
+    
+})
+
+const updateManagerInfo = asyncHandler(async(req, res) => {
+    
+})
+
+const changeStatus = asyncHandler(async(req, res) => {
+    
+})
+
+// admin need to authorize deletion
+const deleteAccount = asyncHandler(async(req, res) => {
+
+})
+
 module.exports = {
-    verifyManagerToken
+    verifyManagerToken,
+    registerManager,
+    loginManager,
+    updateManagerInfo,
+    changeStatus,
+    deleteAccount
 }
