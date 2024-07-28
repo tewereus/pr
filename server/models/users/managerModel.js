@@ -1,4 +1,6 @@
 const { Schema, model } = require('mongoose')
+const crypto = require("crypto")
+const bcrypt = require("bcryptjs")
 
 const managerSchema = new Schema({
     unique_id: String,
@@ -60,6 +62,23 @@ const managerSchema = new Schema({
         default: {}
     },
 }, { timestamps: true })
+
+managerSchema.pre("save", async function (next) {
+  if (!this.isModified("password")) {
+    next();
+  }
+  try {
+    const salt = await bcrypt.genSaltSync(10);
+    this.password = await bcrypt.hash(this.password, salt);
+  } catch (err) {
+    next(err);
+  }
+  next();
+});
+
+managerSchema.methods.isPasswordMatched = async function (enteredPassword) {
+  return await bcrypt.compare(enteredPassword, this.password);
+};
 
 managerSchema.methods.createManagerToken = async function () {
     const token = crypto.randomBytes(5).toString("hex");
