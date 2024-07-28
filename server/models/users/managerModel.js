@@ -45,15 +45,11 @@ const managerSchema = new Schema({
         enum: ["active", "inactive", "waiting", "unavailable"], // unavailable if the manager is not working anymore(change/ fired/ retired)
         default: "inactive"
     },
-    payment: {
-        type: String,
-        default: 'inactive'
-    },
-    method: {
-        type: String,
-        // required: true,
-    },
-    image: {
+    payment: [{
+      bankName: String,
+      bankAccount: String //hash this if needed
+    }],
+    profile: {
         type: String,
         default: ''
     },
@@ -61,6 +57,9 @@ const managerSchema = new Schema({
         type: Object,
         default: {}
     },
+    managerToken: {
+      type: String
+    }
 }, { timestamps: true })
 
 managerSchema.pre("save", async function (next) {
