@@ -17,7 +17,7 @@ const verifyManagerToken = asyncHandler(async(req, res) => {
             res.redirect(redirectUrl)
         }else if(manager.main_status === "unavailable"){
             const currentUrl = new URL.parse(req.originalUrl)
-            const redirectUrl = `${currentUrl.protocol}//${currentUrl.host}${currentUrl.pathname}/404-page` // modify this, maybe send to homepage
+            const redirectUrl = `${currentUrl.protocol}//${currentUrl.host}/404-page` // modify this, maybe send to homepage
             res.redirect(redirectUrl)
         }
         
@@ -26,9 +26,32 @@ const verifyManagerToken = asyncHandler(async(req, res) => {
     }
 })
 
-
+// unfinished: needed continous test(
+// check: 
+// 1. mobile is same as the one saved with token 
+// 2. change the main status correct way )
+// 3. on method make them choose bank and input their bank method 
 const registerManager = asyncHandler(async(req, res) => {
+    const {token} = req.params
+    const {mobile} = req.body
+    try {
+        const managerExists = await Manager.findOne({token})
+        if(managerExists){
+            console.log("check") // check if mobile on database with this token is same as they provided
+        }
+        const manager = await Manager.create({
+            fullname,
+            email,
+            mobile,
+            main_status: "waiting",
+            shop_info,
+            method,
+            image,
+        })
 
+    } catch (error) {
+        throw new Error(error)
+    }
 })
 
 

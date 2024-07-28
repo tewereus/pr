@@ -1,3 +1,5 @@
 the users table is not being updated when user is deleted unless it is refreshed or clicked another link. it is not being updated like the products when user is deleted
 setSelectedUser is not working on Table component for Users
 modify the users(Users, userService anduserSlice ), make it like products (not callig getAllUsers everytime a change is made) 
+
+=> make the role in the user, admin , printer and manager model uneditable 

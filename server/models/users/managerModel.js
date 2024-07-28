@@ -40,7 +40,7 @@ const managerSchema = new Schema({
     main_status: { // this is for the admin to make them active after verifying the manager info 
         type: String,
         require: true,
-        enum: ["active", "inactive", "unavailable"], // unavailable if the manager is not working anymore(change/ fired/ retired)
+        enum: ["active", "inactive", "waiting", "unavailable"], // unavailable if the manager is not working anymore(change/ fired/ retired)
         default: "inactive"
     },
     payment: {
