@@ -56,11 +56,42 @@ const registerManager = asyncHandler(async(req, res) => {
 
 
 const loginManager = asyncHandler(async(req, res) => {
-    
+    const {mobile, password} = req.body
+    try {
+        const manager = await Manager.findOne({mobile})
+        if(!manager) throw new Error("Incorrect phone or password")
+        if(manager && (await manager.isPasswordMatched(password))){
+            const managerToken = await generateRefreshToken(manager?._id);
+            const updateToken = await Manager.findOneAndUpdate(
+                manager.mobile,
+                {managerToken: managerToken},
+                {new: true}
+            )
+        }
+        res.cookie("manager", managerToken, {
+            httpOnly: true,
+            sameSite: "true",
+            maxAge: 72*60*60*1000
+        })
+        res.json({
+            message: "Manager logged in successfully",
+            _id: manager._id,
+            unique_id: manager.unique_id,
+            fullname: manager.fullname,
+            email: manager.email,
+            mobile: manager.mobile,
+            status: manager.status,
+            main_status: manager.main_status,
+            payment: [{bankName, bankAccount}],
+            token: generateToken(manager?._id),
+        })
+    } catch (error) {
+        throw new Error(error)
+    }
 })
 
 const updateManagerInfo = asyncHandler(async(req, res) => {
-    
+    const {id} = req.manager
 })
 
 const changeStatus = asyncHandler(async(req, res) => {
