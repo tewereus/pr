@@ -8,6 +8,9 @@ const {
     changeStatus,
     deleteAccount
 } = require("../../controllers/users/managerCtrl")
+const {managerAuthMiddleware} = require('../../middlewares/authMiddleware') 
+
+// check if this route is working
 
 router.route("/manager/:token")
 .get(verifyManagerToken)
