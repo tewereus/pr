@@ -113,7 +113,13 @@ const changeStatus = asyncHandler(async(req, res) => {
 
 // admin need to authorize deletion
 const deleteAccount = asyncHandler(async(req, res) => {
-
+    const {id} = req.manager
+    try {
+        const manager = await manager.findByIdAndDelete(id)
+        res.json(manager)
+    } catch (error) {
+        throw new Error(error)
+    }
 })
 
 module.exports = {
