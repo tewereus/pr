@@ -89,13 +89,26 @@ const loginManager = asyncHandler(async(req, res) => {
         throw new Error(error)
     }
 })
-
+// make sure they don't update location and address and other sensitive 
 const updateManagerInfo = asyncHandler(async(req, res) => {
     const {id} = req.manager
+    try {
+        const manager = await Manager.findByIdAndUpdate(id, req.body, {new: true})
+        res.json(manager)
+    } catch (error) {
+        throw new Error(error)
+    }
 })
 
 const changeStatus = asyncHandler(async(req, res) => {
-    
+    const {id} = req.manager
+    const {status} = req.body;
+    try {
+        const manager = await manager.findByIdAndUpdate(id, {status}, {new: true})
+        res.json(manager)
+    } catch (error) {
+        throw new Error(error)
+    }
 })
 
 // admin need to authorize deletion
