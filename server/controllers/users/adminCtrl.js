@@ -464,7 +464,7 @@ const resetPassword = asyncHandler(async (req, res) => {
 
 const checkAdminPass = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
-  // check if user exists or not
+  // check if admin exists or not
   const findAdmin = await Admin.findOne({ email });
   if (findAdmin.role !== "administrator") throw new Error("Not Authorized");
   if (findAdmin && (await findAdmin.isPasswordMatched(password))) {
@@ -483,39 +483,6 @@ const checkAdminPass = asyncHandler(async (req, res) => {
 });
 
 const addManager = asyncHandler(async(req, res) => {
-  // const {id} = req.user
-  // const {mobile, email} = req.body
-  // try {
-  //   const isAdmin = await Admin.findById(id)
-  //   if(isAdmin){
-  //     const manager = await AddManager.findOne({mobile})
-  //     if(!manager){
-  //       try {
-  //         const token = await manager.createManagerMessageToken()
-  //         await manager.save();
-  //         const messageUrl = `Hi please follow this link to start your journey as a manager. This link is valid for 1 hour from now <a href='http://localhost:5000/api/v1/manager/verify-message/${token}'>Click Here</a>`;
-  //         const data = {
-  //           to: email,
-  //           subject: "Verify Account",
-  //           text: "Hey future manager",
-  //           htm: messageUrl,
-  //         };
-  //         sendEmail(data);
-  //         res.json(token);
-  //       } catch (error) {
-  //         throw new Error(error);
-  //       }
-  //     }else{
-  //       throw new Error("Manager with this mobile already registered")
-  //     }
-  //   }else{
-  //     throw new Error("Not Authorized")
-  //   }
-    
-  // } catch (error) {
-  //   throw new Error(error)
-  // }
-
   const {id} = req.user
   const {mobile, email} = req.body
   try {
@@ -539,6 +506,24 @@ const addManager = asyncHandler(async(req, res) => {
   }
 })
 
+const changeMainStatus = asyncHandler(async (req, res) => {
+  const {id} = req.user
+  const {main_status} = req.body
+  const {manager} = req.params
+  try {
+    const isAdmin = await Admin.findById(id)
+    if(!isAdmin) throw new Error("Not Authorized")
+    const newManager = await Manager.findByIdAndUpdate(manager, {
+        main_status: main_status
+    }, {
+      new: true
+    })
+    res.json(newManager)
+  } catch (error) {
+    throw new Error(error)
+  }
+})
+
 module.exports = {
   // registerUser,
   loginAdmin,
@@ -556,5 +541,6 @@ module.exports = {
   getAllUsers,
   getAllAdmins,
   checkAdminPass,
-  addManager
+  addManager,
+  changeMainStatus
 };

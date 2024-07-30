@@ -16,7 +16,8 @@ const {
   getAllUsers,
   getAllAdmins,
   checkAdminPass,
-  addManager
+  addManager,
+  changeMainStatus
 } = require("../../controllers/users/adminCtrl");
 
 const { adminAuthMiddleware } = require("../../middlewares/authMiddleware");
@@ -37,6 +38,7 @@ router.get("/all-users", getAllUsers);
 router.get("/all-admins", getAllAdmins);
 router.post("/check-admin", checkAdminPass);
 router.post("/add-manager", addManager)
+router.post("/manager-status/:manager", addManager)
 
 
 module.exports = router;
