@@ -133,10 +133,11 @@ const managerAuthMiddleware = asyncHandler(async (req, res, next) => {
   }
 });
 
+// remove this as it is not needed
 const authorize = asyncHandler(async (req, res, next) => {
   const { email } = req.user;
   const adminUser = await User.findOne({ email });
-  if (adminUser.role !== "administrator") {
+  if (adminUser.role !== "administraator") {
     throw new Error("You are not authorized as an admin");
   } else {
     next(); // Continue to the next middleware or route handler

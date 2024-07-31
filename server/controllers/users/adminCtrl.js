@@ -483,14 +483,16 @@ const checkAdminPass = asyncHandler(async (req, res) => {
 });
 
 const addManager = asyncHandler(async(req, res) => {
-  const {id} = req.user
+  // const {id} = req.user
   const {mobile, email} = req.body
   try {
     const manager = await Manager.findOne({mobile})
     if(manager) throw new Error("Manager with this mobile already exists")
-      const token = await manager.createManagerToken()
-      await manager.save();
-      const messageUrl = `Hi please follow this link to start your journey as a manager. This link is valid for 1 hour from now <a href='http://localhost:5000/api/v1/manager/verify-message/${token}'>Click Here</a>`;
+      const newManager = await Manager.create({mobile, email}) // check if it can be added with await manager.save()
+      const token = await newManager.createManagerToken()
+      await newManager.save();
+      console.log(token)
+      const messageUrl = `Hi please follow this link to start your journey as a manager. This link is valid for 1 hour from now <a href='http://localhost:5000/api/v1/manager/manager/${token}'>Click Here</a>`;
       const data = {
         to: email,
         subject: "Verify Account",
@@ -498,22 +500,20 @@ const addManager = asyncHandler(async(req, res) => {
         htm: messageUrl,
       };
       sendEmail(data);
-      res.json(token);
-    const newManager = await Manager.create({mobile, email}) // check if it can be added with await manager.save()
-    res.json(newManager)
+      res.json(newManager)
   } catch (error) {
     throw new Error(error)
   }
 })
 
 const changeMainStatus = asyncHandler(async (req, res) => {
-  const {id} = req.user
+  const {_id} = req.user
   const {main_status} = req.body
-  const {manager} = req.params
+  const {id} = req.params
   try {
-    const isAdmin = await Admin.findById(id)
+    const isAdmin = await Admin.findById(_id)
     if(!isAdmin) throw new Error("Not Authorized")
-    const newManager = await Manager.findByIdAndUpdate(manager, {
+    const newManager = await Manager.findByIdAndUpdate(id, {
         main_status: main_status
     }, {
       new: true

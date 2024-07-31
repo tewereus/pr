@@ -6,6 +6,7 @@ import AdminLogin from "./views/auth/AdminLogin";
 import MainLayout from "./views/MainLayout";
 import Dashboard from "./views/Dashboard";
 import Users from "./views/users/Users";
+import Manager from "./views/users/manager/Manager";
 import Products from "./views/products/Products";
 import ProductTypes from "./views/prodTypes/ProductTypes";
 // import Signup from "./views/Signup";
@@ -35,6 +36,7 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <Dashboard /> },
       { path: "users", element: <Users /> },
+      { path: "manager", element: <Manager /> },
       { path: "products", element: <Products /> },
       { path: "product-types", element: <ProductTypes /> },
     ],

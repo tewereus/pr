@@ -80,11 +80,10 @@ managerSchema.methods.isPasswordMatched = async function (enteredPassword) {
 };
 
 managerSchema.methods.createManagerToken = async function () {
-    const token = crypto.randomBytes(5).toString("hex");
-    this.unique_id = crypto
-      .createHash("sha256")
-      .update(token)
-      .digest("hex");
+    const token = crypto.randomBytes(3).toString("hex");
+    this.unique_id = token
+
+    console.log("token: ", token)
     return token;
   };
 

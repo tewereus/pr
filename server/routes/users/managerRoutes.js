@@ -12,12 +12,11 @@ const {managerAuthMiddleware} = require('../../middlewares/authMiddleware')
 
 // check if this route is working
 
-router.route("/manager/:token")
-.get(verifyManagerToken)
-.post("/register-account", registerManager)
-.post("/login", loginManager)
-.put("/update", updateManagerInfo)
-.put("/change-status", changeStatus)
-.delete("/delete-account", deleteAccount)
+router.get("/manager/:token", verifyManagerToken)
+router.get("/manager/:token/register-account", registerManager)
+router.post("/manager/:token/login", loginManager)
+router.put("/manager/:token/update", updateManagerInfo)
+router.put("/manager/:token/change-status", changeStatus)
+router.delete("/manager/:token/delete-account", deleteAccount)
 
 module.exports = router

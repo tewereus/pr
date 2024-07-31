@@ -2,29 +2,43 @@ const Manager = require("../../models/users/managerModel")
 const asyncHandler = require("express-async-handler")
 // const url = require('url')
 
-const verifyManagerToken = asyncHandler(async(req, res) => {
-    const {token} = req.params
+const verifyManagerToken = asyncHandler(async (req, res) => {
+    const { token } = req.params; // Extract token from URL parameters
     try {
-        const manager = await Manager.findOne({token})
-        if(!manager) throw new Error(error) // modify this, maybe send to homepage
-        if(manager.main_status === "inactive"){
-            const currentUrl = new URL.parse(req.originalUrl)
-            const redirectUrl = `${currentUrl.protocol}//${currentUrl.host}${currentUrl.pathname}/register`
-            res.redirect(redirectUrl)
-        }else if(manager.main_status === "active"){
-            const currentUrl = new URL.parse(req.originalUrl)
-            const redirectUrl = `${currentUrl.protocol}//${currentUrl.host}${currentUrl.pathname}/login` // check if already logged in to goto their hompage instead of login
-            res.redirect(redirectUrl)
-        }else if(manager.main_status === "unavailable"){
-            const currentUrl = new URL.parse(req.originalUrl)
-            const redirectUrl = `${currentUrl.protocol}//${currentUrl.host}/404-page` // modify this, maybe send to homepage
-            res.redirect(redirectUrl)
-        }
-        
+      const manager = await Manager.findOne({ unique_id: token }); // Find manager by unique_id
+      console.log("manager token: ", token);
+      
+      if (!manager) {
+        return res.status(404).json({ message: "No manager found" }); // Return 404 if no manager is found
+      }
+  
+      console.log("Manager status:", manager.main_status);
+      
+      // Handle based on the manager's main status
+      switch (manager.main_status) {
+        case "inactive":
+          console.log("Redirecting to register");
+          return res.redirect(`http://localhost:3000/admin/login`); // Redirect to client app for registration
+  
+        case "active":
+          console.log("Redirecting to login");
+          return res.redirect(`http://localhost:3000/manager/login`); // Redirect to client app for login
+  
+        case "unavailable":
+          console.log("Redirecting to 404 page");
+          return res.redirect(`http://localhost:3000/404-page`); // Redirect to client app for 404 page
+  
+        default:
+          console.log("Invalid main_status value");
+          return res.status(400).json({ message: "Invalid main_status value" }); // Handle unexpected status
+      }
     } catch (error) {
-        throw new Error(error)
+      console.error("Error:", error);
+      return res.status(500).json({ message: error.message }); // Return error message
     }
-})
+  });
+  
+  
 
 // unfinished: needed continous test(
 // check: 

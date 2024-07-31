@@ -38,7 +38,7 @@ router.get("/all-users", getAllUsers);
 router.get("/all-admins", getAllAdmins);
 router.post("/check-admin", checkAdminPass);
 router.post("/add-manager", addManager)
-router.post("/manager-status/:manager", addManager)
+router.post("/manager-status/:id", changeMainStatus)
 
 
 module.exports = router;

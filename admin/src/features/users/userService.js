@@ -26,6 +26,15 @@ const getAllAdmins = async ({ page, limit, search, sort, searchField }) => {
   return response.data;
 };
 
+const getAllManagers = async () => {
+  const response = await axios.get(
+    `${base_url}/admin/all-managers`,
+    config
+  );
+  return response.data;
+};
+
+
 const deleteUser = async (id) => {
   const response = await axios.delete(
     `${base_url}/admin/get-user/${id}/delete`
@@ -43,6 +52,7 @@ const userService = {
   getAllAdmins,
   deleteUser,
   deleteAllUsers,
+  getAllManagers
 };
 
 export default userService;
