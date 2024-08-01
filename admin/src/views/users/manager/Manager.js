@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
-import {
-  getAllManagers,
-} from "../../features/users/userSlice";
+
+import { getAllManagers, addManager } from "../../../features/users/userSlice";
+
 import { useSelector, useDispatch } from "react-redux";
 
 const Manager = () => {
@@ -9,6 +9,10 @@ const Manager = () => {
   useEffect(() => {
     dispatch(getAllManagers())
   }, []);
+
+  const addManagerHandler = () => {
+    dispatch(addManager())
+  }
 
   const { users, totalUsers, isLoading } = useSelector((state) => state.users);
   return (
@@ -22,12 +26,12 @@ const Manager = () => {
       <table>
         <thead>
           <tr>
-            <th>Username</th>
-            <th>Full Name</th>
             <th>Email</th>
             <th>Mobile</th>
+            <th>Role</th>
+            <th>Status</th>
             <th>
-              isBlocked
+              Main Status
             </th>
             <th>Created At</th>
           </tr>
@@ -42,11 +46,11 @@ const Manager = () => {
           ) : totalUsers > 0 ? (
             users.map((user) => (
               <tr key={user._id}>
-                <td>{user.username}</td>
-                <td>{user.fullname}</td>
                 <td>{user.email}</td>
                 <td>{user.mobile}</td>
-                <td>{user.isBlocked ? "Blocked" : "Not Blocked"}</td>
+                <td>{user.role}</td>
+                <td>{user.status}</td>
+                <td>{user.main_status}</td>
                 <td>{new Date(user.createdAt).toLocaleString()}</td>
               </tr>
             ))
@@ -73,6 +77,7 @@ const Manager = () => {
           Next
         </button>
       </div> */}
+      <button onClick={addManagerHandler}>Add Manager</button>
     </div>
   );
 };

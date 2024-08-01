@@ -47,12 +47,18 @@ const deleteAllUsers = async () => {
   return response.data;
 };
 
+const addManager = async (data) => {
+  const response = await axios.delete(`${base_url}/admin/add-manager`, data);
+  return response.data;
+};
+
 const userService = {
   getAllUsers,
   getAllAdmins,
   deleteUser,
   deleteAllUsers,
-  getAllManagers
+  getAllManagers,
+  addManager
 };
 
 export default userService;

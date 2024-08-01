@@ -524,6 +524,62 @@ const changeMainStatus = asyncHandler(async (req, res) => {
   }
 })
 
+const getAllManagers = asyncHandler(async (req, res) => {
+  try {
+    //Filtering
+    const queryObj = { ...req.query };
+    const excludeFields = [
+      "page",
+      "sort",
+      "limit",
+      "fields",
+      "search",
+      "searchField",
+    ];
+    excludeFields.forEach((el) => delete queryObj[el]);
+
+    let queryStr = JSON.stringify(queryObj);
+    queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`);
+
+    let query = Manager.find(JSON.parse(queryStr));
+
+    // Search
+    
+    //Sorting
+    if (req.query.sort) {
+      const sortBy = req.query.sort.split(",").join(" ");
+      query = query.sort(sortBy);
+    } else {
+      query = query.sort("-createdAt");
+    }
+
+    // limiting the fields
+    if (req.query.fields) {
+      const fields = req.query.fields.split(",").join(" ");
+      query = query.select(fields);
+    } else {
+      query = query.select("-__v");
+    }
+
+    // pagination
+    const page = req.query.page;
+    const limit = req.query.limit;
+    const skip = (page - 1) * limit;
+    query = query.skip(skip).limit(limit);
+    if (req.query.page) {
+      const usersCount = await Manager.countDocuments();
+      if (skip >= usersCount) throw new Error("This Page does not exists");
+    }
+    // const usersCount = await User.countDocuments(JSON.parse(queryStr));
+    // Get the total number of users
+    const totalUsers = await Manager.countDocuments();
+    const users = await query;
+    res.json({ users, totalUsers });
+  } catch (error) {
+    throw new Error(error);
+  }
+})
+
 module.exports = {
   // registerUser,
   loginAdmin,
@@ -542,5 +598,6 @@ module.exports = {
   getAllAdmins,
   checkAdminPass,
   addManager,
-  changeMainStatus
+  changeMainStatus,
+  getAllManagers
 };

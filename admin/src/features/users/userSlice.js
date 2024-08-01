@@ -4,6 +4,7 @@ import toast from "react-hot-toast";
 const initialState = {
   users: [],
   admins: [],
+  managers: [],
   totalUsers: 0,
   isSuccess: false,
   isError: false,
@@ -65,6 +66,19 @@ export const deleteAllUsers = createAsyncThunk(
     }
   }
 );
+
+export const addManager = createAsyncThunk(
+  "users/add-manager",
+  async (data, thunkAPI) => {
+    try {
+      return await userService.addManager(data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+
 
 export const userSlice = createSlice({
   name: "users",
