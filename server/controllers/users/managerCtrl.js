@@ -18,11 +18,11 @@ const verifyManagerToken = asyncHandler(async (req, res) => {
       switch (manager.main_status) {
         case "inactive":
           console.log("Redirecting to register");
-          return res.redirect(`http://localhost:3000/admin/login`); // Redirect to client app for registration
+          return res.redirect(`http://localhost:3000/admin`); // Redirect to client app for registration
   
         case "active":
           console.log("Redirecting to login");
-          return res.redirect(`http://localhost:3000/manager/login`); // Redirect to client app for login
+          return res.redirect(`http://localhost:3000/admin/login`); // Redirect to client app for login
   
         case "unavailable":
           console.log("Redirecting to 404 page");

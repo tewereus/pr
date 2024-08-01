@@ -22,8 +22,8 @@ const Sidebar = () => {
             {isDropdownOpen && ( // Conditional rendering based on dropdown state
               <ul>
                 <li><Link to="users">Users</Link></li>
-                <li><Link to="admin">Admin</Link></li>
-                <li><Link to="manager">Manager</Link></li>
+                <li><Link to="managers">Managers</Link></li>
+                <li><Link to="printers">Printers</Link> </li>
               </ul>
             )}
           </div>
