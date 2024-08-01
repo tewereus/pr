@@ -238,7 +238,7 @@ export const productSlice = createSlice({
         state.isSuccess = false;
         state.isError = true;
         state.message = action.error;
-        state.products = [];
+        // state.products = [];   // check if there is ana error
         if (state.isError === true) {
           toast.error(action.payload.response.data.message);
         }
