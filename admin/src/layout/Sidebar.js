@@ -19,7 +19,7 @@ const Sidebar = () => {
             <button onClick={toggleDropdown} style={{ cursor: 'pointer', background: 'none', border: 'none', padding: '0', margin: '0' }}>
               Users
             </button>
-            {isDropdownOpen && ( // Conditional rendering based on dropdown state
+            {isDropdownOpen && (
               <ul>
                 <li><Link to="users">Users</Link></li>
                 <li><Link to="managers">Managers</Link></li>
@@ -33,6 +33,9 @@ const Sidebar = () => {
         </li>
         <li>
           <Link to="product-types">Product Types</Link>
+        </li>
+        <li>
+          <Link to="colors">Colors</Link>
         </li>
       </ul>
     </div>

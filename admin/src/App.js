@@ -16,6 +16,7 @@ import ProductTypes from "./views/prodTypes/ProductTypes";
 // import VerifyEmail from "./views/VerifyEKsmail";
 import { PrivateRoutes } from "./views/routes/PrivateRoutes";
 import { OpenRoutes } from "./views/routes/OpenRoutes";
+import Colors from "./views/color/Colors";
 
 const router = createBrowserRouter([
   {
@@ -39,6 +40,7 @@ const router = createBrowserRouter([
       { path: "manager", element: <Manager /> },
       { path: "products", element: <Products /> },
       { path: "product-types", element: <ProductTypes /> },
+      { path: "colors", element: <Colors /> },
     ],
   },
   // errorElement: <ErrorPage />,
