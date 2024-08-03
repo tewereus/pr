@@ -31,7 +31,7 @@ const managerSchema = new Schema({
     },
     role: {
         type: String,
-        default: 'seller'
+        default: 'manager'
     },
     status: { // this is for the managers to make it inactive incase of an emergency
         type: String,
@@ -53,12 +53,22 @@ const managerSchema = new Schema({
         type: String,
         default: ''
     },
+    country: { // only admin can change
+      type: String,
+      required: true
+    },
+    region: { // like Addis ababa only admin can change
+      type: String,
+      required: true
+    },
+    location: { // like Yeka, Bole  only admin can change
+      type: String,
+      required: true
+    },
+    // may be remove this
     shopInfo: {
         type: Object,
         default: {}
-    },
-    managerToken: {
-      type: String
     }
 }, { timestamps: true })
 

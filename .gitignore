@@ -1,5 +1,6 @@
 /admin/node_modules
 /client/node_modules
 /server/node_modules
+/manager/node_modules
 /server/.env
 

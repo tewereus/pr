@@ -4,3 +4,4 @@ modify the users(Users, userService anduserSlice ), make it like products (not c
 
 => make the role in the user, admin , printer and manager model uneditable 
 => check if in the middleware req.user can be changed(maybe req.manager or req.admin)
+=> maybe make address model after researching for the managers, so that new locations can be added as we scale
