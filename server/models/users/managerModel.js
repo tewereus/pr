@@ -57,17 +57,9 @@ const managerSchema = mongoose.Schema({
         type: String,
         default: ''
     },
-    country: { // only admin can change
-      type: String,
-      required: true
-    },
-    region: { // like Addis ababa only admin can changek
-      type: String,
-      required: true
-    },
-    location: { // like Yeka, Bole  only admin can change
-      type: String,
-      required: true
+    address: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Address"
     },
     // may be remove this
     shopInfo: {
