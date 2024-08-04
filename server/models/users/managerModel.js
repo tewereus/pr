@@ -1,8 +1,8 @@
-const { Schema, model } = require('mongoose')
+const mongoose = require('mongoose')
 const crypto = require("crypto")
 const bcrypt = require("bcryptjs")
 
-const managerSchema = new Schema({
+const managerSchema = mongoose.Schema({
     unique_id: String,
     fullname: {
         type: String,
@@ -45,6 +45,10 @@ const managerSchema = new Schema({
         enum: ["active", "inactive", "waiting", "unavailable"], // unavailable if the manager is not working anymore(change/ fired/ retired)
         default: "inactive"
     },
+    printers: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Printer"
+    }],
     payment: [{
       bankName: String,
       bankAccount: String //hash this if needed
@@ -57,7 +61,7 @@ const managerSchema = new Schema({
       type: String,
       required: true
     },
-    region: { // like Addis ababa only admin can change
+    region: { // like Addis ababa only admin can changek
       type: String,
       required: true
     },
@@ -97,4 +101,4 @@ managerSchema.methods.createManagerToken = async function () {
     return token;
   };
 
-module.exports = model('Manager', managerSchema)
+module.exports = mongoose.model('Manager', managerSchema)

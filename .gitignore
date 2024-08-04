@@ -2,5 +2,7 @@
 /client/node_modules
 /server/node_modules
 /manager/node_modules
+/printers/node_modules
+
 /server/.env
 
