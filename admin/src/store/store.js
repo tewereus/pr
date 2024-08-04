@@ -11,6 +11,6 @@ export const store = configureStore({
     users: usersReducer,
     products: productReducer,
     productTypes: prodTypeReducer,
-    color: colorReducer
+    colors: colorReducer
   },
 });
