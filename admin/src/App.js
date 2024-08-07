@@ -17,6 +17,9 @@ import ProductTypes from "./views/prodTypes/ProductTypes";
 import { PrivateRoutes } from "./views/routes/PrivateRoutes";
 import { OpenRoutes } from "./views/routes/OpenRoutes";
 import Colors from "./views/color/Colors";
+import Images from "./views/images/image/Images";
+import ImageTypes from "./views/images/imageTypes/ImageTypes";
+import ImageCategories from "./views/images/imageCategories/ImageCategories";
 
 const router = createBrowserRouter([
   {
@@ -41,6 +44,9 @@ const router = createBrowserRouter([
       { path: "products", element: <Products /> },
       { path: "product-types", element: <ProductTypes /> },
       { path: "colors", element: <Colors /> },
+      { path: "images", element: <Images /> },
+      { path: "image-types", element: <ImageTypes /> },
+      { path: "image-categories", element: <ImageCategories /> },
     ],
   },
   // errorElement: <ErrorPage />,
