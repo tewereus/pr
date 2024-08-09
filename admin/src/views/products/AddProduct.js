@@ -11,7 +11,10 @@ const AddProduct = ({ setIsOpen }) => {
     title: "",
     description: "",
     basePrice: 0,
+    product_type: ""
   });
+
+  const {productTypes} = useSelector((state) => state.productTypes)
 
   const handleChange = (e) => {
     setProductState({
@@ -26,7 +29,9 @@ const AddProduct = ({ setIsOpen }) => {
       title: productState.title,
       description: productState.description,
       basePrice: productState.basePrice,
+      product_type: productState.product_type
     };
+    console.log(data)
     dispatch(createProduct(data));
     // setIsOpen(false);
   };
@@ -68,6 +73,12 @@ const AddProduct = ({ setIsOpen }) => {
           onChange={handleChange}
         />
       </label>
+      <select name="product_type" onChange={handleChange} required>
+        <option value="">select product type</option>
+        {productTypes.map((prod) => (
+          <option key={prod._id} value={prod._id}>{prod.productName}</option>
+        ))}
+      </select>
       <button type="submit">Add Product</button>
       <button type="button" onClick={() => setIsOpen(false)}>
         Close Modal

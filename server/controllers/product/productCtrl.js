@@ -5,6 +5,7 @@ const asyncHandler = require("express-async-handler");
 const validateMongoDbId = require("../../utils/validateMongoDbId");
 
 const slugify = require("slugify");
+const { default: mongoose } = require("mongoose");
 
 const createProduct = asyncHandler(async (req, res) => {
   // const { id } = req.user;
@@ -12,6 +13,9 @@ const createProduct = asyncHandler(async (req, res) => {
   try {
     if (req.body.title) {
       req.body.slug = slugify(req.body.title);
+    }
+    if(!mongoose.Types.ObjectId.isValid(req.body.product_type)){
+      return res.status(400).json({message: 'Invalid product type'})
     }
     const product = await Product.create(req.body);
     res.status(200).json(product);
@@ -22,7 +26,7 @@ const createProduct = asyncHandler(async (req, res) => {
 
 const getAllProducts = asyncHandler(async (req, res) => {
   try {
-    const product = await Product.find();
+    const product = await Product.find().populate('product_type');
     res.status(200).json(product);
   } catch (error) {
     throw new Error(error);

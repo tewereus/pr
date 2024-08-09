@@ -11,8 +11,8 @@ const getAllColors = async () => {
     return response.data
 }
 
-const updateColor = async (id) => {
-    const response = await axios.put(`${base_url}/colors/${id}`)
+const updateColor = async (data) => {
+    const response = await axios.put(`${base_url}/colors/${data.id}`, data.data)
     return response.data
 }
 

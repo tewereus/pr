@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { updateProduct } from "../../features/products/productSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const EditProduct = ({ setEditModal, selectedProduct }) => {
   const dispatch = useDispatch();
@@ -10,15 +10,18 @@ const EditProduct = ({ setEditModal, selectedProduct }) => {
       : {
           title: "",
           description: "",
-          basePrice: 0,
+          basePrice: 0
         }
   );
 
+  // const productType = useSelector((state) => state.productTypes.productTypes)
+  // console.log(productType)
   const handleChange = (e) => {
     setProductState({
       ...productState,
       [e.target.name]: e.target.value,
     });
+    console.log(productState)
   };
 
   const handleSubmit = async (e) => {
@@ -28,9 +31,10 @@ const EditProduct = ({ setEditModal, selectedProduct }) => {
       data: {
         title: productState.title,
         description: productState.description,
-        basePrice: productState.basePrice,
+        basePrice: productState.basePrice
       },
     };
+    console.log(productState)
     dispatch(updateProduct(data));
     // const response = await axios.put(
     //   `http://localhost:3773/api/v1/product/${data.id}`,

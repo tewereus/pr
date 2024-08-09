@@ -24,6 +24,7 @@ const Products = () => {
     dispatch(getAllProducts());
   }, []);
   const { products } = useSelector((state) => state.products);
+  const {productTypes} = useSelector((state) => state.productTypes)
   const handleAddProduct = () => {
     setIsOpen(true);
   };
@@ -83,8 +84,9 @@ const Products = () => {
                 }}
                 onClick={() => handleSelect(product)}
               >
-                <p>{product.title}</p>
-                <p>{product.basePrice}</p>
+                <p>Product Name: {product.title}</p>
+                <p>Price: {product.basePrice}</p>
+                <p>type:  {product.product_type.productName}</p>
               </div>
             );
           })}

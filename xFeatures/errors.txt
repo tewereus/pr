@@ -11,3 +11,6 @@
         it was executing the first one and it was missing the ID so the solution is 1. to make delete-all above it or 
         2. change the "/:id" to something that doesn't clash like "/delete/:id" 
         REMEMBER this occurs for same methods like when both are delete or put or others)
+
+=> "ValidationError: product_type: Cast to ObjectId failed for value \"cotton\" (type string) at path \"product_type\" because of \"BSONError\""
+        this is because a string is being passed instead of an id, in this case the product_type parameter is passing cotton instead of the cotton id
