@@ -14,11 +14,17 @@ const Sidebar = () => {
         </li>
         <li>
           <div>
-            <button onClick={() => setIsUsersOpen(!isUsersOpen)} style={{ cursor: 'pointer', background: 'none', border: 'none', padding: '0', margin: '0' }}>
+            <button onClick={() => {
+              setIsUsersOpen(!isUsersOpen)
+              setIsImagesOpen(false)
+              setIsProductsOpen(false)
+            }}
+              
+              style={{ cursor: 'pointer', background: 'none', border: 'none', padding: '0', margin: '0' }}>
               Users
             </button>
             {isUsersOpen && (
-              <ul>
+              <ul className="bg-[#999] pl-[10px]">
                 <li><Link to="users">Users</Link></li>
                 <li><Link to="managers">Managers</Link></li>
                 <li><Link to="printers">Printers</Link> </li>
@@ -28,11 +34,17 @@ const Sidebar = () => {
         </li>
         <li>
           <div>
-            <button onClick={() => setIsProductsOpen(!isProductsOpen)} style={{ cursor: 'pointer', background: 'none', border: 'none', padding: '0', margin: '0' }}>
+            <button onClick={() => {
+              setIsProductsOpen(!isProductsOpen)
+              setIsUsersOpen(false)
+              setIsImagesOpen(false)
+            }}
+              
+              style={{ cursor: 'pointer', background: 'none', border: 'none', padding: '0', margin: '0' }}>
               Products
             </button>
             {isProductsOpen && (
-              <ul>
+              <ul className="bg-[#999] pl-[10px]">
                 <li><Link to="products">Products</Link></li>
                 <li><Link to="product-types">Product Types</Link></li>
               </ul>
@@ -44,11 +56,17 @@ const Sidebar = () => {
         </li>
         <li>
           <div>
-            <button onClick={() => setIsImagesOpen(!isImagesOpen)} style={{ cursor: 'pointer', background: 'none', border: 'none', padding: '0', margin: '0' }}>
+            <button
+              onClick={() => {
+                setIsImagesOpen(!isImagesOpen)
+                setIsUsersOpen(false)
+                setIsProductsOpen(false)
+              }}
+              style={{ cursor: 'pointer', background: 'none', border: 'none', padding: '0', margin: '0' }}>
               Images
             </button>
             {isImagesOpen && (
-              <ul>
+              <ul className="bg-[#999] pl-[10px]">
                 <li><Link to="images">Images</Link></li>
                 <li><Link to="image-types">Image Types</Link></li>
                 <li><Link to="image-categories">Image Categories</Link> </li>

@@ -57,7 +57,10 @@ const loginAdmin = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
   // check if user exists or not
   const findAdmin = await Admin.findOne({ email });
+  console.log("am here")
+  console.log(findAdmin)
   if (findAdmin.role !== "administrator") throw new Error("Not Authorized");
+  
   if (findAdmin && (await findAdmin.isPasswordMatched(password))) {
     const refreshToken = await generateRefreshToken(findAdmin?._id);
     const updateuser = await Admin.findByIdAndUpdate(

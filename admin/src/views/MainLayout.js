@@ -7,9 +7,11 @@ const MainLayout = () => {
   return (
     <>
       <Navigation />
-      <div className="flex">
-        <Sidebar />
-        <div className="ml-15 w-[100%] ">
+      <div className="flex  min-h-[95vh]">
+        <div className="bg-[#ccc] w-[10%]">
+          <Sidebar />
+        </div>
+        <div className="ml-15 w-[85%] ">
           <Outlet />
         </div>
       </div>

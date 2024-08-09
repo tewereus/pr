@@ -16,7 +16,7 @@ const updateColor = async (id) => {
     return response.data
 }
 
-const deleteColor = async () => {
+const deleteColor = async (id) => {
     const response = await axios.delete(`${base_url}/colors/delete/${id}`)
     return response.data
 }

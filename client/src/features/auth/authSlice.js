@@ -187,11 +187,11 @@ export const authSlice = createSlice({
         state.isSuccess = false;
         state.isError = true;
         state.message = action.error;
-        if (state.isError === true) {
-          const validationError =
-            action.payload.response.data.message.split(":");
-          toast.error(action.payload.response.data.message);
-        }
+        // if (state.isError === true) {
+        //   const validationError =
+        //     action.payload.response.data.message.split(":");
+        //   toast.error(action.payload.response.data.message);
+        // }
       })
 
       .addCase(forgotPasswordToken.pending, (state) => {
