@@ -26,7 +26,7 @@ const createProduct = asyncHandler(async (req, res) => {
 
 const getAllProducts = asyncHandler(async (req, res) => {
   try {
-    const product = await Product.find().populate('product_type');
+    const product = await Product.find().populate('product_type color');
     res.status(200).json(product);
   } catch (error) {
     throw new Error(error);

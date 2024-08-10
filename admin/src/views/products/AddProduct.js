@@ -11,10 +11,12 @@ const AddProduct = ({ setIsOpen }) => {
     title: "",
     description: "",
     basePrice: 0,
-    product_type: ""
+    color: "",
+    product_type: "",
   });
 
   const {productTypes} = useSelector((state) => state.productTypes)
+  const {colors} = useSelector((state) => state.colors)
 
   const handleChange = (e) => {
     setProductState({
@@ -29,6 +31,7 @@ const AddProduct = ({ setIsOpen }) => {
       title: productState.title,
       description: productState.description,
       basePrice: productState.basePrice,
+      color: productState.color,
       product_type: productState.product_type
     };
     console.log(data)
@@ -77,6 +80,12 @@ const AddProduct = ({ setIsOpen }) => {
         <option value="">select product type</option>
         {productTypes.map((prod) => (
           <option key={prod._id} value={prod._id}>{prod.productName}</option>
+        ))}
+      </select>
+      <select name="color" onChange={handleChange} required>
+        <option value="">Select Color</option>
+        {colors.map((color) => (
+          <option key={color._id} value={color._id}>{color.name}</option>
         ))}
       </select>
       <button type="submit">Add Product</button>

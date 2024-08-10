@@ -6,7 +6,7 @@ import axios from "axios";
 const adminLogin = async (data) => {
   const response = await axios.post(`${base_url}/admin/login`, data);
   if (response.data) {
-    localStorage.setItem("user", JSON.stringify(response.data));
+    localStorage.setItem("admin", JSON.stringify(response.data));
   }
   return response.data;
 };
