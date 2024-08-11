@@ -8,3 +8,13 @@
 => on Coupon model the catagory on discount modify this to get productTypes and also make it multiselectable and also has all choice if the coupon applies to all or some from productTypes 
 => the sold property should be add to the Product Image model to count the sales for recommendation purpose
 => maybe hash the account number if needed
+=> registeration for managers should follow this step(
+    1. admin adds manager with phone and location(optional if manager should fill it their own since it will be checked before being active)
+    2. an email or sms be sent to the manager with the link and unique token id(eg. localhost:3000/api/v1/manager/${token})
+    3. when manager clicks on the link, it redirect to login page
+    4. since it is first time manager clicks on register button and be redirected to verify manager(not register because it needs to be checked, not anyone can register)
+    5. on verify manager they will put the mobile they are added with, and it will be verified with the token in the params
+    6. still on verify manager it also checks if the manager registered with this mobile has a main_status of inactive to continue(if not inactive it throws an error, on client side using useEffect use (isError) or (isSuccess) to redirect if successfull or not)
+    7. if it passes all this it goes to register and fill out the remaining information(like name, shop info), after success the main_status should be changed to waiting
+    8. after logged in, the manager should not be able to access anything except their profile until admin reviews their filled information and changes their main status to active
+)
