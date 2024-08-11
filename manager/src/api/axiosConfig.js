@@ -1,7 +1,7 @@
 export const base_url = "http://localhost:3773/api/v1";
 
-const getTokenFromLocalStorage = localStorage.getItem("admin")
-  ? JSON.parse(localStorage.getItem("admin"))
+const getTokenFromLocalStorage = localStorage.getItem("manager")
+  ? JSON.parse(localStorage.getItem("manager"))
   : null;
 
 export const config = {
