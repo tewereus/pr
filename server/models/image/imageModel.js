@@ -2,20 +2,29 @@ const mongoose = require("mongoose");
 
 const imageSchema = mongoose.Schema(
   {
-    image: [{
+    image: [
+      {
         type: String,
-        required: true
-    }],
-    image_catagory: [{
+        required: true,
+      },
+    ],
+    image_catagory: [
+      {
         type: mongoose.Schema.Types.ObjectId,
         ref: "ImgCategory",
-        required: true
-    }],
+        required: true,
+      },
+    ],
     image_type: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "ImageType",
-        required: true
-    }
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "ImageType",
+      required: true,
+    },
+    sold: {
+      type: Number,
+      default: 0,
+      min: 0,
+    },
   },
   {
     timestamps: true,

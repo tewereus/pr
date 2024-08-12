@@ -17,4 +17,5 @@
     6. still on verify manager it also checks if the manager registered with this mobile has a main_status of inactive to continue(if not inactive it throws an error, on client side using useEffect use (isError) or (isSuccess) to redirect if successfull or not)
     7. if it passes all this it goes to register and fill out the remaining information(like name, shop info), after success the main_status should be changed to waiting
     8. after logged in, the manager should not be able to access anything except their profile until admin reviews their filled information and changes their main status to active
+    9. if manager tries to login or go to register again when the main status is waiting, they should be redirected to waiting page
 )
