@@ -7,6 +7,7 @@ import AddProduct from "./AddProduct";
 import DeleteAllProducts from "./DeleteAllProducts";
 import EditProduct from "./EditProduct";
 import DeleteProduct from "./DeleteProduct";
+import { getAllColors } from "../../features/color/colorSlice";
 
 Modal.setAppElement("#root");
 
@@ -22,9 +23,10 @@ const Products = () => {
   // const [selectedProducts, setSelectedProducts] = useState([]);
   useEffect(() => {
     dispatch(getAllProducts());
+    dispatch(getAllColors());
   }, []);
   const { products } = useSelector((state) => state.products);
-  const {productTypes} = useSelector((state) => state.productTypes)
+  const { productTypes } = useSelector((state) => state.productTypes);
   const handleAddProduct = () => {
     setIsOpen(true);
   };
@@ -86,7 +88,7 @@ const Products = () => {
               >
                 <p>Product Name: {product.title}</p>
                 <p>Price: {product.basePrice}</p>
-                <p>type:  {product.product_type.productName}</p>
+                <p>type: {product.product_type.productName}</p>
               </div>
             );
           })}
