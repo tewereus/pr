@@ -8,6 +8,7 @@ import DeleteAllProducts from "./DeleteAllProducts";
 import EditProduct from "./EditProduct";
 import DeleteProduct from "./DeleteProduct";
 import { getAllColors } from "../../features/color/colorSlice";
+import { getAllProdTypes } from "../../features/productType/prodTypeSlice";
 
 Modal.setAppElement("#root");
 
@@ -24,9 +25,9 @@ const Products = () => {
   useEffect(() => {
     dispatch(getAllProducts());
     dispatch(getAllColors());
+    dispatch(getAllProdTypes());
   }, []);
   const { products } = useSelector((state) => state.products);
-  const { productTypes } = useSelector((state) => state.productTypes);
   const handleAddProduct = () => {
     setIsOpen(true);
   };

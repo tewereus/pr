@@ -78,28 +78,6 @@ export const deleteAllProducts = createAsyncThunk(
   }
 );
 
-export const addProductType = createAsyncThunk(
-  "product/add-productType",
-  async (data, thunkAPI) => {
-    try {
-      return await productService.addProductType(data);
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error);
-    }
-  }
-);
-
-export const getAllProdTypes = createAsyncThunk(
-  "product/get-productTypes",
-  async (thunkAPI) => {
-    try {
-      return await productService.getAllProdTypes();
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error);
-    }
-  }
-);
-
 export const productSlice = createSlice({
   name: "products",
   initialState,
