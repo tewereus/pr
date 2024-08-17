@@ -118,13 +118,13 @@ const AddProduct = ({ setIsOpen }) => {
           <button
             type="button"
             onClick={() => setIsOpen(false)}
-            className="bg-red-600 text-white text-lg text-center rounded-lg h-12 p-2 m-4 w-64 inline"
+            className="bg-red-600 text-white text-lg text-center rounded-lg h-12 p-2 m-4 w-64"
           >
             Cancel
           </button>
           <button
             type="submit"
-            className="bg-green-600 text-white text-lg text-center rounded-lg h-12 p-2 m-4 w-64 inline"
+            className="bg-green-600 text-white text-lg text-center rounded-lg h-12 p-2 m-4 w-64"
           >
             Add Product
           </button>

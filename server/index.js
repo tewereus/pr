@@ -26,7 +26,11 @@ app.use(morgan("dev"));
 app.use(cookieParser());
 
 const corsOptions = {
-  origin: ["http://localhost:3000", "http://localhost:3001", "http://localhost:3002"],
+  origin: [
+    "http://localhost:3000",
+    "http://localhost:3001",
+    "http://localhost:3002",
+  ],
   credentials: true, //access-control-allow-credentials:true
   optionSuccessStatus: 200,
 };
@@ -44,7 +48,7 @@ app.use("/api/v1/product-type", prodTypeRouter);
 app.use("/api/v1/favourites", wishlistRouter);
 app.use("/api/v1/coupons", couponRouter);
 app.use("/api/v1/colors", colorRouter);
-app.use("/api/v1/image-types", imageCategoryRouter);
+app.use("/api/v1/image-category", imageCategoryRouter);
 app.use("/api/v1/image-types", imageTypeRouter);
 
 app.use(notFound);
