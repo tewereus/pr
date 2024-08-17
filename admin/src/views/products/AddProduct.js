@@ -1,3 +1,7 @@
+/*
+todo Use fieldset for price since place holder doesn't work
+todo make image accept drag and drop and also make display zone and make it look like that in eshop
+*/
 import React, { useEffect, useState } from "react";
 import {
   createProduct,
@@ -13,6 +17,7 @@ const AddProduct = ({ setIsOpen }) => {
     basePrice: 0,
     color: "",
     product_type: "",
+    image: "",
   });
 
   const { productTypes } = useSelector((state) => state.productTypes);
@@ -33,6 +38,7 @@ const AddProduct = ({ setIsOpen }) => {
       basePrice: productState.basePrice,
       color: productState.color,
       product_type: productState.product_type,
+      image: productState.image,
     };
     console.log(data);
     dispatch(createProduct(data));
@@ -43,59 +49,87 @@ const AddProduct = ({ setIsOpen }) => {
   //   if (createdProduct && isSuccess) {
   //     setIsOpen(false);
   //     dispatch(messageClear());
-  //     //   setTimeout(() => {
-  //     //     window.location.reload();
-  //     //   }, 2000);
+  //     setTimeout(() => {
+  //        window.location.reload();
+  //       }, 2000);
   //   }
   // }, [isSuccess]);
   return (
     <form onSubmit={handleSubmit}>
-      <label>
-        Title:
+      <div className="flex flex-col">
         <input
           type="text"
           value={productState.title}
           name="title"
           onChange={handleChange}
+          placeholder="Title"
+          className="border rounded-lg h-10 pl-2 m-4"
         />
-      </label>
-      <label>
-        Description:
         <textarea
           value={productState.description}
           name="description"
           onChange={handleChange}
+          placeholder="Description"
+          className="border rounded-lg h-32 p-2 m-4"
         />
-      </label>
-      <label>
-        Price:
+
         <input
           type="number"
           value={productState.basePrice}
           name="basePrice"
           onChange={handleChange}
+          className="border rounded-lg h-12 pl-2 m-4"
         />
-      </label>
-      <select name="product_type" onChange={handleChange} required>
-        <option value="">select product type</option>
-        {productTypes.map((prod) => (
-          <option key={prod._id} value={prod._id}>
-            {prod.productName}
-          </option>
-        ))}
-      </select>
-      <select name="color" onChange={handleChange} required>
-        <option value="">Select Color</option>
-        {colors.map((color) => (
-          <option key={color._id} value={color._id}>
-            {color.name}
-          </option>
-        ))}
-      </select>
-      <button type="submit">Add Product</button>
-      <button type="button" onClick={() => setIsOpen(false)}>
-        Close Modal
-      </button>
+        <select
+          name="product_type"
+          onChange={handleChange}
+          className="flex flex-col border rounded-lg h-12 p-2 m-4 text-slate-600"
+          required
+        >
+          <option value="">select product type</option>
+          {productTypes.map((prod) => (
+            <option key={prod._id} value={prod._id}>
+              {prod.productName}
+            </option>
+          ))}
+        </select>
+        <select
+          name="color"
+          onChange={handleChange}
+          className="flex flex-col border rounded-lg h-12 p-2 m-4 text-slate-600"
+          required
+        >
+          <option value="">Select Color</option>
+          {colors.map((color) => (
+            <option key={color._id} value={color._id}>
+              {color.name}
+            </option>
+          ))}
+        </select>
+        <input
+          type="file"
+          value={productState.image}
+          name="image"
+          multiple
+          onChange={handleChange}
+          className="flex flex-col border rounded-lg h-12 p-2 m-4 text-slate-600"
+        />
+        <div className="flex justify-end">
+          <button
+            type="button"
+            onClick={() => setIsOpen(false)}
+            className="bg-red-600 text-white text-lg text-center rounded-lg h-12 p-2 m-4 w-64 inline"
+          >
+            Cancel
+          </button>
+          <button
+            type="submit"
+            className="bg-green-600 text-white text-lg text-center rounded-lg h-12 p-2 m-4 w-64 inline"
+          >
+            Add Product
+          </button>
+        </div>
+      </div>
     </form>
   );
 };
