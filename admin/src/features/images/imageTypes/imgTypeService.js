@@ -34,7 +34,7 @@ const deleteAllImgTypes = async () => {
   return response.data;
 };
 
-const ImgTypeService = {
+const imgTypeService = {
   addImageType,
   updateImageType,
   deleteImageType,
@@ -42,4 +42,4 @@ const ImgTypeService = {
   getAllImgTypes,
 };
 
-export default ImgTypeService;
+export default imgTypeService;

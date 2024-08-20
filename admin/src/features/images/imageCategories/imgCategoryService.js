@@ -38,7 +38,7 @@ const deleteImgCategories = async () => {
   return response.data;
 };
 
-const ImgCategoryService = {
+const imgCategoryService = {
   addImgCategory,
   updateImgCategory,
   deleteImgCategory,
@@ -46,4 +46,4 @@ const ImgCategoryService = {
   allImgCategories,
 };
 
-export default ImgCategoryService;
+export default imgCategoryService;
