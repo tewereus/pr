@@ -88,7 +88,7 @@ export const imgCategorySlice = createSlice({
         state.isSuccess = true;
         state.message = "";
         if (state.isSuccess === true) {
-          toast.success("Product Type Added Successfully");
+          toast.success("Image Category Added Successfully");
         }
         state.imgCategories = [...state.imgCategories, action.payload];
       })
@@ -113,7 +113,7 @@ export const imgCategorySlice = createSlice({
           category._id === action.payload._id ? action.payload : category
         );
         if (state.isSuccess === true) {
-          toast.success("Product Type updated Successfully");
+          toast.success("Image Category updated Successfully");
         }
       })
       .addCase(updateImgCategory.rejected, (state, action) => {
@@ -137,7 +137,7 @@ export const imgCategorySlice = createSlice({
           (category) => category._id !== action.payload._id
         );
         if (state.isSuccess === true) {
-          toast.success("Product Deleted Successfully");
+          toast.success("Image Category Deleted Successfully");
         }
       })
       .addCase(deleteImgCategory.rejected, (state, action) => {
@@ -159,7 +159,7 @@ export const imgCategorySlice = createSlice({
         state.message = "success";
         state.imgCategories = [];
         if (state.isSuccess === true) {
-          toast.success("All Products Deleted Successfully");
+          toast.success("All Categories Deleted Successfully");
         }
       })
       .addCase(deleteImgCategories.rejected, (state, action) => {
