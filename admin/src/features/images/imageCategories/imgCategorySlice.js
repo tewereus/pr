@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import ImgCategoryService from "./imgCategoryService";
+import imgCategoryService from "./imgCategoryService";
 import toast from "react-hot-toast";
 
 const initialState = {
@@ -14,7 +14,7 @@ export const addImgCategory = createAsyncThunk(
   "image/add-category",
   async (data, thunkAPI) => {
     try {
-      return await ImgCategoryService.addImgCategory(data);
+      return await imgCategoryService.addImgCategory(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -25,7 +25,7 @@ export const updateImgCategory = createAsyncThunk(
   "image/update-category",
   async (data, thunkAPI) => {
     try {
-      return await ImgCategoryService.updateImgCategory(data);
+      return await imgCategoryService.updateImgCategory(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -36,7 +36,7 @@ export const deleteImgCategory = createAsyncThunk(
   "image/delete-category",
   async (id, thunkAPI) => {
     try {
-      return await ImgCategoryService.deleteImgCategory(id);
+      return await imgCategoryService.deleteImgCategory(id);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -47,7 +47,7 @@ export const allImgCategories = createAsyncThunk(
   "image/get-categories",
   async (thunkAPI) => {
     try {
-      return await ImgCategoryService.allImgCategories();
+      return await imgCategoryService.allImgCategories();
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -58,7 +58,7 @@ export const deleteImgCategories = createAsyncThunk(
   "image/delete-categories",
   async (thunkAPI) => {
     try {
-      return await ImgCategoryService.deleteImgCategories();
+      return await imgCategoryService.deleteImgCategories();
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
