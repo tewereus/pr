@@ -3,7 +3,9 @@ import authReducer from "../features/auth/authSlice";
 import usersReducer from "../features/users/userSlice";
 import productReducer from "../features/products/productSlice";
 import prodTypeReducer from "../features/productType/prodTypeSlice";
-import colorReducer from "../features/color/colorSlice"
+import colorReducer from "../features/color/colorSlice";
+import imgCategoryReducer from "../features/images/imageCategories/imgCategorySlice";
+import imgTypeReducer from "../features/images/imageTypes/imgTypeSlice";
 
 export const store = configureStore({
   reducer: {
@@ -11,6 +13,8 @@ export const store = configureStore({
     users: usersReducer,
     products: productReducer,
     productTypes: prodTypeReducer,
-    colors: colorReducer
+    colors: colorReducer,
+    imgCategories: imgCategoryReducer,
+    imageTypes: imgTypeReducer,
   },
 });
