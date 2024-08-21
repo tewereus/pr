@@ -10,6 +10,7 @@ const imgCategorySchema = mongoose.Schema(
     image_type: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "ImageType",
+      required: true,
     },
     sold: {
       type: Number,

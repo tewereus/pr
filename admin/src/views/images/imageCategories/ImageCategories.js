@@ -6,6 +6,7 @@ import AddImgCategory from "./AddImgCategory";
 import EditImgCategory from "./EditImgCategory";
 import DeleteImgCategory from "./DeleteImgCategory";
 import DeleteAllCategories from "./DeleteAllCategories";
+import { getAllImgTypes } from "../../../features/images/imageTypes/imgTypeSlice";
 
 const ImageCategories = () => {
   const dispatch = useDispatch();
@@ -69,6 +70,9 @@ const ImageCategories = () => {
                 onClick={() => handleSelect(image)}
               >
                 <p>{image.image_category}</p>
+                <p>
+                  <i>{image.image_type.image_type}</i>
+                </p>
               </div>
             );
           })}

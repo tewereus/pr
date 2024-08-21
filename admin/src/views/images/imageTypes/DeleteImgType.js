@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { deleteImageType } from "../../../features/images/imageTypes/imgTypeSlice";
 
-const DeleteProductType = ({ setIsDelete, selectedImage }) => {
+const DeleteImgType = ({ setIsDelete, selectedImage }) => {
   const dispatch = useDispatch();
 
   // const handleCheckInput = (e) => {
@@ -25,4 +25,4 @@ const DeleteProductType = ({ setIsDelete, selectedImage }) => {
   );
 };
 
-export default DeleteProductType;
+export default DeleteImgType;
