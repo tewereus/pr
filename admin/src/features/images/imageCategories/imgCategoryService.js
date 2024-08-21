@@ -1,4 +1,4 @@
-import { base_url, config } from "../../api/axiosConfig";
+import { base_url, config } from "../../../api/axiosConfig";
 import axios from "axios";
 
 const addImgCategory = async (data) => {
