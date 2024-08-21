@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { getAllImgTypes } from "../../../features/images/imageTypes/imgTypeSlice";
 import { useDispatch, useSelector } from "react-redux";
 import Modal from "react-modal";
+import { getAllImgTypes } from "../../../features/images/imageTypes/imgTypeSlice";
 import AddImgType from "./AddImgType";
 import EditImgType from "./EditImgType";
 import DeleteImgType from "./DeleteImgType";
@@ -101,7 +101,7 @@ const ImageTypes = () => {
         onClick={handleEdit}
         disabled={selectedImage ? false : true}
       >
-        Edit Product
+        Edit Type
       </button>
       {isEdit && (
         <Modal
@@ -131,7 +131,7 @@ const ImageTypes = () => {
         onClick={handleDelete}
         disabled={selectedImage ? false : true}
       >
-        Delete Product
+        Delete Type
       </button>
       {isDelete && (
         <Modal
