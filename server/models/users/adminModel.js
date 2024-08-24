@@ -55,7 +55,11 @@ const adminSchema = mongoose.Schema(
           `Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character`,
       },
     },
-
+    preference: {
+      type: String,
+      enum: ["light", "dark"],
+      default: "light",
+    },
     profile: {
       type: String,
     },

@@ -55,12 +55,9 @@ const Manager = require("../../models/users/managerModel");
 
 const loginAdmin = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
-  // check if user exists or not
   const findAdmin = await Admin.findOne({ email });
-  console.log("am here")
-  console.log(findAdmin)
-  if (findAdmin.role !== "administrator") throw new Error("Not Authorized");
-  
+  // if (findAdmin.role !== "administrator") throw new Error("Not Authorized"); // not needed
+
   if (findAdmin && (await findAdmin.isPasswordMatched(password))) {
     const refreshToken = await generateRefreshToken(findAdmin?._id);
     const updateuser = await Admin.findByIdAndUpdate(
@@ -74,6 +71,15 @@ const loginAdmin = asyncHandler(async (req, res) => {
       httpOnly: true,
       maxAge: 72 * 60 * 60 * 1000,
     });
+    // res.json({
+    //   _id: findAdmin?._id,
+    //   firstname: findAdmin?.firstname,
+    //   lastname: findAdmin?.lastname,
+    //   role: findAdmin?.role,
+    //   email: findAdmin?.email,
+    //   mobile: findAdmin?.mobile,
+    //   token: generateToken(findAdmin?._id),
+    // });
     res.json({
       _id: findAdmin?._id,
       firstname: findAdmin?.firstname,
@@ -81,6 +87,7 @@ const loginAdmin = asyncHandler(async (req, res) => {
       role: findAdmin?.role,
       email: findAdmin?.email,
       mobile: findAdmin?.mobile,
+      preference: findAdmin?.preference,
       token: generateToken(findAdmin?._id),
     });
   } else {
@@ -485,47 +492,51 @@ const checkAdminPass = asyncHandler(async (req, res) => {
   }
 });
 
-const addManager = asyncHandler(async(req, res) => {
+const addManager = asyncHandler(async (req, res) => {
   // const {id} = req.user
-  const {mobile, email} = req.body
+  const { mobile, email } = req.body;
   try {
-    const manager = await Manager.findOne({mobile})
-    if(manager) throw new Error("Manager with this mobile already exists")
-      const newManager = await Manager.create({mobile, email}) // check if it can be added with await manager.save()
-      const token = await newManager.createManagerToken()
-      await newManager.save();
-      console.log(token)
-      const messageUrl = `Hi please follow this link to start your journey as a manager. This link is valid for 1 hour from now <a href='http://localhost:5000/api/v1/manager/manager/${token}'>Click Here</a>`;
-      const data = {
-        to: email,
-        subject: "Verify Account",
-        text: "Hey future manager",
-        htm: messageUrl,
-      };
-      sendEmail(data);
-      res.json(newManager)
+    const manager = await Manager.findOne({ mobile });
+    if (manager) throw new Error("Manager with this mobile already exists");
+    const newManager = await Manager.create({ mobile, email }); // check if it can be added with await manager.save()
+    const token = await newManager.createManagerToken();
+    await newManager.save();
+    console.log(token);
+    const messageUrl = `Hi please follow this link to start your journey as a manager. This link is valid for 1 hour from now <a href='http://localhost:5000/api/v1/manager/manager/${token}'>Click Here</a>`;
+    const data = {
+      to: email,
+      subject: "Verify Account",
+      text: "Hey future manager",
+      htm: messageUrl,
+    };
+    sendEmail(data);
+    res.json(newManager);
   } catch (error) {
-    throw new Error(error)
+    throw new Error(error);
   }
-})
+});
 
 const changeMainStatus = asyncHandler(async (req, res) => {
-  const {_id} = req.user
-  const {main_status} = req.body
-  const {id} = req.params
+  const { _id } = req.user;
+  const { main_status } = req.body;
+  const { id } = req.params;
   try {
-    const isAdmin = await Admin.findById(_id)
-    if(!isAdmin) throw new Error("Not Authorized")
-    const newManager = await Manager.findByIdAndUpdate(id, {
-        main_status: main_status
-    }, {
-      new: true
-    })
-    res.json(newManager)
+    const isAdmin = await Admin.findById(_id);
+    if (!isAdmin) throw new Error("Not Authorized");
+    const newManager = await Manager.findByIdAndUpdate(
+      id,
+      {
+        main_status: main_status,
+      },
+      {
+        new: true,
+      }
+    );
+    res.json(newManager);
   } catch (error) {
-    throw new Error(error)
+    throw new Error(error);
   }
-})
+});
 
 const getAllManagers = asyncHandler(async (req, res) => {
   try {
@@ -547,7 +558,7 @@ const getAllManagers = asyncHandler(async (req, res) => {
     let query = Manager.find(JSON.parse(queryStr));
 
     // Search
-    
+
     //Sorting
     if (req.query.sort) {
       const sortBy = req.query.sort.split(",").join(" ");
@@ -581,7 +592,7 @@ const getAllManagers = asyncHandler(async (req, res) => {
   } catch (error) {
     throw new Error(error);
   }
-})
+});
 
 module.exports = {
   // registerUser,
@@ -602,5 +613,5 @@ module.exports = {
   checkAdminPass,
   addManager,
   changeMainStatus,
-  getAllManagers
+  getAllManagers,
 };
