@@ -27,13 +27,9 @@ const getAllAdmins = async ({ page, limit, search, sort, searchField }) => {
 };
 
 const getAllManagers = async () => {
-  const response = await axios.get(
-    `${base_url}/admin/all-managers`,
-    config
-  );
+  const response = await axios.get(`${base_url}/admin/all-managers`, config);
   return response.data;
 };
-
 
 const deleteUser = async (id) => {
   const response = await axios.delete(
@@ -52,13 +48,24 @@ const addManager = async (data) => {
   return response.data;
 };
 
+const toggleDarkMode = async (data) => {
+  const response = await axios.post(
+    `${base_url}/admin/dark-mode`,
+    data,
+    config
+  );
+  console.log(response.data);
+  return response.data;
+};
+
 const userService = {
   getAllUsers,
   getAllAdmins,
   deleteUser,
   deleteAllUsers,
   getAllManagers,
-  addManager
+  addManager,
+  toggleDarkMode,
 };
 
 export default userService;

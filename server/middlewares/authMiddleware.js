@@ -86,7 +86,7 @@ const adminAuthMiddleware = asyncHandler(async (req, res, next) => {
         // Retrieve the user based on the decoded token
         const user = await Admin.findById(decoded.id).select("-password");
         if (user) {
-          req.user = user;
+          req.admin = user;
           next(); // Continue to the next middleware or route handler
         } else {
           throw new Error("User not found with the provided token");
@@ -144,4 +144,9 @@ const authorize = asyncHandler(async (req, res, next) => {
   }
 });
 
-module.exports = { authMiddleware, adminAuthMiddleware, managerAuthMiddleware, authorize };
+module.exports = {
+  authMiddleware,
+  adminAuthMiddleware,
+  managerAuthMiddleware,
+  authorize,
+};

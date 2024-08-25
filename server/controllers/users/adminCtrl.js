@@ -55,6 +55,7 @@ const Manager = require("../../models/users/managerModel");
 
 const loginAdmin = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
+  console.log(req.body);
   const findAdmin = await Admin.findOne({ email });
   // if (findAdmin.role !== "administrator") throw new Error("Not Authorized"); // not needed
 
@@ -594,6 +595,25 @@ const getAllManagers = asyncHandler(async (req, res) => {
   }
 });
 
+const toggleDarkMode = asyncHandler(async (req, res) => {
+  const { id } = req.admin;
+  const { darkMode } = req.body;
+  console.log(id);
+  console.log(req.body);
+  try {
+    const darkmode = Admin.findByIdAndUpdate(
+      id,
+      { preference: darkMode },
+      {
+        new: true,
+      }
+    );
+    res.json(darkmode);
+  } catch (error) {
+    throw new Error(error);
+  }
+});
+
 module.exports = {
   // registerUser,
   loginAdmin,
@@ -614,4 +634,5 @@ module.exports = {
   addManager,
   changeMainStatus,
   getAllManagers,
+  toggleDarkMode,
 };

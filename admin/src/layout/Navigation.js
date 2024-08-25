@@ -4,11 +4,13 @@ import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 // import {user_reset} from "../features/auth/authSlice"
 import { FaMoon, FaSun } from "react-icons/fa";
+import { toggleDarkMode } from "../features/users/userSlice";
 
 const Navigation = () => {
   // const dispatch = useDispatch();
   const [darkMode, setDarkMode] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
 
   const handleLogout = () => {
@@ -16,17 +18,22 @@ const Navigation = () => {
     // dispatch(user_reset())
     navigate("/");
     window.location.reload();
-    console.log(user);
+    // console.log(user);
   };
 
   const handleTheme = () => {
     if (darkMode == false) {
       setDarkMode(true);
       document.querySelector("html").classList.add("dark");
-      console.log(user);
+      const data = "light";
+      // console.log(data);
+      dispatch(toggleDarkMode(data));
     } else {
       document.querySelector("html").classList.remove("dark");
       setDarkMode(false);
+      const data = "light";
+      dispatch(toggleDarkMode(data));
+      // console.log(darkMode);
     }
   };
 

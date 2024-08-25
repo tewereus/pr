@@ -78,7 +78,16 @@ export const addManager = createAsyncThunk(
   }
 );
 
-
+export const toggleDarkMode = createAsyncThunk(
+  "admin/dark-mode",
+  async (data, thunkAPI) => {
+    try {
+      return await userService.toggleDarkMode(data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
 
 export const userSlice = createSlice({
   name: "users",
@@ -167,6 +176,21 @@ export const userSlice = createSlice({
         if (state.isError === true) {
           toast.error(action.error.message);
         }
+      })
+      .addCase(toggleDarkMode.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(toggleDarkMode.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isSuccess = true;
+        state.message = "mode changed successfully";
+      })
+      .addCase(toggleDarkMode.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = false;
+        state.isError = true;
+        state.message = action.error.message;
       });
   },
 });
