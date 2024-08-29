@@ -6,9 +6,7 @@ import { adminLogin, messageClear } from "../../features/auth/authSlice";
 const AdminLogin = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { isLoading, isError, isSuccess } = useSelector(
-    (state) => state.auth
-  );
+  const { isLoading, isError, isSuccess } = useSelector((state) => state.auth);
   const [state, setState] = useState({
     email: "",
     password: "",
@@ -23,13 +21,7 @@ const AdminLogin = () => {
     e.preventDefault();
     dispatch(adminLogin(state));
   };
-  const overrideStyle = {
-    display: "flex",
-    margin: "0 auto",
-    height: "24px",
-    justifyContent: "center",
-    alignItems: "center",
-  };
+
   useEffect(() => {
     if (isError) {
       toast.error("can't login");
@@ -85,12 +77,7 @@ const AdminLogin = () => {
               disabled={isLoading ? true : false}
               className="bg-blue-500 w-full hover:shadow-blue-500/50 hover:shadow-lg text-white rounded-md px-7 py-2 mb-3"
             >
-              {isLoading ? (
-                // <PropagateLoader color="#fff" cssOverride={overrideStyle} />
-                <div>Loading....</div>
-              ) : (
-                "Login"
-              )}
+              {isLoading ? <div>Loading....</div> : "Login"}
             </button>
           </form>
         </div>

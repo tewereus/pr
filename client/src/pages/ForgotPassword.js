@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from "react";
-// import BreadCrumb from '../components/BreadCrumb'
-// import Meta from '../components/Meta'
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -30,8 +28,6 @@ const ForgotPassword = () => {
 
   return (
     <>
-      {/* <Meta title={"Forgot Password"} />
-         <BreadCrumb title="Forgot Password" /> */}
       <div className="login-wrapper py-5 home-wrapper-2">
         <div className="row">
           <div className="col-12">

@@ -2,3 +2,5 @@
 => Add logging and others to track user activity for security purposes
 => add recommeded(based on recent purchases or favorites ) and Based on recent search
 => Add a coupon feature with time expiration and how much percentage it discounts
+=> add "remember me" functionality
+=> 

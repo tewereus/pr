@@ -19,3 +19,4 @@
     8. after logged in, the manager should not be able to access anything except their profile until admin reviews their filled information and changes their main status to active
     9. if manager tries to login or go to register again when the main status is waiting, they should be redirected to waiting page
 )
+=> on reset password, show token is expired component if it is expired or the form if it is not expired

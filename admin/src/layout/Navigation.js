@@ -13,13 +13,13 @@ const Navigation = () => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
 
-  const handleLogout = () => {
-    localStorage.clear();
-    // dispatch(user_reset())
-    navigate("/");
-    window.location.reload();
-    // console.log(user);
-  };
+  // const handleLogout = () => {
+  //   localStorage.clear();
+  //   // dispatch(user_reset())
+  //   navigate("/");
+  //   window.location.reload();
+  //   // console.log(user);
+  // };
 
   const handleTheme = () => {
     if (darkMode == false) {
@@ -58,9 +58,9 @@ const Navigation = () => {
               {darkMode ? <FaSun /> : <FaMoon />}
             </button>
 
-            <button onClick={handleLogout} type="button">
+            {/* <button onClick={handleLogout} type="button">
               Logout
-            </button>
+            </button> */}
           </>
         ) : (
           <>
