@@ -38,7 +38,7 @@ const Navigation = () => {
   };
 
   return (
-    <div className="flex justify-around items-center border-b-8 bg-red-500 border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+    <div className="flex justify-around items-center border-b-4 text-gray-800 bg-gray-300 border-gray-200 dark:bg-gray-800 dark:border-gray-700 h-[10vh] dark:text-gray-300">
       {/* <Link to="/">
         <img src={logo} alt="logo" className="h-20" />
       </Link> */}
@@ -54,7 +54,10 @@ const Navigation = () => {
               <Link to="/profile">{user.username}</Link>
             </button>
 
-            <button onClick={handleTheme} className="text-white">
+            <button
+              onClick={handleTheme}
+              className="text-gray-800 dark:text-gray-300"
+            >
               {darkMode ? <FaSun /> : <FaMoon />}
             </button>
 

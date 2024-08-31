@@ -1,18 +1,22 @@
-import React, { useEffect } from "react";
-
-import { getAllManagers, addManager } from "../../../features/users/userSlice";
+import React, { useEffect, useState } from "react";
+import Modal from "react-modal";
+import { getAllManagers } from "../../../features/users/userSlice";
 
 import { useSelector, useDispatch } from "react-redux";
+import AddManager from "./AddManager";
 
+Modal.setAppElement("#root");
 const Manager = () => {
   const dispatch = useDispatch();
+  const [isOpen, setIsOpen] = useState(false);
+
   useEffect(() => {
-    dispatch(getAllManagers())
+    dispatch(getAllManagers());
   }, []);
 
-  const addManagerHandler = () => {
-    dispatch(addManager())
-  }
+  const handleAddManager = () => {
+    setIsOpen(true);
+  };
 
   const { users, totalUsers, isLoading } = useSelector((state) => state.users);
   return (
@@ -30,9 +34,7 @@ const Manager = () => {
             <th>Mobile</th>
             <th>Role</th>
             <th>Status</th>
-            <th>
-              Main Status
-            </th>
+            <th>Main Status</th>
             <th>Created At</th>
           </tr>
         </thead>
@@ -57,7 +59,7 @@ const Manager = () => {
           ) : (
             <tr>
               <td colSpan="6" align="center">
-                No user found
+                No manager found
               </td>
             </tr>
           )}
@@ -77,7 +79,18 @@ const Manager = () => {
           Next
         </button>
       </div> */}
-      <button onClick={addManagerHandler}>Add Manager</button>
+      <button onClick={handleAddManager}>Add Manager</button>
+      {isOpen && (
+        <>
+          <Modal
+            isOpen={isOpen}
+            onRequestClose={() => setIsOpen(false)}
+            contentLabel="Add Manager"
+          >
+            <AddManager setIsOpen={setIsOpen} />
+          </Modal>
+        </>
+      )}
     </div>
   );
 };
