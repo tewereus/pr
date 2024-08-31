@@ -1,10 +1,1 @@
-the users table is not being updated when user is deleted unless it is refreshed or clicked another link. it is not being updated like the products when user is deleted
-setSelectedUser is not working on Table component for Users
-modify the users(Users, userService anduserSlice ), make it like products (not callig getAllUsers everytime a change is made) 
-
-=> make the role in the user, admin , printer and manager model uneditable 
-=> check if in the middleware req.user can be changed(maybe req.manager or req.admin)
-=> maybe make address model after researching for the managers, so that new locations can be added as we scale
-=> after manager is added, on login manager, if the main_status property is inactive if it passed this check: if(manager && (await manager.isPasswordMatched(password)))  make almost all manager features inaccessable by using middleware or redirecting to a new page like 404 page
-=> something modified in client authSlice bring back from github
-=> make the colors in add product be multiselectable and by default be all colors(or chose all color option) 
+=> after manager adds mobile the checkManager checks the mobile with the token(unique_id) if not sucessfull goto error page if successfull check the status and redirect based on that(if inactive goto a page to fill their information, if waiting goto page that tells them to wait until active and if active redirect to the main page ) 

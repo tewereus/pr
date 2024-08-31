@@ -51,8 +51,8 @@ const Manager = () => {
                 <td>{user.email}</td>
                 <td>{user.mobile}</td>
                 <td>{user.role}</td>
-                <td>{user.status}</td>
-                <td>{user.main_status}</td>
+                <td className="text-red-500">{user.status}</td>
+                <td className="text-purple-600">{user.main_status}</td>
                 <td>{new Date(user.createdAt).toLocaleString()}</td>
               </tr>
             ))

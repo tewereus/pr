@@ -5,13 +5,14 @@ import Login from "./views/auth/Login";
 import VerifyManager from "./views/auth/VerifyManager";
 import RegisterManager from "./views/auth/RegisterManager";
 import MainLayout from "./views/MainLayout";
+import CheckManager from "./views/auth/CheckManager";
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: "/manager/:id",
     element: (
       <OpenRoutes>
-        <Login />
+        <CheckManager />
       </OpenRoutes>
     ),
   },
@@ -32,7 +33,7 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "/manager",
+    path: "/managers",
     element: (
       <PrivateRoutes>
         <MainLayout />
