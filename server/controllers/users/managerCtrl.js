@@ -41,19 +41,14 @@ const asyncHandler = require("express-async-handler");
 const verifyManager = asyncHandler(async (req, res) => {
   const { token } = req.params;
   const { mobile } = req.body;
+  console.log(req.body);
 
   try {
-    const manager = await Manager.findOne({ token });
+    const manager = await Manager.findOne({ unique_id: token });
     if (!manager) throw new Error("Manager does not exist");
-    if (manager.main_status !== "inactive")
-      throw new Error("Manager is already registered");
-    if (
-      manager &&
-      manager.main_status === "inactive" &&
-      mobile === manager.mobile
-    ) {
-      res.status({ message: "manager verified" });
-    }
+    if (manager && mobile !== manager.mobile)
+      throw new Error("Invalid Credentials");
+    res.json({ message: "Verified Successfully" });
   } catch (error) {
     throw new Error(error);
   }

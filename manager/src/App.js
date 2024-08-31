@@ -12,18 +12,18 @@ const router = createBrowserRouter([
     path: "/manager/:id",
     element: (
       <OpenRoutes>
-        <CheckManager />
-      </OpenRoutes>
-    ),
-  },
-  {
-    path: "/verify-manager",
-    element: (
-      <OpenRoutes>
         <VerifyManager />
       </OpenRoutes>
     ),
   },
+  // {
+  //   path: "/verify-manager",
+  //   element: (
+  //     <OpenRoutes>
+  //       <VerifyManager />
+  //     </OpenRoutes>
+  //   ),
+  // },
   {
     path: "/register-manager",
     element: (

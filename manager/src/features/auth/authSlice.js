@@ -48,12 +48,18 @@ export const authSlice = createSlice({
         state.isError = false;
         state.message = "success";
         state.user = action.payload;
+        toast.success("Manager Verified");
       })
       .addCase(verifyManager.rejected, (state, action) => {
         state.isLoading = false;
         state.isSuccess = false;
         state.isError = true;
         state.message = action.error;
+        if (state.isError === true) {
+          const validationError =
+            action.payload.response.data.message.split(":")[1];
+          toast.error(validationError);
+        }
       });
   },
 });
