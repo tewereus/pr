@@ -1,15 +1,12 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { addManager } from "../../../features/users/userSlice";
 
 const AddManager = ({ setIsOpen }) => {
   const dispatch = useDispatch();
   const [inputState, setInputState] = useState({
-    title: "",
-    description: "",
-    basePrice: 0,
-    color: "",
-    product_type: "",
-    image: "",
+    mobile: "",
+    email: "",
   });
 
   const handleChange = (e) => {
@@ -22,48 +19,30 @@ const AddManager = ({ setIsOpen }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const data = {
-      title: inputState.title,
-      description: inputState.description,
-      basePrice: inputState.basePrice,
-      color: inputState.color,
-      product_type: inputState.product_type,
-      image: inputState.image,
+      mobile: inputState.mobile,
+      email: inputState.email,
     };
+    dispatch(addManager(data));
     // setIsOpen(false);
   };
   return (
     <form onSubmit={handleSubmit}>
       <div className="flex flex-col">
         <input
-          type="text"
-          value={inputState.title}
-          name="title"
+          type="number"
+          value={inputState.mobile}
+          name="mobile"
           onChange={handleChange}
-          placeholder="Title"
+          placeholder="Mobile"
           className="border rounded-lg h-10 pl-2 m-4"
         />
-        <textarea
-          value={inputState.description}
-          name="description"
-          onChange={handleChange}
-          placeholder="Description"
-          className="border rounded-lg h-32 p-2 m-4"
-        />
-
         <input
-          type="number"
-          value={inputState.basePrice}
-          name="basePrice"
+          type="email"
+          value={inputState.email}
+          name="email"
           onChange={handleChange}
-          className="border rounded-lg h-12 pl-2 m-4"
-        />
-        <input
-          type="file"
-          value={inputState.image}
-          name="image"
-          multiple
-          onChange={handleChange}
-          className="flex flex-col border rounded-lg h-12 p-2 m-4 text-slate-600"
+          placeholder="E-Mail"
+          className="border rounded-lg h-10 pl-2 m-4"
         />
         <div className="flex justify-end">
           <button

@@ -503,14 +503,14 @@ const addManager = asyncHandler(async (req, res) => {
     const token = await newManager.createManagerToken();
     await newManager.save();
     console.log(token);
-    const messageUrl = `Hi please follow this link to start your journey as a manager. This link is valid for 1 hour from now <a href='http://localhost:5000/api/v1/manager/manager/${token}'>Click Here</a>`;
-    const data = {
-      to: email,
-      subject: "Verify Account",
-      text: "Hey future manager",
-      htm: messageUrl,
-    };
-    sendEmail(data);
+    // const messageUrl = `Hi please follow this link to start your journey as a manager. This link is valid for 1 hour from now <a href='http://localhost:5000/api/v1/manager/manager/${token}'>Click Here</a>`;
+    // const data = {
+    //   to: email,
+    //   subject: "Verify Account",
+    //   text: "Hey future manager",
+    //   htm: messageUrl,
+    // };
+    // sendEmail(data);
     res.json(newManager);
   } catch (error) {
     throw new Error(error);

@@ -177,6 +177,24 @@ export const userSlice = createSlice({
           toast.error(action.error.message);
         }
       })
+      .addCase(addManager.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(addManager.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isSuccess = true;
+        state.message = "Manager Added successfully";
+        state.managers = [...state.managers, action.payload];
+        toast.success(state.message);
+      })
+      .addCase(addManager.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = false;
+        state.isError = true;
+        state.message = action.error.message;
+        toast.error(state.message);
+      })
       .addCase(toggleDarkMode.pending, (state) => {
         state.isLoading = true;
       })
