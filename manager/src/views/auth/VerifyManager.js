@@ -11,7 +11,9 @@ const VerifyManager = () => {
 
   const [enteredValue, setEnteredValue] = useState("");
 
-  const { isSuccess, isError, message } = useSelector((state) => state.auth);
+  const { isSuccess, isError, message, user } = useSelector(
+    (state) => state.auth
+  );
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -27,7 +29,18 @@ const VerifyManager = () => {
 
   useEffect(() => {
     if (isSuccess === true && message === "verified manager") {
-      navigate("verify-password");
+      // console.log(user.main_status);
+      if (user.main_status === "inactive") {
+        navigate("manager-info");
+      } else if (user.main_status === "waiting") {
+        navigate("waiting");
+      } else if (user.main_status === "unavailable") {
+        navigate("unavailable");
+      } else if (user.main_status === "active") {
+        navigate("login");
+      }
+
+      // navigate("verify-password");
     }
     console.log(isSuccess, isError);
   }, [isSuccess, isError]);

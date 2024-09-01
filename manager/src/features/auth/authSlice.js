@@ -7,7 +7,7 @@ const getTokenFromLocalStorage = localStorage.getItem("manager")
   : null;
 
 const initialState = {
-  user: getTokenFromLocalStorage,
+  user: [],
   isLoading: false,
   isSuccess: false,
   isError: false,
@@ -25,11 +25,22 @@ export const verifyManager = createAsyncThunk(
   }
 );
 
-export const verifyPassword = createAsyncThunk(
+// export const verifyPassword = createAsyncThunk(
+//   "auth/verify-password",
+//   async (data, thunkAPI) => {
+//     try {
+//       return await authService.verifyPassword(data);
+//     } catch (error) {
+//       return thunkAPI.rejectWithValue(error);
+//     }
+//   }
+// );
+
+export const managerInfo = createAsyncThunk(
   "auth/verify-password",
   async (data, thunkAPI) => {
     try {
-      return await authService.verifyPassword(data);
+      return await authService.managerInfo(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -72,18 +83,40 @@ export const authSlice = createSlice({
           toast.error(validationError);
         }
       })
-      .addCase(verifyPassword.pending, (state) => {
+      // .addCase(verifyPassword.pending, (state) => {
+      //   state.isLoading = true;
+      // })
+      // .addCase(verifyPassword.fulfilled, (state, action) => {
+      //   state.isLoading = false;
+      //   state.isSuccess = true;
+      //   state.isError = false;
+      //   state.message = "verified manager password";
+      //   state.user = action.payload;
+      //   toast.success("Welcome Manager");
+      // })
+      // .addCase(verifyPassword.rejected, (state, action) => {
+      //   state.isLoading = false;
+      //   state.isSuccess = false;
+      //   state.isError = true;
+      //   state.message = action.error;
+      //   if (state.isError === true) {
+      //     const validationError =
+      //       action.payload.response.data.message.split(":")[1];
+      //     toast.error(validationError);
+      //   }
+      // })
+      .addCase(managerInfo.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(verifyPassword.fulfilled, (state, action) => {
+      .addCase(managerInfo.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
         state.isError = false;
-        state.message = "verified manager password";
-        state.user = action.payload;
-        toast.success("Welcome Manager");
+        state.message = "manager Info updated";
+        // state.user = action.payload;
+        toast.success(state.message);
       })
-      .addCase(verifyPassword.rejected, (state, action) => {
+      .addCase(managerInfo.rejected, (state, action) => {
         state.isLoading = false;
         state.isSuccess = false;
         state.isError = true;

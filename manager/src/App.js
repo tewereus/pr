@@ -1,12 +1,8 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { PrivateRoutes } from "./routes/PrivateRoutes";
 import { OpenRoutes } from "./routes/OpenRoutes";
-import Login from "./views/auth/Login";
 import VerifyManager from "./views/auth/VerifyManager";
-import RegisterManager from "./views/auth/RegisterManager";
-import MainLayout from "./views/MainLayout";
-// import CheckManager from "./views/auth/CheckManager";
-import VerifyPassword from "./views/auth/VerifyPassword";
+import InactiveManager from "./views/auth/InactiveManager";
 
 const router = createBrowserRouter([
   {
@@ -17,36 +13,13 @@ const router = createBrowserRouter([
       </OpenRoutes>
     ),
   },
+  // make it so that this can't be accessed unless from verifyManager
   {
-    path: "/manager/:id/verify-password",
+    path: "/manager/:id/manager-info",
     element: (
       <OpenRoutes>
-        <VerifyPassword />
+        <InactiveManager />
       </OpenRoutes>
-    ),
-  },
-  // {
-  //   path: "/verify-manager",
-  //   element: (
-  //     <OpenRoutes>
-  //       <VerifyManager />
-  //     </OpenRoutes>
-  //   ),
-  // },
-  {
-    path: "/register-manager",
-    element: (
-      <OpenRoutes>
-        <RegisterManager />
-      </OpenRoutes>
-    ),
-  },
-  {
-    path: "/managers",
-    element: (
-      <PrivateRoutes>
-        <MainLayout />
-      </PrivateRoutes>
     ),
   },
 ]);

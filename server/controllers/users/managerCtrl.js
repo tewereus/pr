@@ -1,5 +1,7 @@
 const Manager = require("../../models/users/managerModel");
 const asyncHandler = require("express-async-handler");
+const bcrypt = require("bcryptjs");
+
 // const url = require('url')
 
 // const verifyManagerToken = asyncHandler(async (req, res) => {
@@ -14,7 +16,7 @@ const asyncHandler = require("express-async-handler");
 
 //       console.log("Manager status:", manager.main_status);
 
-//       // Handle based on the manager's main status
+//       /Handle based on the manager's main status
 //       switch (manager.main_status) {
 //         case "inactive":
 //           console.log("Redirecting to register");
@@ -48,7 +50,63 @@ const verifyManager = asyncHandler(async (req, res) => {
     if (!manager) throw new Error("Manager does not exist");
     if (manager && mobile !== manager.mobile)
       throw new Error("Invalid Credentials");
-    res.json({ message: "Verified Successfully" });
+    res.json({
+      _id: manager?._id,
+      email: manager?.email,
+      mobile: manager?.mobile,
+      status: manager?.status,
+      main_status: manager?.main_status,
+    });
+  } catch (error) {
+    throw new Error(error);
+  }
+});
+
+const verifyPassword = asyncHandler(async (req, res) => {
+  const { token } = req.params;
+  const { password } = req.body;
+  console.log(req.body);
+
+  try {
+    const manager = await Manager.findOne({ unique_id: token });
+    if (!manager) throw new Error("Manager does not exist");
+    if (manager && (await manager.isPasswordMatched(password))) {
+      res.json({
+        _id: manager?._id,
+        email: manager?.email,
+        mobile: manager?.mobile,
+      });
+    } else {
+      throw new Error("Invalid Credentials");
+    }
+  } catch (error) {
+    throw new Error(error);
+  }
+});
+
+const managerInfo = asyncHandler(async (req, res) => {
+  const { token } = req.params;
+  const { fullname, email, password, profile } = req.body;
+  try {
+    const manager = await Manager.findOne({ unique_id: token });
+    if (manager) {
+      // const salt = await bcrypt.genSaltSync(10);
+      // password = await bcrypt.hash(this.password, salt);
+      console.log(password);
+      const updated = await Manager.findOneAndUpdate(
+        { unique_id: token },
+        {
+          fullname,
+          email,
+          password,
+          profile,
+          main_status: "waiting",
+        }
+      );
+      res.json(updated);
+    } else {
+      throw new Error("Manager does not exist");
+    }
   } catch (error) {
     throw new Error(error);
   }
@@ -157,6 +215,8 @@ const deleteAccount = asyncHandler(async (req, res) => {
 module.exports = {
   // verifyManagerToken,
   verifyManager,
+  managerInfo,
+  verifyPassword,
   registerManager,
   loginManager,
   updateManagerInfo,
