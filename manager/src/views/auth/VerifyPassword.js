@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
-import { verifyManager } from "../../features/auth/authSlice";
+import { verifyPassword } from "../../features/auth/authSlice";
 
-const VerifyManager = () => {
+const VerifyPassword = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
@@ -18,16 +18,16 @@ const VerifyManager = () => {
     const data = {
       token: getToken,
       data: {
-        mobile: enteredValue,
+        password: enteredValue,
       },
     };
     // console.log(getToken);
-    dispatch(verifyManager(data));
+    dispatch(verifyPassword(data));
   };
 
   useEffect(() => {
-    if (isSuccess === true && message === "verified manager") {
-      navigate("verify-password");
+    if (isSuccess === true && message === "verified manager password") {
+      navigate("login");
     }
     console.log(isSuccess, isError);
   }, [isSuccess, isError]);
@@ -36,10 +36,10 @@ const VerifyManager = () => {
     <div>
       <form onSubmit={handleSubmit}>
         <input
-          type="number"
-          name="mobile"
+          type="password"
+          name="password"
           value={enteredValue}
-          placeholder="Mobile"
+          placeholder="Password"
           onChange={(e) => setEnteredValue(e.target.value)}
           className="border rounded-lg h-10 pl-2 m-4"
         />
@@ -49,4 +49,4 @@ const VerifyManager = () => {
   );
 };
 
-export default VerifyManager;
+export default VerifyPassword;

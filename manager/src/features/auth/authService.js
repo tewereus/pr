@@ -9,8 +9,16 @@ const verifyManager = async (data) => {
   return response.data;
 };
 
+const verifyPassword = async (data) => {
+  const response = await axios.post(
+    `${base_url}/manager/manager/${data.token}/verify-password`
+  );
+  return response.data;
+};
+
 const authService = {
   verifyManager,
+  verifyPassword,
 };
 
 export default authService;

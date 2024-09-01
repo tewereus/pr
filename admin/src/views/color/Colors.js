@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { getAllColors } from "../../features/color/colorSlice"
+import { getAllColors } from "../../features/color/colorSlice";
 import { useDispatch, useSelector } from "react-redux";
 import Modal from "react-modal";
 import AddColor from "./AddColor";
 import EditColor from "./EditColor";
 import DeleteColor from "./DeleteColor";
 import DeleteAllColors from "./DeleteAllColors";
-
 
 const Colors = () => {
   const dispatch = useDispatch();
@@ -22,7 +21,7 @@ const Colors = () => {
   }, []);
 
   const handleSelect = (color) => {
-    console.log(color);
+    // console.log(color);
     setSelectedColor(color);
   };
   const handleEdit = () => {
@@ -64,14 +63,16 @@ const Colors = () => {
                 key={color._id}
                 className={`color m-[20px] p-[20px] cursor-pointer ${
                   selectedColor && selectedColor._id === color._id
-                    ? "bg-gray-200 text-gray-800 border border-gray-400"
-                    : "bg-white-700 text-black border-none"
+                    ? " text-gray-800 border border-gray-400"
+                    : " text-black border-none"
                 }`}
                 onClick={() => handleSelect(color)}
               >
-                <div className={`w-[100px] h-[100px] bg-[${color.hex_code}] border`}></div>
-                <p>{color.name}</p>
-                <p>{color.hex_code}</p>
+                <div
+                  className={`w-[100px] h-[100px] bg-[${color.hex_code}] border rounded-full`}
+                ></div>
+                {/* <p className="text-center">{color.name}</p>
+                <p className="text-center">{color.hex_code}</p> */}
               </div>
             );
           })}
@@ -122,10 +123,7 @@ const Colors = () => {
             },
           }}
         >
-          <EditColor
-            setIsEdit={setIsEdit}
-            selectedColor={modifyColor}
-          />
+          <EditColor setIsEdit={setIsEdit} selectedColor={modifyColor} />
         </Modal>
       )}
       <button
@@ -145,10 +143,7 @@ const Colors = () => {
           onRequestClose={() => setIsDelete(false)}
           contentLabel="Delete color"
         >
-          <DeleteColor
-            setIsDelete={setIsDelete}
-            selectedColor={modifyColor}
-          />
+          <DeleteColor setIsDelete={setIsDelete} selectedColor={modifyColor} />
         </Modal>
       )}
       <button

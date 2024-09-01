@@ -5,7 +5,8 @@ import Login from "./views/auth/Login";
 import VerifyManager from "./views/auth/VerifyManager";
 import RegisterManager from "./views/auth/RegisterManager";
 import MainLayout from "./views/MainLayout";
-import CheckManager from "./views/auth/CheckManager";
+// import CheckManager from "./views/auth/CheckManager";
+import VerifyPassword from "./views/auth/VerifyPassword";
 
 const router = createBrowserRouter([
   {
@@ -13,6 +14,14 @@ const router = createBrowserRouter([
     element: (
       <OpenRoutes>
         <VerifyManager />
+      </OpenRoutes>
+    ),
+  },
+  {
+    path: "/manager/:id/verify-password",
+    element: (
+      <OpenRoutes>
+        <VerifyPassword />
       </OpenRoutes>
     ),
   },
