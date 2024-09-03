@@ -1,1 +1,2 @@
-=> after manager adds mobile the checkManager checks the mobile with the token(unique_id) if not sucessfull goto error page if successfull check the status and redirect based on that(if inactive goto a page to fill their information, if waiting goto page that tells them to wait until active and if active redirect to the main page ) 
+=> when manager fills information make it go back one step and go to waiting page(localhost:3000/mamager/34903/waiting instead of localhost:3000/mamager/34903/manager-info/waiting)
+=> create waiting page

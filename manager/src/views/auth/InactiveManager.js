@@ -25,7 +25,9 @@ const InactiveManager = () => {
     });
   };
 
-  const { isSuccess, isError, user } = useSelector((state) => state.auth);
+  const { isSuccess, isError, message, user } = useSelector(
+    (state) => state.auth
+  );
 
   const handleSubmit = (e) => {
     e.preventDefault();
