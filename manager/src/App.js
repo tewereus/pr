@@ -3,6 +3,7 @@ import { PrivateRoutes } from "./routes/PrivateRoutes";
 import { OpenRoutes } from "./routes/OpenRoutes";
 import VerifyManager from "./views/auth/VerifyManager";
 import InactiveManager from "./views/auth/InactiveManager";
+import Waiting from "./views/auth/Waiting";
 
 const router = createBrowserRouter([
   {
@@ -19,6 +20,14 @@ const router = createBrowserRouter([
     element: (
       <OpenRoutes>
         <InactiveManager />
+      </OpenRoutes>
+    ),
+  },
+  {
+    path: "/manager/:id/waiting",
+    element: (
+      <OpenRoutes>
+        <Waiting />
       </OpenRoutes>
     ),
   },

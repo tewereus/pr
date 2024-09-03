@@ -90,17 +90,19 @@ const managerInfo = asyncHandler(async (req, res) => {
   try {
     const manager = await Manager.findOne({ unique_id: token });
     if (manager) {
-      // const salt = await bcrypt.genSaltSync(10);
-      // password = await bcrypt.hash(this.password, salt);
-      console.log(password);
+      const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash(password, salt);
       const updated = await Manager.findOneAndUpdate(
         { unique_id: token },
         {
           fullname,
           email,
-          password,
+          password: hashedPassword,
           profile,
           main_status: "waiting",
+        },
+        {
+          new: true,
         }
       );
       res.json(updated);

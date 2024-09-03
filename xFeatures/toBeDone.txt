@@ -30,3 +30,4 @@ modify the users(Users, userService anduserSlice ), make it like products (not c
 => after manager is added, on login manager, if the main_status property is inactive if it passed this check: if(manager && (await manager.isPasswordMatched(password)))  make almost all manager features inaccessable by using middleware or redirecting to a new page like 404 page
 => something modified in client authSlice bring back from github
 => (Done!!) make the colors in add product be multiselectable and by default be all colors(or chose all color option)
+=> all routes are accessable from the url like http://localhost:3001/manager/cba86d/manager-info/ when status is waiting

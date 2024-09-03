@@ -45,9 +45,12 @@ const InactiveManager = () => {
   };
   useEffect(() => {
     if (isSuccess === true && message === "manager Info updated") {
-      navigate("pending");
+      navigate(-1, { replace: true });
+      setTimeout(() => {
+        navigate("waiting");
+      }, 1000);
     }
-  }, [isSuccess, isError]);
+  }, [isSuccess, isError, message]);
 
   return (
     <>
