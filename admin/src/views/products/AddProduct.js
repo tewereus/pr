@@ -8,6 +8,7 @@ import {
   messageClear,
 } from "../../features/products/productSlice";
 import { useDispatch, useSelector } from "react-redux";
+import MultiSelect from "../components/MultiSelect";
 
 const AddProduct = ({ setIsOpen }) => {
   const dispatch = useDispatch();
@@ -30,6 +31,13 @@ const AddProduct = ({ setIsOpen }) => {
     });
   };
 
+  const handleColorChange = (selectedColors) => {
+    setProductState({
+      ...productState,
+      color: selectedColors,
+    });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const data = {
@@ -42,18 +50,14 @@ const AddProduct = ({ setIsOpen }) => {
     };
     console.log(data);
     dispatch(createProduct(data));
-    // setIsOpen(false);
+    setIsOpen(false); // Close the modal after submission
   };
-  // const { isSuccess, createdProduct } = useSelector((state) => state.products);
-  // useEffect(() => {
-  //   if (createdProduct && isSuccess) {
-  //     setIsOpen(false);
-  //     dispatch(messageClear());
-  //     setTimeout(() => {
-  //        window.location.reload();
-  //       }, 2000);
-  //   }
-  // }, [isSuccess]);
+
+  const colorOptions = colors.map((color) => ({
+    value: color._id,
+    label: color.name,
+  }));
+
   return (
     <form onSubmit={handleSubmit}>
       <div className="flex flex-col">
@@ -93,19 +97,31 @@ const AddProduct = ({ setIsOpen }) => {
             </option>
           ))}
         </select>
-        <select
+        {/* <select
           name="color"
+          multiple
           onChange={handleChange}
           className="flex flex-col border rounded-lg h-12 p-2 m-4 text-slate-600"
           required
+          style={{
+            height: "auto",
+            maxHeight: "150px",
+            overflowY: "auto",
+          }}
         >
-          <option value="">Select Color</option>
+          {/* <option value="">Select Color</option> 
+          <option value="all">All</option>
           {colors.map((color) => (
             <option key={color._id} value={color._id}>
               {color.name}
             </option>
           ))}
-        </select>
+        </select> */}
+        <MultiSelect
+          options={colorOptions}
+          selectedOptions={productState.color}
+          onChange={handleColorChange}
+        />
         <input
           type="file"
           value={productState.image}
