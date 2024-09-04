@@ -25,13 +25,17 @@ const Navigation = () => {
     if (darkMode == false) {
       setDarkMode(true);
       document.querySelector("html").classList.add("dark");
-      const data = "light";
+      const data = {
+        preference: "dark",
+      };
       // console.log(data);
       dispatch(toggleDarkMode(data));
     } else {
       document.querySelector("html").classList.remove("dark");
       setDarkMode(false);
-      const data = "light";
+      const data = {
+        preference: "light",
+      };
       dispatch(toggleDarkMode(data));
       // console.log(darkMode);
     }

@@ -597,15 +597,16 @@ const getAllManagers = asyncHandler(async (req, res) => {
 
 const toggleDarkMode = asyncHandler(async (req, res) => {
   const { id } = req.admin;
-  const { darkMode } = req.body;
+  const { preference } = req.body;
   console.log(id);
-  console.log(req.body);
+  console.log(preference);
   try {
-    const darkmode = Admin.findByIdAndUpdate(
+    const darkmode = await Admin.findByIdAndUpdate(
       id,
-      { preference: darkMode },
+      { preference: preference },
       {
         new: true,
+        runValidators: true, // Optional: Ensure that validators are run
       }
     );
     res.json(darkmode);

@@ -77,8 +77,9 @@ const adminAuthMiddleware = asyncHandler(async (req, res, next) => {
     req.headers.authorization &&
     req.headers.authorization.startsWith("Bearer")
   ) {
-    // Extract the token from the authorization header
     token = req.headers.authorization.split(" ")[1];
+    // console.log("hello");
+    // console.log(req.headers.authorization);
     try {
       if (token) {
         // Verify and decode the token

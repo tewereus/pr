@@ -49,6 +49,7 @@ const addManager = async (data) => {
 };
 
 const toggleDarkMode = async (data) => {
+  // console.log(config);
   const response = await axios.post(
     `${base_url}/admin/dark-mode`,
     data,
