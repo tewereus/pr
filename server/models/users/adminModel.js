@@ -56,9 +56,16 @@ const adminSchema = mongoose.Schema(
       },
     },
     preference: {
-      type: String,
-      enum: ["light", "dark"],
-      default: "light",
+      mode: {
+        type: String,
+        enum: ["light", "dark"],
+        default: "light",
+      },
+      language: {
+        type: String,
+        enum: ["en", "am"],
+        default: "en",
+      },
     },
     profile: {
       type: String,

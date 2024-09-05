@@ -26,8 +26,11 @@ const getAllAdmins = async ({ page, limit, search, sort, searchField }) => {
   return response.data;
 };
 
-const getAllManagers = async () => {
-  const response = await axios.get(`${base_url}/admin/all-managers`, config);
+const getAllManagers = async ({ page, limit, search, searchField }) => {
+  const response = await axios.get(
+    `${base_url}/admin/all-managers?page=${page}&limit=${limit}&search=${search}&searchField=${searchField}`,
+    config
+  );
   return response.data;
 };
 

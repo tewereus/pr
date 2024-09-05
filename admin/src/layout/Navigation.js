@@ -22,23 +22,19 @@ const Navigation = () => {
   // };
 
   const handleTheme = () => {
-    if (darkMode == false) {
+    const data = {
+      preference: {
+        mode: darkMode ? "light" : "dark",
+      },
+    };
+    if (!darkMode) {
       setDarkMode(true);
       document.querySelector("html").classList.add("dark");
-      const data = {
-        preference: "dark",
-      };
-      // console.log(data);
-      dispatch(toggleDarkMode(data));
     } else {
       document.querySelector("html").classList.remove("dark");
       setDarkMode(false);
-      const data = {
-        preference: "light",
-      };
-      dispatch(toggleDarkMode(data));
-      // console.log(darkMode);
     }
+    dispatch(toggleDarkMode(data));
   };
 
   return (
@@ -54,15 +50,14 @@ const Navigation = () => {
       <div>
         {user ? (
           <>
-            <button type="button">
-              <Link to="/profile">{user.username}</Link>
-            </button>
-
             <button
               onClick={handleTheme}
               className="text-gray-800 dark:text-gray-300"
             >
               {darkMode ? <FaSun /> : <FaMoon />}
+            </button>
+            <button type="button" className="pl-4">
+              <Link to="/profile">{user.username}</Link>
             </button>
 
             {/* <button onClick={handleLogout} type="button">
@@ -72,7 +67,9 @@ const Navigation = () => {
         ) : (
           <>
             <button>
-              <Link to="/signup">Sign up</Link>
+              <Link to="/signup" className="text-white">
+                Sign up
+              </Link>
             </button>
             <button>
               <Link to="/login">Log in</Link>

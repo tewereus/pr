@@ -36,9 +36,9 @@ export const getAllAdmins = createAsyncThunk(
 
 export const getAllManagers = createAsyncThunk(
   "users/all-managers",
-  async (thunkAPI) => {
+  async (data, thunkAPI) => {
     try {
-      return await userService.getAllManagers();
+      return await userService.getAllManagers(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }

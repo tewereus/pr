@@ -25,6 +25,18 @@ const managerSchema = mongoose.Schema(
         message: (props) => `${props.value} is not a valid mobile number!`,
       },
     },
+    preference: {
+      mode: {
+        type: String,
+        enum: ["light", "dark"],
+        default: "light",
+      },
+      language: {
+        type: String,
+        enum: ["en", "am"],
+        default: "en",
+      },
+    },
     password: {
       type: String,
       // required: true,

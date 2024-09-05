@@ -83,8 +83,8 @@ const loginAdmin = asyncHandler(async (req, res) => {
     // });
     res.json({
       _id: findAdmin?._id,
-      firstname: findAdmin?.firstname,
-      lastname: findAdmin?.lastname,
+      fullname: findAdmin?.fullname,
+      username: findAdmin?.username,
       role: findAdmin?.role,
       email: findAdmin?.email,
       mobile: findAdmin?.mobile,
@@ -559,6 +559,34 @@ const getAllManagers = asyncHandler(async (req, res) => {
     let query = Manager.find(JSON.parse(queryStr));
 
     // Search
+    if (req.query.search) {
+      const searchField = req.query.searchField; // Add this line to get the search field from the query parameters
+      let searchQuery = {};
+
+      // Determine which field to search based on the searchField parameter
+      switch (searchField) {
+        case "username":
+          searchQuery = {
+            username: { $regex: req.query.search, $options: "i" },
+          };
+          break;
+        case "fullname":
+          searchQuery = {
+            fullname: { $regex: req.query.search, $options: "i" },
+          };
+          break;
+        case "mobile":
+          searchQuery = { mobile: { $regex: req.query.search, $options: "i" } };
+          break;
+        case "email":
+          searchQuery = { email: { $regex: req.query.search, $options: "i" } };
+          break;
+        default:
+          throw new Error("Invalid search field");
+      }
+
+      query = query.find(searchQuery);
+    }
 
     //Sorting
     if (req.query.sort) {
@@ -597,13 +625,11 @@ const getAllManagers = asyncHandler(async (req, res) => {
 
 const toggleDarkMode = asyncHandler(async (req, res) => {
   const { id } = req.admin;
-  const { preference } = req.body;
-  console.log(id);
-  console.log(preference);
+  const { mode } = req.body.preference;
   try {
     const darkmode = await Admin.findByIdAndUpdate(
       id,
-      { preference: preference },
+      { "preference.mode": mode },
       {
         new: true,
         runValidators: true, // Optional: Ensure that validators are run
