@@ -1,41 +1,34 @@
 import React, { useEffect, useState } from "react";
 import Modal from "react-modal";
 import { getAllManagers } from "../../../features/users/userSlice";
-
+import { GiDeadEye, GiEyeTarget } from "react-icons/gi";
+import { BsTrash } from "react-icons/bs";
 import { useSelector, useDispatch } from "react-redux";
 import AddManager from "./AddManager";
 import Pagination from "../../components/Pagination";
+import { FaRegEdit } from "react-icons/fa";
 
 Modal.setAppElement("#root");
 const Manager = () => {
   const dispatch = useDispatch();
   const [selectedUser, setSelectedUser] = useState(null);
   const [isAdd, setIsAdd] = useState(false);
-  const [isOpen, setIsOpen] = useState({
-    edit: false,
-    delete: false,
-    deleteAll: false,
-  });
+  const [isView, setIsView] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
+  const [isDelete, setIsDelete] = useState(false);
 
   const [modifyUser, setModifyUser] = useState(null);
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(5);
   const [search, setSearch] = useState("");
-  const [blocked, setBlocked] = useState(false);
-  const [searchField, setSearchField] = useState("username"); // Add searchField state
-  const [role, setRole] = useState("users");
-  const [sort, setSort] = useState("-createdAt");
-
-  // const sortOptions = ["createdAt", "username", "fullname"];
+  const [searchField, setSearchField] = useState("username");
 
   useEffect(() => {
     const obj = {
       limit: parseInt(limit),
       page: parseInt(page),
-      // sort,
       search,
       searchField,
-      // blocked,
     };
     dispatch(getAllManagers(obj));
   }, [page, limit, search, searchField]);
@@ -68,22 +61,6 @@ const Manager = () => {
     if (e.key === "Enter") {
       setSearch(e.target.value);
     }
-  };
-
-  // const handleSort = () => {
-  //   if (sortValue.order === "asc") {
-  //     setSort(sortValue.sortBy);
-  //   } else if (sortValue.order === "desc") {
-  //     setSort(() => {
-  //       return "-" + sortValue.sortBy;
-  //     });
-  //   }
-  // };
-
-  const handleBlockChange = () => {
-    setBlocked((prevOption) => {
-      return !prevOption;
-    });
   };
 
   const handleRowSelect = (user) => {
@@ -131,14 +108,10 @@ const Manager = () => {
     }
   };
 
-  const handleAddManager = () => {
-    setIsAdd(true);
-  };
-
   const { users, totalUsers, isLoading } = useSelector((state) => state.users);
   return (
     <div>
-      <div className="search-container h-200 pb-30 mb-20 border-3">
+      <div className="search-container h-200 pb-30 border-3">
         <input
           type="text"
           placeholder="Search users..."
@@ -152,18 +125,30 @@ const Manager = () => {
           <option value="email">Email</option>
         </select>
       </div>
-      <table>
-        <thead>
+      <button onClick={() => setIsAdd(true)}>Add Manager</button>
+      {isAdd && (
+        <>
+          <Modal
+            isOpen={isAdd}
+            onRequestClose={() => setIsOpen(false)}
+            contentLabel="Add Manager"
+          >
+            <AddManager setIsOpen={setIsAdd} />
+          </Modal>
+        </>
+      )}
+      <table className="border">
+        <thead className="border">
           <tr>
             <th>Email</th>
             <th>Mobile</th>
-            <th>Role</th>
             <th>Status</th>
             <th>Main Status</th>
             <th>Created At</th>
+            <th>Actions</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className="border">
           {isLoading ? (
             <tr>
               <td colSpan="6" align="center">
@@ -172,13 +157,36 @@ const Manager = () => {
             </tr>
           ) : totalUsers > 0 ? (
             users.map((user) => (
-              <tr key={user._id} onClick={() => handleRowSelect(user)}>
-                <td>{user.email}</td>
+              <tr
+                key={user._id}
+                onClick={() => handleRowSelect(user)}
+                className="text-center border"
+              >
+                <td className="p-4">{user.email}</td>
                 <td>{user.mobile}</td>
-                <td>{user.role}</td>
                 <td className="text-red-500">{user.status}</td>
                 <td className="text-purple-600">{user.main_status}</td>
                 <td>{new Date(user.createdAt).toLocaleString()}</td>
+                <td className="flex items-center justify-center text-center">
+                  <span
+                    onClick={() => setIsView(true)}
+                    className="text-blue-500 text-2xl"
+                  >
+                    <GiEyeTarget />
+                  </span>
+                  <span
+                    onClick={() => setIsEdit(true)}
+                    className="text-orange-400 text-2xl pl-2"
+                  >
+                    <FaRegEdit />
+                  </span>
+                  <span
+                    onClick={() => setIsDelete(true)}
+                    className="text-red-500 text-2xl pl-2"
+                  >
+                    <BsTrash />
+                  </span>
+                </td>
               </tr>
             ))
           ) : (
@@ -212,15 +220,36 @@ const Manager = () => {
         <button onClick={handleUpdate}>Update</button>
         <button onClick={handleDelete}>Delete</button>
       </div>
-      <button onClick={handleAddManager}>Add Manager</button>
-      {isAdd && (
+      {isView && (
         <>
           <Modal
-            isOpen={isAdd}
-            onRequestClose={() => setIsOpen(false)}
-            contentLabel="Add Manager"
+            isOpen={isView}
+            onRequestClose={() => setIsView(false)}
+            contentLabel="View Manager Info"
           >
-            <AddManager setIsOpen={setIsAdd} />
+            <ViewManager setIsOpen={setIsView} />
+          </Modal>
+        </>
+      )}
+      {isEdit && (
+        <>
+          <Modal
+            isOpen={isEdit}
+            onRequestClose={() => setIsEdit(false)}
+            contentLabel="Edit Manager Info"
+          >
+            <EditManager setIsOpen={setIsEdit} />
+          </Modal>
+        </>
+      )}
+      {isDelete && (
+        <>
+          <Modal
+            isOpen={isDelete}
+            onRequestClose={() => setIsDelete(false)}
+            contentLabel="Delete Manager"
+          >
+            <DeleteManager setIsOpen={setIsDelete} />
           </Modal>
         </>
       )}

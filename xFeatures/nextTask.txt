@@ -1,3 +1,4 @@
 => change the status of manager from admin after checking the profile(do view profile(edit profile))
 => change the product catagories(maybe add product type)
 => create coupon
+=> initialize printers
