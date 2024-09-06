@@ -10,6 +10,7 @@ Modal.setAppElement("#root");
 const Manager = () => {
   const dispatch = useDispatch();
   const [selectedUser, setSelectedUser] = useState(null);
+  const [isAdd, setIsAdd] = useState(false);
   const [isOpen, setIsOpen] = useState({
     edit: false,
     delete: false,
@@ -131,7 +132,7 @@ const Manager = () => {
   };
 
   const handleAddManager = () => {
-    // setIsOpen(true);
+    setIsAdd(true);
   };
 
   const { users, totalUsers, isLoading } = useSelector((state) => state.users);
@@ -212,17 +213,17 @@ const Manager = () => {
         <button onClick={handleDelete}>Delete</button>
       </div>
       <button onClick={handleAddManager}>Add Manager</button>
-      {/* {isOpen && (
+      {isAdd && (
         <>
           <Modal
-            isOpen={isOpen}
+            isOpen={isAdd}
             onRequestClose={() => setIsOpen(false)}
             contentLabel="Add Manager"
           >
-            <AddManager setIsOpen={setIsOpen} />
+            <AddManager setIsOpen={setIsAdd} />
           </Modal>
         </>
-      )} */}
+      )}
     </div>
   );
 };

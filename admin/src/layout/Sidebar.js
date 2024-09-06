@@ -18,22 +18,16 @@ const Sidebar = () => {
     <div>
       <ul>
         <li>
-          <Link to="/">Dashboard</Link>
+          <Link to="/admin">Dashboard</Link>
         </li>
         <li>
           <div>
             <button
+              className="cursor-pointer bg-none border-none p-0 m-0"
               onClick={() => {
                 setIsUsersOpen(!isUsersOpen);
                 setIsImagesOpen(false);
                 setIsProductsOpen(false);
-              }}
-              style={{
-                cursor: "pointer",
-                background: "none",
-                border: "none",
-                padding: "0",
-                margin: "0",
               }}
             >
               Users

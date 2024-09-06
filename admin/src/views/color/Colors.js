@@ -69,7 +69,8 @@ const Colors = () => {
                 onClick={() => handleSelect(color)}
               >
                 <div
-                  className={`w-[100px] h-[100px] bg-[${color.hex_code}] border rounded-full`}
+                  style={{ background: color.hex_code }}
+                  className={`w-[100px] h-[100px] border-none rounded-full`}
                 ></div>
                 {/* <p className="text-center">{color.name}</p>
                 <p className="text-center">{color.hex_code}</p> */}

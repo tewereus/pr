@@ -1,2 +1,3 @@
-=> when manager fills information make it go back one step and go to waiting page(localhost:3000/mamager/34903/waiting instead of localhost:3000/mamager/34903/manager-info/waiting)
-=> create waiting page
+=> change the status of manager from admin after checking the profile(do view profile(edit profile))
+=> change the product catagories(maybe add product type)
+=> create coupon
