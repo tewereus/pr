@@ -62,27 +62,27 @@ const verifyManager = asyncHandler(async (req, res) => {
   }
 });
 
-const verifyPassword = asyncHandler(async (req, res) => {
-  const { token } = req.params;
-  const { password } = req.body;
-  console.log(req.body);
+// const verifyPassword = asyncHandler(async (req, res) => {
+//   const { token } = req.params;
+//   const { password } = req.body;
+//   console.log(req.body);
 
-  try {
-    const manager = await Manager.findOne({ unique_id: token });
-    if (!manager) throw new Error("Manager does not exist");
-    if (manager && (await manager.isPasswordMatched(password))) {
-      res.json({
-        _id: manager?._id,
-        email: manager?.email,
-        mobile: manager?.mobile,
-      });
-    } else {
-      throw new Error("Invalid Credentials");
-    }
-  } catch (error) {
-    throw new Error(error);
-  }
-});
+//   try {
+//     const manager = await Manager.findOne({ unique_id: token });
+//     if (!manager) throw new Error("Manager does not exist");
+//     if (manager && (await manager.isPasswordMatched(password))) {
+//       res.json({
+//         _id: manager?._id,
+//         email: manager?.email,
+//         mobile: manager?.mobile,
+//       });
+//     } else {
+//       throw new Error("Invalid Credentials");
+//     }
+//   } catch (error) {
+//     throw new Error(error);
+//   }
+// });
 
 const managerInfo = asyncHandler(async (req, res) => {
   const { token } = req.params;
@@ -114,28 +114,11 @@ const managerInfo = asyncHandler(async (req, res) => {
   }
 });
 
-// unfinished: needed continous test(
-// check:
-// 1. mobile is same as the one saved with token
-// 2. change the main status correct way )
-// 3. on method make them choose bank and input their bank method
-const registerManager = asyncHandler(async (req, res) => {
-  const { token } = req.params;
-  const { mobile } = req.body;
+const viewProfile = asyncHandler(async (req, res) => {
+  const { id } = req.manager;
   try {
-    const managerExists = await Manager.findOne({ token });
-    if (managerExists) {
-      console.log("check"); // check if mobile on database with this token is same as they provided
-    }
-    const manager = await Manager.create({
-      fullname,
-      email,
-      mobile,
-      main_status: "waiting",
-      shop_info,
-      method,
-      image,
-    });
+    const manager = await Manager.findById(id);
+    res.json(manager);
   } catch (error) {
     throw new Error(error);
   }
@@ -218,9 +201,8 @@ module.exports = {
   // verifyManagerToken,
   verifyManager,
   managerInfo,
-  verifyPassword,
-  registerManager,
   loginManager,
+  viewProfile,
   updateManagerInfo,
   changeStatus,
   deleteAccount,

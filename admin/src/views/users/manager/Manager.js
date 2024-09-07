@@ -7,6 +7,9 @@ import { useSelector, useDispatch } from "react-redux";
 import AddManager from "./AddManager";
 import Pagination from "../../components/Pagination";
 import { FaRegEdit } from "react-icons/fa";
+import EditManager from "./EditManager";
+import DeleteManager from "./DeleteManager";
+import ViewManager from "./ViewManager";
 
 Modal.setAppElement("#root");
 const Manager = () => {
@@ -77,36 +80,36 @@ const Manager = () => {
     }
   };
 
-  const handleUpdate = () => {
-    if (selectedUser) {
-      setModifyUser(selectedUser);
-      // Execute API code for updating
-      setIsOpen((prevState) => ({
-        ...prevState,
-        edit: true,
-      }));
-      console.log("Updating user:", selectedUser.username);
-      console.log("total users: ", totalUsers);
-    } else {
-      console.log("No user selected for updating");
-    }
-  };
+  // const handleUpdate = () => {
+  //   if (selectedUser) {
+  //     setModifyUser(selectedUser);
+  //     // Execute API code for updating
+  //     setIsOpen((prevState) => ({
+  //       ...prevState,
+  //       edit: true,
+  //     }));
+  //     console.log("Updating user:", selectedUser.username);
+  //     console.log("total users: ", totalUsers);
+  //   } else {
+  //     console.log("No user selected for updating");
+  //   }
+  // };
 
-  const handleDelete = () => {
-    if (selectedUser) {
-      setModifyUser(selectedUser);
+  // const handleDelete = () => {
+  //   if (selectedUser) {
+  //     setModifyUser(selectedUser);
 
-      // Execute API code for updating
-      setIsOpen((prevState) => ({
-        ...prevState,
-        delete: true,
-      }));
-      console.log("Deleting user:", selectedUser.username);
-      console.log("total users: ", totalUsers);
-    } else {
-      console.log("No user selected for Deleting");
-    }
-  };
+  //     // Execute API code for updating
+  //     setIsOpen((prevState) => ({
+  //       ...prevState,
+  //       delete: true,
+  //     }));
+  //     console.log("Deleting user:", selectedUser.username);
+  //     console.log("total users: ", totalUsers);
+  //   } else {
+  //     console.log("No user selected for Deleting");
+  //   }
+  // };
 
   const { users, totalUsers, isLoading } = useSelector((state) => state.users);
   return (
@@ -130,7 +133,7 @@ const Manager = () => {
         <>
           <Modal
             isOpen={isAdd}
-            onRequestClose={() => setIsOpen(false)}
+            onRequestClose={() => setIsAdd(false)}
             contentLabel="Add Manager"
           >
             <AddManager setIsOpen={setIsAdd} />
@@ -216,9 +219,9 @@ const Manager = () => {
         </span>
       </div>
       <div>
-        <button onClick={handleEdit}>Edit</button>
+        {/* <button onClick={handleEdit}>Edit</button>
         <button onClick={handleUpdate}>Update</button>
-        <button onClick={handleDelete}>Delete</button>
+        <button onClick={handleDelete}>Delete</button> */}
       </div>
       {isView && (
         <>

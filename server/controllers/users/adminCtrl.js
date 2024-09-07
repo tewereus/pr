@@ -623,6 +623,17 @@ const getAllManagers = asyncHandler(async (req, res) => {
   }
 });
 
+const getManagerInfo = asyncHandler(async (req, res) => {
+  // const {id} = req.admin
+  const { id } = req.body;
+  try {
+    const manager = await Manager.findById(id);
+    res.json(manager);
+  } catch (error) {
+    throw new Error(error);
+  }
+});
+
 const toggleDarkMode = asyncHandler(async (req, res) => {
   const { id } = req.admin;
   const { mode } = req.body.preference;
