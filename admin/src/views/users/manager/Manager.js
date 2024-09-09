@@ -68,7 +68,7 @@ const Manager = () => {
 
   const handleRowSelect = (user) => {
     setSelectedUser(user);
-    console.log(user);
+    // console.log(user);
   };
 
   const handleEdit = () => {
@@ -110,6 +110,11 @@ const Manager = () => {
   //     console.log("No user selected for Deleting");
   //   }
   // };
+
+  const handleView = (user) => {
+    setSelectedUser(user);
+    setIsView(true);
+  };
 
   const { users, totalUsers, isLoading } = useSelector((state) => state.users);
   return (
@@ -172,19 +177,28 @@ const Manager = () => {
                 <td>{new Date(user.createdAt).toLocaleString()}</td>
                 <td className="flex items-center justify-center text-center">
                   <span
-                    onClick={() => setIsView(true)}
+                    onClick={() => {
+                      setSelectedUser(user);
+                      setIsView(true);
+                    }}
                     className="text-blue-500 text-2xl"
                   >
                     <GiEyeTarget />
                   </span>
                   <span
-                    onClick={() => setIsEdit(true)}
+                    onClick={() => {
+                      setSelectedUser(user);
+                      setIsEdit(true);
+                    }}
                     className="text-orange-400 text-2xl pl-2"
                   >
                     <FaRegEdit />
                   </span>
                   <span
-                    onClick={() => setIsDelete(true)}
+                    onClick={() => {
+                      setSelectedUser(user);
+                      setIsDelete(true);
+                    }}
                     className="text-red-500 text-2xl pl-2"
                   >
                     <BsTrash />
@@ -230,7 +244,7 @@ const Manager = () => {
             onRequestClose={() => setIsView(false)}
             contentLabel="View Manager Info"
           >
-            <ViewManager setIsOpen={setIsView} />
+            <ViewManager setIsOpen={setIsView} selectedUser={selectedUser} />
           </Modal>
         </>
       )}
@@ -241,7 +255,7 @@ const Manager = () => {
             onRequestClose={() => setIsEdit(false)}
             contentLabel="Edit Manager Info"
           >
-            <EditManager setIsOpen={setIsEdit} />
+            <EditManager setIsOpen={setIsEdit} selectedUser={selectedUser} />
           </Modal>
         </>
       )}
@@ -252,7 +266,10 @@ const Manager = () => {
             onRequestClose={() => setIsDelete(false)}
             contentLabel="Delete Manager"
           >
-            <DeleteManager setIsOpen={setIsDelete} />
+            <DeleteManager
+              setIsOpen={setIsDelete}
+              selectedUser={selectedUser}
+            />
           </Modal>
         </>
       )}

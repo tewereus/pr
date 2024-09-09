@@ -34,6 +34,11 @@ const getAllManagers = async ({ page, limit, search, searchField }) => {
   return response.data;
 };
 
+const getManagerInfo = async (id) => {
+  const response = await axios.get(`${base_url}/admin/get-manager/${id}`);
+  return response.data;
+};
+
 const deleteUser = async (id) => {
   const response = await axios.delete(
     `${base_url}/admin/get-user/${id}/delete`
@@ -51,6 +56,13 @@ const addManager = async (data) => {
   return response.data;
 };
 
+const deleteManager = async (id) => {
+  const response = await axios.delete(
+    `${base_url}/admin/get-manager/${id}/delete`
+  );
+  return response.data;
+};
+
 const toggleDarkMode = async (data) => {
   // console.log(config);
   const response = await axios.post(
@@ -65,10 +77,12 @@ const toggleDarkMode = async (data) => {
 const userService = {
   getAllUsers,
   getAllAdmins,
+  getManagerInfo,
   deleteUser,
   deleteAllUsers,
   getAllManagers,
   addManager,
+  deleteManager,
   toggleDarkMode,
 };
 

@@ -2,3 +2,4 @@
 => change the product catagories(maybe add product type)
 => create coupon
 => initialize printers
+=> when manager is deleted update the table without refresh

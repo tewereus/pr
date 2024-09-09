@@ -1,6 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 
-const EditManager = () => {
+const EditManager = ({ setIsOpen, selectedUser }) => {
+  useEffect(() => {
+    console.log(selectedUser);
+  }, []);
+
   return <div>EditManager</div>;
 };
 

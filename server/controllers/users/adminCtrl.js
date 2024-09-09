@@ -624,11 +624,27 @@ const getAllManagers = asyncHandler(async (req, res) => {
 });
 
 const getManagerInfo = asyncHandler(async (req, res) => {
-  // const {id} = req.admin
-  const { id } = req.body;
+  const { id } = req.params;
+  console.log(id);
   try {
     const manager = await Manager.findById(id);
+    if (!manager) {
+      return res.status(404).json({ message: "Manager not found" });
+    }
     res.json(manager);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+const deleteManager = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  try {
+    const manager = await Manager.findByIdAndDelete(id);
+    if (!manager) {
+      return res.status(404).json({ message: "Manager not found" });
+    }
+    res.json({ message: "Manager deleted successfully" });
   } catch (error) {
     throw new Error(error);
   }
@@ -672,5 +688,7 @@ module.exports = {
   addManager,
   changeMainStatus,
   getAllManagers,
+  getManagerInfo,
+  deleteManager,
   toggleDarkMode,
 };

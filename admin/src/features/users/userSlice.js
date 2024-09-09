@@ -6,6 +6,7 @@ const initialState = {
   admins: [],
   managers: [],
   totalUsers: 0,
+  selectedManager: null,
   isSuccess: false,
   isError: false,
   isLoading: false,
@@ -28,6 +29,28 @@ export const getAllAdmins = createAsyncThunk(
   async (data, thunkAPI) => {
     try {
       return await userService.getAllAdmins(data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+export const getManagerInfo = createAsyncThunk(
+  "users/get-manager",
+  async (id, thunkAPI) => {
+    try {
+      return await userService.getManagerInfo(id);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+export const deleteManager = createAsyncThunk(
+  "users/delete-manager",
+  async (id, thunkAPI) => {
+    try {
+      return await userService.deleteManager(id);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -177,6 +200,24 @@ export const userSlice = createSlice({
           toast.error(action.error.message);
         }
       })
+      .addCase(getManagerInfo.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getManagerInfo.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isSuccess = true;
+        state.message = "Manager Info Retrieved";
+        state.selectedManager = action.payload;
+        toast.success(state.message);
+      })
+      .addCase(getManagerInfo.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = false;
+        state.isError = true;
+        state.message = action.error.message;
+        toast.error(state.message);
+      })
       .addCase(addManager.pending, (state) => {
         state.isLoading = true;
       })
@@ -189,6 +230,23 @@ export const userSlice = createSlice({
         toast.success(state.message);
       })
       .addCase(addManager.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = false;
+        state.isError = true;
+        state.message = action.error.message;
+        toast.error(state.message);
+      })
+      .addCase(deleteManager.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(deleteManager.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isSuccess = true;
+        state.message = "Manager Deleted successfully";
+        toast.success(state.message);
+      })
+      .addCase(deleteManager.rejected, (state, action) => {
         state.isLoading = false;
         state.isSuccess = false;
         state.isError = true;

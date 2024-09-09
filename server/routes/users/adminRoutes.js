@@ -20,6 +20,8 @@ const {
   changeMainStatus,
   getAllManagers,
   toggleDarkMode,
+  getManagerInfo,
+  deleteManager,
 } = require("../../controllers/users/adminCtrl");
 
 const { adminAuthMiddleware } = require("../../middlewares/authMiddleware");
@@ -42,6 +44,8 @@ router.post("/check-admin", checkAdminPass);
 router.post("/add-manager", addManager);
 router.post("/manager-status/:id", changeMainStatus);
 router.get("/all-managers", getAllManagers);
+router.get("/get-manager/:id", getManagerInfo);
+router.delete("/get-manager/:id/delete", deleteManager);
 router.post("/dark-mode", adminAuthMiddleware, toggleDarkMode);
 
 module.exports = router;
