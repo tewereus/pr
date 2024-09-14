@@ -66,7 +66,7 @@ const deleteManager = async (id) => {
 const updateManager = async (data) => {
   const response = await axios.put(
     `${base_url}/admin/get-manager/${data.id}/update`,
-    data
+    data.data
   );
   return response.data;
 };

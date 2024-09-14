@@ -32,8 +32,7 @@ const Manager = () => {
       searchField,
     };
     dispatch(getAllManagers(obj));
-    console.log("here");
-  }, [page, limit, search, searchField, dispatch]);
+  }, [page, limit, search, searchField]);
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -101,7 +100,7 @@ const Manager = () => {
           </Modal>
         </>
       )}
-      <table className="border">
+      <table className="border-4">
         <thead className="border">
           <tr>
             <th>Email</th>
@@ -126,7 +125,7 @@ const Manager = () => {
                 onClick={() => handleRowSelect(manager)}
                 className="text-center border"
               >
-                <td className="p-4 items-start">{manager.email}</td>
+                <td className="p-4">{manager.email}</td>
                 <td>{manager.mobile}</td>
                 <td className="text-red-500">{manager.status}</td>
                 <td className="text-purple-600">{manager.main_status}</td>

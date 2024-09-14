@@ -273,7 +273,9 @@ export const userSlice = createSlice({
         state.isSuccess = true;
         state.message = "Manager updated successfully";
         state.managers = state.managers.map((manager) =>
-          manager._id === action.payload._id ? action.payload : manager
+          manager._id === action.payload.id
+            ? { ...manager, ...action.payload.data }
+            : manager
         );
         toast.success(state.message);
       })
