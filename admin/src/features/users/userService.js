@@ -63,6 +63,14 @@ const deleteManager = async (id) => {
   return response.data;
 };
 
+const updateManager = async (data) => {
+  const response = await axios.put(
+    `${base_url}/admin/get-manager/${data.id}/update`,
+    data
+  );
+  return response.data;
+};
+
 const toggleDarkMode = async (data) => {
   // console.log(config);
   const response = await axios.post(
@@ -83,6 +91,7 @@ const userService = {
   getAllManagers,
   addManager,
   deleteManager,
+  updateManager,
   toggleDarkMode,
 };
 

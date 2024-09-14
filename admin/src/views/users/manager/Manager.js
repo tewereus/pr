@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import Modal from "react-modal";
 import { getAllManagers } from "../../../features/users/userSlice";
-import { GiDeadEye, GiEyeTarget } from "react-icons/gi";
+import { GiEyeTarget } from "react-icons/gi";
 import { BsTrash } from "react-icons/bs";
+import { FaRegEdit } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
 import AddManager from "./AddManager";
 import Pagination from "../../components/Pagination";
-import { FaRegEdit } from "react-icons/fa";
 import EditManager from "./EditManager";
 import DeleteManager from "./DeleteManager";
 import ViewManager from "./ViewManager";
@@ -19,8 +19,6 @@ const Manager = () => {
   const [isView, setIsView] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
-
-  const [modifyUser, setModifyUser] = useState(null);
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(5);
   const [search, setSearch] = useState("");
@@ -34,7 +32,8 @@ const Manager = () => {
       searchField,
     };
     dispatch(getAllManagers(obj));
-  }, [page, limit, search, searchField]);
+    console.log("here");
+  }, [page, limit, search, searchField, dispatch]);
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -66,57 +65,14 @@ const Manager = () => {
     }
   };
 
-  const handleRowSelect = (user) => {
-    setSelectedUser(user);
-    // console.log(user);
+  const handleRowSelect = (manager) => {
+    setSelectedUser(manager);
+    // console.log(manager);
   };
 
-  const handleEdit = () => {
-    if (selectedUser) {
-      setModifyUser(selectedUser);
-      console.log("Editing user:", selectedUser.username);
-    } else {
-      console.log("No user selected for editing");
-    }
-  };
-
-  // const handleUpdate = () => {
-  //   if (selectedUser) {
-  //     setModifyUser(selectedUser);
-  //     // Execute API code for updating
-  //     setIsOpen((prevState) => ({
-  //       ...prevState,
-  //       edit: true,
-  //     }));
-  //     console.log("Updating user:", selectedUser.username);
-  //     console.log("total users: ", totalUsers);
-  //   } else {
-  //     console.log("No user selected for updating");
-  //   }
-  // };
-
-  // const handleDelete = () => {
-  //   if (selectedUser) {
-  //     setModifyUser(selectedUser);
-
-  //     // Execute API code for updating
-  //     setIsOpen((prevState) => ({
-  //       ...prevState,
-  //       delete: true,
-  //     }));
-  //     console.log("Deleting user:", selectedUser.username);
-  //     console.log("total users: ", totalUsers);
-  //   } else {
-  //     console.log("No user selected for Deleting");
-  //   }
-  // };
-
-  const handleView = (user) => {
-    setSelectedUser(user);
-    setIsView(true);
-  };
-
-  const { users, totalUsers, isLoading } = useSelector((state) => state.users);
+  const { managers, totalUsers, isLoading } = useSelector(
+    (state) => state.users
+  );
   return (
     <div>
       <div className="search-container h-200 pb-30 border-3">
@@ -164,21 +120,21 @@ const Manager = () => {
               </td>
             </tr>
           ) : totalUsers > 0 ? (
-            users.map((user) => (
+            managers.map((manager) => (
               <tr
-                key={user._id}
-                onClick={() => handleRowSelect(user)}
+                key={manager._id}
+                onClick={() => handleRowSelect(manager)}
                 className="text-center border"
               >
-                <td className="p-4">{user.email}</td>
-                <td>{user.mobile}</td>
-                <td className="text-red-500">{user.status}</td>
-                <td className="text-purple-600">{user.main_status}</td>
-                <td>{new Date(user.createdAt).toLocaleString()}</td>
+                <td className="p-4 items-start">{manager.email}</td>
+                <td>{manager.mobile}</td>
+                <td className="text-red-500">{manager.status}</td>
+                <td className="text-purple-600">{manager.main_status}</td>
+                <td>{new Date(manager.createdAt).toLocaleString()}</td>
                 <td className="flex items-center justify-center text-center">
                   <span
                     onClick={() => {
-                      setSelectedUser(user);
+                      setSelectedUser(manager);
                       setIsView(true);
                     }}
                     className="text-blue-500 text-2xl"
@@ -187,7 +143,7 @@ const Manager = () => {
                   </span>
                   <span
                     onClick={() => {
-                      setSelectedUser(user);
+                      setSelectedUser(manager);
                       setIsEdit(true);
                     }}
                     className="text-orange-400 text-2xl pl-2"
@@ -196,7 +152,7 @@ const Manager = () => {
                   </span>
                   <span
                     onClick={() => {
-                      setSelectedUser(user);
+                      setSelectedUser(manager);
                       setIsDelete(true);
                     }}
                     className="text-red-500 text-2xl pl-2"
@@ -231,11 +187,6 @@ const Manager = () => {
             min="1"
           />
         </span>
-      </div>
-      <div>
-        {/* <button onClick={handleEdit}>Edit</button>
-        <button onClick={handleUpdate}>Update</button>
-        <button onClick={handleDelete}>Delete</button> */}
       </div>
       {isView && (
         <>

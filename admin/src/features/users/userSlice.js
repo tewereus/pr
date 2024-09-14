@@ -57,6 +57,17 @@ export const deleteManager = createAsyncThunk(
   }
 );
 
+export const updateManager = createAsyncThunk(
+  "users/update-manager",
+  async (id, thunkAPI) => {
+    try {
+      return await userService.updateManager(id);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 export const getAllManagers = createAsyncThunk(
   "users/all-managers",
   async (data, thunkAPI) => {
@@ -165,7 +176,7 @@ export const userSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = true;
         state.isError = false;
-        state.users = action.payload.users;
+        state.managers = action.payload.users;
         state.totalUsers = action.payload.totalUsers;
         state.message = "success";
         // console.log("Fulfilled - Data:", action.payload);
@@ -186,8 +197,8 @@ export const userSlice = createSlice({
         state.isError = false;
         state.isSuccess = true;
         state.message = "User deleted successfully";
-        state.users = state.users.filter(
-          (user) => user._id !== action.payload._id
+        state.managers = state.managers.filter(
+          (manager) => manager._id !== action.payload._id
         );
         state.totalUsers = state.totalUsers - 1;
       })
@@ -247,6 +258,26 @@ export const userSlice = createSlice({
         toast.success(state.message);
       })
       .addCase(deleteManager.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = false;
+        state.isError = true;
+        state.message = action.error.message;
+        toast.error(state.message);
+      })
+      .addCase(updateManager.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(updateManager.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isSuccess = true;
+        state.message = "Manager updated successfully";
+        state.managers = state.managers.map((manager) =>
+          manager._id === action.payload._id ? action.payload : manager
+        );
+        toast.success(state.message);
+      })
+      .addCase(updateManager.rejected, (state, action) => {
         state.isLoading = false;
         state.isSuccess = false;
         state.isError = true;

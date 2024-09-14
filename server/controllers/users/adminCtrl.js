@@ -650,6 +650,21 @@ const deleteManager = asyncHandler(async (req, res) => {
   }
 });
 
+const updateManager = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  try {
+    const manager = await Manager.findByIdAndUpdate(id, req.body, {
+      new: true,
+    });
+    if (!manager) {
+      return res.status(404).json({ message: "Manager not found" });
+    }
+    res.json({ message: "Manager updated successfully", manager });
+  } catch (error) {
+    throw new Error(error);
+  }
+});
+
 const toggleDarkMode = asyncHandler(async (req, res) => {
   const { id } = req.admin;
   const { mode } = req.body.preference;
@@ -690,5 +705,6 @@ module.exports = {
   getAllManagers,
   getManagerInfo,
   deleteManager,
+  updateManager,
   toggleDarkMode,
 };
