@@ -1,6 +1,8 @@
 const User = require("../../models/users/userModel");
 const ProductType = require("../../models/product/productTypeModel");
 const Product = require("../../models/product/productModel");
+const QRCode = require("qrcode");
+const CryptoJS = require("crypto-js");
 const asyncHandler = require("express-async-handler");
 const validateMongoDbId = require("../../utils/validateMongoDbId");
 
@@ -14,11 +16,26 @@ const createProduct = asyncHandler(async (req, res) => {
     if (req.body.title) {
       req.body.slug = slugify(req.body.title);
     }
-    if(!mongoose.Types.ObjectId.isValid(req.body.product_type)){
-      return res.status(400).json({message: 'Invalid product type'})
+    if (!mongoose.Types.ObjectId.isValid(req.body.product_type)) {
+      return res.status(400).json({ message: "Invalid product type" });
     }
     const product = await Product.create(req.body);
-    res.status(200).json(product);
+    console.log(product);
+    const qrData = JSON.stringify({
+      app: "Onprintz",
+      id: product._id,
+      price: product.basePrice,
+      type: product.product_type,
+      description: product.description,
+    });
+    // console.log(qrData);
+    const encryptedData = CryptoJS.AES.encrypt(qrData, "hello").toString();
+    // console.log(encryptedData);
+    // Generate QR code
+    const qrCode = await QRCode.toDataURL(encryptedData);
+    res.status(201).json({ product, qrCode });
+    console.log(product, qrCode);
+    // res.status(200).json(product);
   } catch (error) {
     throw new Error(error);
   }
@@ -26,7 +43,7 @@ const createProduct = asyncHandler(async (req, res) => {
 
 const getAllProducts = asyncHandler(async (req, res) => {
   try {
-    const product = await Product.find().populate('product_type color');
+    const product = await Product.find().populate("product_type color");
     res.status(200).json(product);
   } catch (error) {
     throw new Error(error);
