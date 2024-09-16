@@ -8,6 +8,8 @@ const validateMongoDbId = require("../../utils/validateMongoDbId");
 
 const slugify = require("slugify");
 const { default: mongoose } = require("mongoose");
+const { cloudinaryUploadImg } = require("../../utils/cloudinary");
+const fs = require("fs");
 
 const createProduct = asyncHandler(async (req, res) => {
   // const { id } = req.user;
@@ -100,6 +102,36 @@ const deleteAllProducts = asyncHandler(async (req, res) => {
   }
 });
 
+const uploadImages = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const uploader = (path) => cloudinaryUploadImg(path, "images");
+    const urls = [];
+    const files = req.files;
+    for (const file of files) {
+      const { path } = file;
+      const newpath = await uploader(path);
+      console.log(newpath);
+      urls.push(newpath);
+      // fs.unlinkSync(path);
+    }
+    const findProduct = await Product.findByIdAndUpdate(
+      id,
+      {
+        images: urls.map((file) => {
+          return file;
+        }),
+      },
+      { new: true }
+    );
+
+    res.json(findProduct);
+  } catch (error) {
+    throw new Error(error);
+  }
+});
+
 module.exports = {
   createProduct,
   getAllProducts,
@@ -107,4 +139,5 @@ module.exports = {
   updateProduct,
   deleteProduct,
   deleteAllProducts,
+  uploadImages,
 };

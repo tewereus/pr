@@ -9,6 +9,7 @@ import EditProduct from "./EditProduct";
 import DeleteProduct from "./DeleteProduct";
 import { getAllColors } from "../../features/color/colorSlice";
 import { getAllProdTypes } from "../../features/productType/prodTypeSlice";
+import QRCode from "react-qr-code";
 
 Modal.setAppElement("#root");
 
@@ -89,7 +90,16 @@ const Products = () => {
               >
                 <p>Product Name: {product.title}</p>
                 <p>Price: {product.basePrice}</p>
-                <p>type: {product.product_type.productName}</p>
+                <QRCode
+                  value={JSON.stringify({
+                    id: product._id,
+                    title: product.title,
+                    price: product.basePrice,
+                  })}
+                  size={100}
+                  style={{ marginTop: "10px" }}
+                />
+                {/* <p>type: {product.product_type.productName}</p> */}
               </div>
             );
           })}

@@ -39,6 +39,27 @@ const deleteAllProducts = async () => {
   return response.data;
 };
 
+const uploadProductImages = async (id, formData) => {
+  const config = {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  };
+
+  const response = await axios.put(
+    `${base_url}/product/upload/${id}`,
+    formData,
+    config
+  );
+  return response.data;
+};
+
+const uploadImg = async (data) => {
+  const response = await axios.post(`${base_url}/upload/`, data, config);
+
+  return response.data;
+};
+
 const productService = {
   createProduct,
   getAllProducts,
@@ -46,6 +67,8 @@ const productService = {
   updateProduct,
   deleteProduct,
   deleteAllProducts,
+  uploadProductImages,
+  uploadImg,
 };
 
 export default productService;

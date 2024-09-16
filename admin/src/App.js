@@ -12,6 +12,7 @@ import Colors from "./views/color/Colors";
 import Images from "./views/images/image/Images";
 import ImageTypes from "./views/images/imageTypes/ImageTypes";
 import ImageCategories from "./views/images/imageCategories/ImageCategories";
+import Profile from "./views/auth/Profile";
 
 const router = createBrowserRouter([
   {
@@ -31,6 +32,7 @@ const router = createBrowserRouter([
     ),
     children: [
       { index: true, element: <Dashboard /> },
+      { path: "profile", element: <Profile /> },
       { path: "users", element: <Users /> },
       { path: "managers", element: <Manager /> },
       { path: "products", element: <Products /> },

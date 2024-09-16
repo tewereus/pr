@@ -43,6 +43,17 @@ export const checkAdminPass = createAsyncThunk(
   }
 );
 
+export const uploadProfile = createAsyncThunk(
+  "auth/profile-upload",
+  async (data, thunkAPI) => {
+    try {
+      return await authService.uploadProfile(data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 export const authSlice = createSlice({
   name: "auth",
   initialState,
@@ -99,6 +110,22 @@ export const authSlice = createSlice({
         console.log("password verified");
       })
       .addCase(checkAdminPass.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = false;
+        state.isError = true;
+        state.message = action.error;
+      })
+      .addCase(uploadProfile.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(uploadProfile.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.isError = false;
+        state.message = "profile uploaded";
+        console.log("profile uploaded");
+      })
+      .addCase(uploadProfile.rejected, (state, action) => {
         state.isLoading = false;
         state.isSuccess = false;
         state.isError = true;

@@ -1,13 +1,11 @@
-/*
-todo Use fieldset for price since place holder doesn't work
-todo make image accept drag and drop and also make display zone and make it look like that in eshop
-*/
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   createProduct,
-  messageClear,
+  uploadImg,
+  uploadProductImages,
 } from "../../features/products/productSlice";
 import { useDispatch, useSelector } from "react-redux";
+import Dropzone from "react-dropzone"; // For drag-and-drop functionality
 import MultiSelect from "../components/MultiSelect";
 
 const AddProduct = ({ setIsOpen }) => {
@@ -16,9 +14,9 @@ const AddProduct = ({ setIsOpen }) => {
     title: "",
     description: "",
     basePrice: 0,
-    color: "",
+    color: [],
     product_type: "",
-    image: "",
+    images: [],
   });
 
   const { productTypes } = useSelector((state) => state.productTypes);
@@ -38,18 +36,49 @@ const AddProduct = ({ setIsOpen }) => {
     });
   };
 
+  const handleImageUpload = async (acceptedFiles) => {
+    const formData = new FormData();
+
+    // Append each image file to FormData
+    acceptedFiles.forEach((file) => {
+      formData.append("images", file);
+    });
+
+    // Dispatch uploadImages action to upload images to Cloudinary
+    try {
+      const response = await dispatch(uploadProductImages(formData)); // Make sure this action is defined
+      console.log("Uploaded Images:", response.payload); // Log the response from the upload
+      setProductState((prevState) => ({
+        ...prevState,
+        images: [...prevState.images, ...acceptedFiles], // Update state with uploaded images
+      }));
+    } catch (error) {
+      console.error("Error uploading images:", error);
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const data = {
-      title: productState.title,
-      description: productState.description,
-      basePrice: productState.basePrice,
-      color: productState.color,
-      product_type: productState.product_type,
-      image: productState.image,
-    };
-    console.log(data);
-    dispatch(createProduct(data));
+
+    const formData = new FormData();
+
+    // Append product details to formData
+    formData.append("title", productState.title);
+    formData.append("description", productState.description);
+    formData.append("basePrice", productState.basePrice);
+    formData.append("color", JSON.stringify(productState.color));
+    formData.append("product_type", productState.product_type);
+
+    // Append images to formData
+    productState.images.forEach((image) => {
+      formData.append("images", image);
+    });
+
+    console.log("Form Data:", Array.from(formData)); // Log FormData for debugging
+
+    // Dispatch createProduct action with FormData
+    await dispatch(createProduct(formData));
+
     setIsOpen(false); // Close the modal after submission
   };
 
@@ -97,39 +126,27 @@ const AddProduct = ({ setIsOpen }) => {
             </option>
           ))}
         </select>
-        {/* <select
-          name="color"
-          multiple
-          onChange={handleChange}
-          className="flex flex-col border rounded-lg h-12 p-2 m-4 text-slate-600"
-          required
-          style={{
-            height: "auto",
-            maxHeight: "150px",
-            overflowY: "auto",
-          }}
-        >
-          {/* <option value="">Select Color</option> 
-          <option value="all">All</option>
-          {colors.map((color) => (
-            <option key={color._id} value={color._id}>
-              {color.name}
-            </option>
-          ))}
-        </select> */}
         <MultiSelect
           options={colorOptions}
           selectedOptions={productState.color}
           onChange={handleColorChange}
         />
-        <input
-          type="file"
-          value={productState.image}
-          name="image"
-          multiple
-          onChange={handleChange}
-          className="flex flex-col border rounded-lg h-12 p-2 m-4 text-slate-600"
-        />
+
+        {/* Dropzone for image uploads */}
+        <Dropzone
+          onDrop={(acceptedFiles) => dispatch(uploadImg(acceptedFiles))}
+        >
+          {({ getRootProps, getInputProps }) => (
+            <div
+              {...getRootProps()}
+              className="border-dashed border-2 border-gray-400 p-12 text-center m-4 rounded-lg"
+            >
+              <input {...getInputProps()} />
+              <p>Drag 'n' drop some files here, or click to select files</p>
+            </div>
+          )}
+        </Dropzone>
+
         <div className="flex justify-end">
           <button
             type="button"

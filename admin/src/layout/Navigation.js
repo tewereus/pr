@@ -57,7 +57,7 @@ const Navigation = () => {
               {darkMode ? <FaSun /> : <FaMoon />}
             </button>
             <button type="button" className="pl-4">
-              <Link to="/profile">{user.username}</Link>
+              <Link to="profile">{user.username}</Link>
             </button>
 
             {/* <button onClick={handleLogout} type="button">

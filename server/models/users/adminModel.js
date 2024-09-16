@@ -70,6 +70,10 @@ const adminSchema = mongoose.Schema(
     profile: {
       type: String,
     },
+    image: {
+      type: String,
+      default: "",
+    },
     role: {
       type: String,
       default: "administrator",

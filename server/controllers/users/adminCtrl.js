@@ -2,12 +2,15 @@
 // in updateUser it should follow the rules of the user schema like usernam should have minlength of 3 and mobile should be 9 digits long...
 // (!Solved! but check again) problem with validateUser as it validates everything not just the one i want to update, like if i change username it also checks for mobile, email...,
 
+const formidable = require("formidable");
 const Admin = require("../../models/users/adminModel");
 const User = require("../../models/users/userModel");
 const asyncHandler = require("express-async-handler");
 const { generateToken } = require("../../config/jwtToken");
 const validateMongoDbId = require("../../utils/validateMongoDbId");
 const { generateRefreshToken } = require("../../config/refreshtoken");
+const cloudinary = require("cloudinary").v2;
+
 const validateUser = require("../../middlewares/validateUser");
 const bcrypt = require("bcryptjs");
 const sendEmail = require("../utils/emailCtrl");
@@ -53,43 +56,79 @@ const Manager = require("../../models/users/managerModel");
 //   }
 // });
 
+// const loginAdmin = asyncHandler(async (req, res) => {
+//   const { email, password } = req.body;
+//   console.log(req.body);
+//   const findAdmin = await Admin.findOne({ email });
+//   // if (findAdmin.role !== "administrator") throw new Error("Not Authorized"); // not needed
+
+//   if (findAdmin && (await findAdmin.isPasswordMatched(password))) {
+//     const refreshToken = await generateRefreshToken(findAdmin?._id);
+//     const updateuser = await Admin.findByIdAndUpdate(
+//       findAdmin.id,
+//       {
+//         refreshToken: refreshToken,
+//       },
+//       { new: true }
+//     );
+//     res.cookie("refreshToken", refreshToken, {
+//       httpOnly: true,
+//       maxAge: 72 * 60 * 60 * 1000,
+//     });
+//     // res.json({
+//     //   _id: findAdmin?._id,
+//     //   firstname: findAdmin?.firstname,
+//     //   lastname: findAdmin?.lastname,
+//     //   role: findAdmin?.role,
+//     //   email: findAdmin?.email,
+//     //   mobile: findAdmin?.mobile,
+//     //   token: generateToken(findAdmin?._id),
+//     // });
+//     res.json({
+//       _id: findAdmin?._id,
+//       fullname: findAdmin?.fullname,
+//       username: findAdmin?.username,
+//       role: findAdmin?.role,
+//       email: findAdmin?.email,
+//       mobile: findAdmin?.mobile,
+//       preference: findAdmin?.preference,
+//       token: generateToken(findAdmin?._id),
+//     });
+//   } else {
+//     throw new Error("Invalid Credentials");
+//   }
+// });
+
 const loginAdmin = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
   console.log(req.body);
   const findAdmin = await Admin.findOne({ email });
-  // if (findAdmin.role !== "administrator") throw new Error("Not Authorized"); // not needed
 
   if (findAdmin && (await findAdmin.isPasswordMatched(password))) {
-    const refreshToken = await generateRefreshToken(findAdmin?._id);
+    const refreshToken = generateRefreshToken(findAdmin._id);
     const updateuser = await Admin.findByIdAndUpdate(
-      findAdmin.id,
-      {
-        refreshToken: refreshToken,
-      },
+      findAdmin._id,
+      { refreshToken: refreshToken },
       { new: true }
     );
+
     res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
-      maxAge: 72 * 60 * 60 * 1000,
+      maxAge: 72 * 60 * 60 * 1000, // 3 days
     });
-    // res.json({
-    //   _id: findAdmin?._id,
-    //   firstname: findAdmin?.firstname,
-    //   lastname: findAdmin?.lastname,
-    //   role: findAdmin?.role,
-    //   email: findAdmin?.email,
-    //   mobile: findAdmin?.mobile,
-    //   token: generateToken(findAdmin?._id),
-    // });
+
+    // Generate access token (assuming you have a function for it)
+    const accessToken = generateToken(findAdmin._id); // Ensure this function exists
+
     res.json({
-      _id: findAdmin?._id,
-      fullname: findAdmin?.fullname,
-      username: findAdmin?.username,
-      role: findAdmin?.role,
-      email: findAdmin?.email,
-      mobile: findAdmin?.mobile,
-      preference: findAdmin?.preference,
-      token: generateToken(findAdmin?._id),
+      _id: findAdmin._id,
+      fullname: findAdmin.fullname,
+      username: findAdmin.username,
+      role: findAdmin.role,
+      email: findAdmin.email,
+      mobile: findAdmin.mobile,
+      preference: findAdmin.preference,
+      token: accessToken,
     });
   } else {
     throw new Error("Invalid Credentials");
@@ -131,6 +170,52 @@ const viewAdminProfile = asyncHandler(async (req, res) => {
   } catch (error) {
     throw new Error(error);
   }
+});
+
+const profileUpload = asyncHandler(async (req, res) => {
+  const { id } = req.admin;
+
+  const form = new formidable.IncomingForm();
+
+  form.parse(req, async (err, fields, files) => {
+    if (err) {
+      return res.status(400).json({ error: "File parsing error." });
+    }
+
+    const { image } = files; // `image` should match the key sent from Postman
+
+    // console.log("Parsed files:", files); // Log all parsed files
+    // console.log("Image file:", image); // Log just the image file
+    const uploadedImage = Array.isArray(image) ? image[0] : image;
+    // console.log("upload: ", uploadedImage);
+    // console.log("upload: ", uploadedImage.filepath);
+
+    if (!image) {
+      return res.status(400).json({ error: "Missing required - file" });
+    }
+
+    try {
+      const result = await cloudinary.uploader.upload(uploadedImage.filepath, {
+        folder: "profile",
+      });
+
+      if (result) {
+        await Admin.findByIdAndUpdate(id, {
+          image: result.url,
+        });
+
+        const userInfo = await Admin.findById(id);
+        res.status(201).json({
+          message: "Image upload success",
+          userInfo,
+        });
+      } else {
+        res.status(404).json({ error: "Image upload failed" });
+      }
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  });
 });
 
 const getaUser = asyncHandler(async (req, res) => {
@@ -689,6 +774,7 @@ module.exports = {
   logout,
   viewAdminProfile,
   getaUser,
+  profileUpload,
   //   updateUser,
   updatePassword,
   blockUser,

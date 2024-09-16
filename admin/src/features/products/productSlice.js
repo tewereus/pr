@@ -78,6 +78,39 @@ export const deleteAllProducts = createAsyncThunk(
   }
 );
 
+export const uploadProductImages = createAsyncThunk(
+  "product/upload-product-image",
+  async (data, thunkAPI) => {
+    try {
+      const { id, formData } = data;
+      return await productService.uploadProductImages(id, formData);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+export const uploadImg = createAsyncThunk(
+  "upload/images",
+  async (data, thunkAPI) => {
+    try {
+      const formData = new FormData();
+      for (let i = 0; i < data.length; i++) {
+        formData.append("images", data[i]);
+      }
+      return await productService.uploadImg(formData);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 export const productSlice = createSlice({
   name: "products",
   initialState,
@@ -220,6 +253,36 @@ export const productSlice = createSlice({
         if (state.isError === true) {
           toast.error(action.payload.response.data.message);
         }
+      })
+      .addCase(uploadProductImages.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(uploadProductImages.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.images = action.payload;
+      })
+      .addCase(uploadProductImages.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+      .addCase(uploadImg.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(uploadImg.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isSuccess = true;
+        state.images = action.payload;
+        console.log("success");
+      })
+      .addCase(uploadImg.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.isSuccess = false;
+        state.message = action.error;
+        console.log("failed");
       });
   },
 });

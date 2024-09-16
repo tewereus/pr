@@ -23,23 +23,27 @@ const productSchema = new mongoose.Schema(
       required: true,
       min: 0,
     },
-    color: [{
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Color"
-    }],
+    color: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Color",
+      },
+    ],
     product_type: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "ProductType"
+      ref: "ProductType",
     },
     sold: {
       type: Number,
       default: 0,
       min: 0,
     },
-    image: {
-      type: String,
-      // required: true,
-    },
+    images: [
+      {
+        public_id: String,
+        url: String,
+      },
+    ],
   },
   { timestamps: true }
 );

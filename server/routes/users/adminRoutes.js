@@ -23,6 +23,7 @@ const {
   getManagerInfo,
   deleteManager,
   updateManager,
+  profileUpload,
 } = require("../../controllers/users/adminCtrl");
 
 const { adminAuthMiddleware } = require("../../middlewares/authMiddleware");
@@ -31,6 +32,7 @@ const { adminAuthMiddleware } = require("../../middlewares/authMiddleware");
 router.post("/login", loginAdmin);
 router.post("/logout", logout);
 router.get("/profile", adminAuthMiddleware, viewAdminProfile);
+router.post("/upload-profile", adminAuthMiddleware, profileUpload);
 router.put("/update-password", updatePassword);
 router.put("/get-user/:id", getaUser);
 router.put("/get-user/:id/block", blockUser);
