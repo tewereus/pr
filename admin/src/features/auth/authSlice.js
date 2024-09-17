@@ -7,6 +7,7 @@ const getTokenFromLocalStorage = localStorage.getItem("admin")
 
 const initialState = {
   user: getTokenFromLocalStorage,
+  userInfo: null,
   isLoading: false,
   isSuccess: false,
   isError: false,
@@ -123,7 +124,8 @@ export const authSlice = createSlice({
         state.isSuccess = true;
         state.isError = false;
         state.message = "profile uploaded";
-        console.log("profile uploaded");
+        // state.userInfo = action.payload.userInfo;
+        // console.log("userInfo: ", action.payload.userInfo);
       })
       .addCase(uploadProfile.rejected, (state, action) => {
         state.isLoading = false;

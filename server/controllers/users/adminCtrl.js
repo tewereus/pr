@@ -128,6 +128,7 @@ const loginAdmin = asyncHandler(async (req, res) => {
       email: findAdmin.email,
       mobile: findAdmin.mobile,
       preference: findAdmin.preference,
+      image: findAdmin.image,
       token: accessToken,
     });
   } else {
@@ -204,7 +205,7 @@ const profileUpload = asyncHandler(async (req, res) => {
           image: result.url,
         });
 
-        const userInfo = await Admin.findById(id);
+        const userInfo = await Admin.findById(id).select("image -_id");
         res.status(201).json({
           message: "Image upload success",
           userInfo,
