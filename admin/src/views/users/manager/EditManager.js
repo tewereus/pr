@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import {
-  getAllManagers,
-  updateManager,
-} from "../../../features/users/userSlice";
+import { getAllManagers, updateManager } from "../../../store/users/userSlice";
 
 const EditManager = ({ setIsOpen, selectedUser }) => {
   const dispatch = useDispatch();

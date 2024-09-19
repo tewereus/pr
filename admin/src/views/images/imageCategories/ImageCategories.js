@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Modal from "react-modal";
-import { allImgCategories } from "../../../features/images/imageCategories/imgCategorySlice";
+import { allImgCategories } from "../../../store/images/imageCategories/imgCategorySlice";
 import AddImgCategory from "./AddImgCategory";
 import EditImgCategory from "./EditImgCategory";
 import DeleteImgCategory from "./DeleteImgCategory";
 import DeleteAllCategories from "./DeleteAllCategories";
-import { getAllImgTypes } from "../../../features/images/imageTypes/imgTypeSlice";
 
 const ImageCategories = () => {
   const dispatch = useDispatch();

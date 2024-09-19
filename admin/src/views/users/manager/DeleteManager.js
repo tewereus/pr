@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { deleteManager } from "../../../features/users/userSlice";
+import { deleteManager } from "../../../store/users/userSlice";
 
 const DeleteManager = ({ setIsOpen, selectedUser }) => {
   const dispatch = useDispatch();

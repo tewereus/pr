@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { updateProduct } from "../../features/products/productSlice";
+import { updateProduct } from "../../store/products/productSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 const EditProduct = ({ setEditModal, selectedProduct }) => {
@@ -10,7 +10,7 @@ const EditProduct = ({ setEditModal, selectedProduct }) => {
       : {
           title: "",
           description: "",
-          basePrice: 0
+          basePrice: 0,
         }
   );
 
@@ -21,7 +21,7 @@ const EditProduct = ({ setEditModal, selectedProduct }) => {
       ...productState,
       [e.target.name]: e.target.value,
     });
-    console.log(productState)
+    console.log(productState);
   };
 
   const handleSubmit = async (e) => {
@@ -31,10 +31,10 @@ const EditProduct = ({ setEditModal, selectedProduct }) => {
       data: {
         title: productState.title,
         description: productState.description,
-        basePrice: productState.basePrice
+        basePrice: productState.basePrice,
       },
     };
-    console.log(productState)
+    console.log(productState);
     dispatch(updateProduct(data));
     // const response = await axios.put(
     //   `http://localhost:3773/api/v1/product/${data.id}`,

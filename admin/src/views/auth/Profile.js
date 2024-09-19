@@ -1,7 +1,7 @@
 import React from "react";
 import { BsImages } from "react-icons/bs";
 import { FadeLoader } from "react-spinners";
-import { uploadProfile } from "../../features/auth/authSlice";
+import { uploadProfile } from "../../store/auth/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 const Profile = () => {

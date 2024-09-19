@@ -3,7 +3,7 @@ import {
   createProduct,
   uploadImg,
   uploadProductImages,
-} from "../../features/products/productSlice";
+} from "../../store/products/productSlice";
 import { useDispatch, useSelector } from "react-redux";
 import Dropzone from "react-dropzone"; // For drag-and-drop functionality
 import MultiSelect from "../components/MultiSelect";

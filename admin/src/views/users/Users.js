@@ -6,7 +6,7 @@ import {
   getAllAdmins,
   deleteUser,
   deleteAllUsers,
-} from "../../features/users/userSlice";
+} from "../../store/users/userSlice";
 import Search from "../components/Search";
 import Modal from "react-modal";
 import { useSelector, useDispatch } from "react-redux";

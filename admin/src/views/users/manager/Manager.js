@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Modal from "react-modal";
-import { getAllManagers } from "../../../features/users/userSlice";
+import { getAllManagers } from "../../../store/users/userSlice";
 import { GiEyeTarget } from "react-icons/gi";
 import { BsTrash } from "react-icons/bs";
 import { FaRegEdit } from "react-icons/fa";

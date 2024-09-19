@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { updateProdType } from "../../features/productType/prodTypeSlice";
+import { updateProdType } from "../../store/productType/prodTypeSlice";
 import { useDispatch } from "react-redux";
 
 const EditProductType = ({ setIsEdit, selectedProduct }) => {

@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
-import {addColor} from "../../features/color/colorSlice"
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState } from "react";
+import { addColor } from "../../store/color/colorSlice";
+import { useDispatch } from "react-redux";
 
 const AddColor = ({ setIsAdd }) => {
   const dispatch = useDispatch();
   const [colorState, setColorState] = useState({
     name: "",
-    hex_code: ""
+    hex_code: "",
   });
 
   const handleChange = (e) => {
@@ -20,7 +20,7 @@ const AddColor = ({ setIsAdd }) => {
     e.preventDefault();
     const data = {
       name: colorState.name,
-      hex_code: colorState.hex_code
+      hex_code: colorState.hex_code,
     };
     dispatch(addColor(data));
     // setIsOpen(false);

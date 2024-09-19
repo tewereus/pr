@@ -1,4 +1,4 @@
-import { deleteUser } from "../../features/users/userSlice";
+import { deleteUser } from "../../store/users/userSlice";
 import { useDispatch } from "react-redux";
 
 const DeleteUser = ({ setIsOpen, selectedUser }) => {

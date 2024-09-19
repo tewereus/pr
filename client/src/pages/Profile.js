@@ -1,16 +1,15 @@
-import React, {useState, useEffect} from 'react'
-import {useSelector, useDispatch} from "react-redux"
-
+import React from "react";
+import { useSelector, useDispatch } from "react-redux";
 
 const Profile = () => {
-  const dispatch = useDispatch()
-  const {user} = useSelector((state) => state.auth)
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth);
   return (
     <div className="flex justify-around items-center">
       <div>{user.username}</div>
       <div>{user.name}</div>
     </div>
-  )
-}
+  );
+};
 
-export default Profile
+export default Profile;

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { deleteAllProdTypes } from "../../features/productType/prodTypeSlice";
-import { checkAdminPass } from "../../features/auth/authSlice";
+import { deleteAllProdTypes } from "../../store/productType/prodTypeSlice";
+import { checkAdminPass } from "../../store/auth/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 const DeleteAllProductTypes = ({ setIsDeleteAll }) => {

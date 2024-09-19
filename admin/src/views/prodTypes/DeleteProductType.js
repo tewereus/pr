@@ -1,5 +1,5 @@
 import React from "react";
-import { deleteProdType } from "../../features/productType/prodTypeSlice";
+import { deleteProdType } from "../../store/productType/prodTypeSlice";
 import { useDispatch } from "react-redux";
 
 const DeleteProductType = ({ setIsDelete, selectedProduct }) => {

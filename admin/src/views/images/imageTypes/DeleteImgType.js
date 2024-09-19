@@ -1,16 +1,9 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { deleteImageType } from "../../../features/images/imageTypes/imgTypeSlice";
+import { deleteImageType } from "../../../store/images/imageTypes/imgTypeSlice";
 
 const DeleteImgType = ({ setIsDelete, selectedImage }) => {
   const dispatch = useDispatch();
-
-  // const handleCheckInput = (e) => {
-  //   if (e.target.value === `Delete ${selectedImage.image_type}`) {
-  //     setDisabled(false);
-  //   }
-  // };
-
   const handleDelete = () => {
     dispatch(deleteImageType(selectedImage._id));
     setIsDelete(false);

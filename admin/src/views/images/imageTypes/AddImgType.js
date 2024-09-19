@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { addImageType } from "../../../features/images/imageTypes/imgTypeSlice";
+import { addImageType } from "../../../store/images/imageTypes/imgTypeSlice";
 
 const AddImgType = ({ setIsAdd }) => {
   const dispatch = useDispatch();

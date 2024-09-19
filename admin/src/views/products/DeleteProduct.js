@@ -1,4 +1,4 @@
-import { deleteProduct } from "../../features/products/productSlice";
+import { deleteProduct } from "../../store/products/productSlice";
 import { useDispatch } from "react-redux";
 
 const DeleteProduct = ({ setDeleteModal, selectedProduct }) => {

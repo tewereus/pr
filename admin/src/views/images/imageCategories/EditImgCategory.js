@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { updateImageType } from "../../../features/images/imageTypes/imgTypeSlice";
-import { updateImgCategory } from "../../../features/images/imageCategories/imgCategorySlice";
+import { updateImgCategory } from "../../../store/images/imageCategories/imgCategorySlice";
 
 const EditImgCategory = ({ setIsEdit, selectedImage }) => {
   const dispatch = useDispatch();
@@ -29,10 +28,6 @@ const EditImgCategory = ({ setIsEdit, selectedImage }) => {
       },
     };
     dispatch(updateImgCategory(data));
-    // const response = await axios.put(
-    //   `http://localhost:3773/api/v1/product/${data.id}`,
-    //   data
-    // );
     setIsEdit(false);
   };
 

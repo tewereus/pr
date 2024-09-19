@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import logo from "./onPrintz-removebg-preview.png";
 import { useSelector, useDispatch } from "react-redux";
-// import {user_reset} from "../features/auth/authSlice"
+// import {user_reset} from "../store/auth/authSlice"
 
 const Navigation = () => {
   const dispatch = useDispatch();

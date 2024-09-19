@@ -4,7 +4,7 @@ import {
   validateUser,
   verifyEmail,
   messageClear,
-} from "../features/auth/authSlice";
+} from "../store/auth/authSlice";
 import { useNavigate } from "react-router-dom";
 
 const Signup = () => {

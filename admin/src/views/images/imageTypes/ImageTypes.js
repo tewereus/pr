@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Modal from "react-modal";
-import { getAllImgTypes } from "../../../features/images/imageTypes/imgTypeSlice";
+import { getAllImgTypes } from "../../../store/images/imageTypes/imgTypeSlice";
 import AddImgType from "./AddImgType";
 import EditImgType from "./EditImgType";
 import DeleteImgType from "./DeleteImgType";

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { deleteAllColors } from "../../features/color/colorSlice";
-import { checkAdminPass } from "../../features/auth/authSlice";
+import { deleteAllColors } from "../../store/color/colorSlice";
+import { checkAdminPass } from "../../store/auth/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 const DeleteAllColors = ({ setIsDeleteAll }) => {

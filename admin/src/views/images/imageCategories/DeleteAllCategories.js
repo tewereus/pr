@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { checkAdminPass } from "../../../features/auth/authSlice";
+import { checkAdminPass } from "../../../store/auth/authSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteImgCategories } from "../../../features/images/imageCategories/imgCategorySlice";
+import { deleteImgCategories } from "../../../store/images/imageCategories/imgCategorySlice";
 
 const DeleteAllCategories = ({ setIsDeleteAll }) => {
   const dispatch = useDispatch();

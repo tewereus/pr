@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { getAllProdTypes } from "../../features/productType/prodTypeSlice";
+import { getAllProdTypes } from "../../store/productType/prodTypeSlice";
 import { useDispatch, useSelector } from "react-redux";
 import Modal from "react-modal";
 import AddProductType from "./AddProductType";

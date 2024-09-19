@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { updateImageType } from "../../../features/images/imageTypes/imgTypeSlice";
+import { updateImageType } from "../../../store/images/imageTypes/imgTypeSlice";
 
 const EditImgType = ({ setIsEdit, selectedImage }) => {
   const dispatch = useDispatch();

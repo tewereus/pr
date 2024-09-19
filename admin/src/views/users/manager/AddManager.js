@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addManager } from "../../../features/users/userSlice";
+import { addManager } from "../../../store/users/userSlice";
 
 const AddManager = ({ setIsOpen }) => {
   const dispatch = useDispatch();

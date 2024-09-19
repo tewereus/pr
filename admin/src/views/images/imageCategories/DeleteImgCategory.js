@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { deleteImgCategory } from "../../../features/images/imageCategories/imgCategorySlice";
+import { deleteImgCategory } from "../../../store/images/imageCategories/imgCategorySlice";
 
 const DeleteImgCategory = ({ setIsDelete, selectedImage }) => {
   const dispatch = useDispatch();

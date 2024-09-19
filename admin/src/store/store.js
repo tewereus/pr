@@ -9,13 +9,14 @@ import {
   PURGE,
   REGISTER,
 } from "redux-persist";
-import authReducer from "../features/auth/authSlice";
-import usersReducer from "../features/users/userSlice";
-import productReducer from "../features/products/productSlice";
-import prodTypeReducer from "../features/productType/prodTypeSlice";
-import colorReducer from "../features/color/colorSlice";
-import imgCategoryReducer from "../features/images/imageCategories/imgCategorySlice";
-import imgTypeReducer from "../features/images/imageTypes/imgTypeSlice";
+
+import authReducer from "./auth/authSlice";
+import usersReducer from "./users/userSlice";
+import productReducer from "./products/productSlice";
+import prodTypeReducer from "./productType/prodTypeSlice";
+import colorReducer from "./color/colorSlice";
+import imgCategoryReducer from "./images/imageCategories/imgCategorySlice";
+import imgTypeReducer from "./images/imageTypes/imgTypeSlice";
 
 const persistConfig = {
   key: "root",

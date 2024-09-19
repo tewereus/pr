@@ -1,7 +1,7 @@
 // ViewManager.js
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getManagerInfo } from "../../../features/users/userSlice"; // Import the action to fetch manager info
+import { getManagerInfo } from "../../../store/users/userSlice"; // Import the action to fetch manager info
 
 const ViewManager = ({ setIsOpen, selectedUser }) => {
   const dispatch = useDispatch();

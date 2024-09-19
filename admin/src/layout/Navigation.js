@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 // import logo from "./onPrintz-removebg-preview.png";
 import { useSelector, useDispatch } from "react-redux";
-// import {user_reset} from "../features/auth/authSlice"
+// import {user_reset} from "../store/auth/authSlice"
 import { FaMoon, FaSun } from "react-icons/fa";
-import { toggleDarkMode } from "../features/auth/authSlice";
+import { toggleDarkMode } from "../store/auth/authSlice";
 
 const Navigation = () => {
   // const dispatch = useDispatch();

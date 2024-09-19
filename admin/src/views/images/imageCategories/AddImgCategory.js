@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addImgCategory } from "../../../features/images/imageCategories/imgCategorySlice";
+import { addImgCategory } from "../../../store/images/imageCategories/imgCategorySlice";
 
 const AddImgCategory = ({ setIsAdd }) => {
   const dispatch = useDispatch();

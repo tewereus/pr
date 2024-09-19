@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import { useNavigate, Link } from "react-router-dom";
-import { adminLogin, messageClear } from "../../features/auth/authSlice";
+import { adminLogin, messageClear } from "../../store/auth/authSlice";
 const AdminLogin = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();

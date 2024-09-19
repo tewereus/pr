@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { deleteAllProducts } from "../../features/products/productSlice";
+import { deleteAllProducts } from "../../store/products/productSlice";
 import { useDispatch } from "react-redux";
 
 const DeleteAllProducts = ({ setDeleteModal }) => {

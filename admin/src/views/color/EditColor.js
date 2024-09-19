@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import {updateColor} from '../../features/color/colorSlice'
+import { updateColor } from "../../store/color/colorSlice";
 import { useDispatch } from "react-redux";
 
 const EditColor = ({ setIsEdit, selectedColor }) => {
@@ -9,7 +9,7 @@ const EditColor = ({ setIsEdit, selectedColor }) => {
       ? selectedColor
       : {
           name: "",
-          hex_code: ""
+          hex_code: "",
         }
   );
 
@@ -18,7 +18,6 @@ const EditColor = ({ setIsEdit, selectedColor }) => {
       ...colorState,
       [e.target.name]: e.target.value,
     });
-    
   };
 
   const handleSubmit = async (e) => {
@@ -27,10 +26,10 @@ const EditColor = ({ setIsEdit, selectedColor }) => {
       id: colorState._id,
       data: {
         name: colorState.name,
-        hex_code: colorState.hex_code
+        hex_code: colorState.hex_code,
       },
     };
-    console.log(data)
+    console.log(data);
     dispatch(updateColor(data));
     // const response = await axios.put(
     //   `http://localhost:3773/api/v1/product/${data.id}`,

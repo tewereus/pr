@@ -5,7 +5,7 @@ import DeleteAllImages from "./DeleteAllImages";
 import DeleteImage from "./DeleteImage";
 import EditImage from "./EditImage";
 import AddImage from "./AddImage";
-import { getAllImages } from "../../../features/images/imageSlice";
+import { getAllImages } from "../../../store/images/imageSlice";
 
 const Images = () => {
   const dispatch = useDispatch();

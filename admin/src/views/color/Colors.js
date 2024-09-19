@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { getAllColors } from "../../features/color/colorSlice";
+import { getAllColors } from "../../store/color/colorSlice";
 import { useDispatch, useSelector } from "react-redux";
 import Modal from "react-modal";
 import AddColor from "./AddColor";

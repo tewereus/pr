@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { getAllProducts } from "../../features/products/productSlice";
 import { useDispatch, useSelector } from "react-redux";
 // import { useNavigate } from "react-router-dom";
 import Modal from "react-modal";
@@ -7,8 +6,9 @@ import AddProduct from "./AddProduct";
 import DeleteAllProducts from "./DeleteAllProducts";
 import EditProduct from "./EditProduct";
 import DeleteProduct from "./DeleteProduct";
-import { getAllColors } from "../../features/color/colorSlice";
-import { getAllProdTypes } from "../../features/productType/prodTypeSlice";
+import { getAllProducts } from "../../store/products/productSlice";
+import { getAllColors } from "../../store/color/colorSlice";
+import { getAllProdTypes } from "../../store/productType/prodTypeSlice";
 import QRCode from "react-qr-code";
 
 Modal.setAppElement("#root");

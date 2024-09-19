@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-import { resetPassword, messageClear } from "../features/auth/authSlice";
+import { resetPassword, messageClear } from "../store/auth/authSlice";
 
 const Resetpassword = () => {
   const location = useLocation();

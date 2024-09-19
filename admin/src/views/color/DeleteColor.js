@@ -1,5 +1,5 @@
 import React from "react";
-import { deleteColor } from "../../features/color/colorSlice";
+import { deleteColor } from "../../store/color/colorSlice";
 import { useDispatch } from "react-redux";
 
 const DeleteColor = ({ setIsDelete, selectedColor }) => {

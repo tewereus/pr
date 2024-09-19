@@ -1,11 +1,7 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
-import {
-  register,
-  verifyEmail,
-  messageClear,
-} from "../features/auth/authSlice";
+import { register, verifyEmail, messageClear } from "../store/auth/authSlice";
 import toast from "react-hot-toast";
 
 const VerifyEmail = () => {

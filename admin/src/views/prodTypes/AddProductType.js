@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   addProductType,
   messageClear,
-} from "../../features/productType/prodTypeSlice";
-import { useDispatch, useSelector } from "react-redux";
+} from "../../store/productType/prodTypeSlice";
+import { useDispatch } from "react-redux";
 
 const AddProduct = ({ setIsAdd }) => {
   const dispatch = useDispatch();
