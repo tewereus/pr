@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 // import {user_reset} from "../features/auth/authSlice"
 import { FaMoon, FaSun } from "react-icons/fa";
-import { toggleDarkMode } from "../features/users/userSlice";
+import { toggleDarkMode } from "../features/auth/authSlice";
 
 const Navigation = () => {
   // const dispatch = useDispatch();
@@ -22,19 +22,38 @@ const Navigation = () => {
   // };
 
   const handleTheme = () => {
-    const data = {
-      preference: {
-        mode: darkMode ? "light" : "dark",
-      },
-    };
-    if (!darkMode) {
-      setDarkMode(true);
-      document.querySelector("html").classList.add("dark");
-    } else {
-      document.querySelector("html").classList.remove("dark");
-      setDarkMode(false);
+    // const data = {
+    //   preference: {
+    //     mode: darkMode ? "light" : "dark",
+    //   },
+    // };
+    // if (!darkMode) {
+    //   setDarkMode(true);
+    //   document.querySelector("html").classList.add("dark");
+    // } else {
+    //   document.querySelector("html").classList.remove("dark");
+    //   setDarkMode(false);
+    // }
+    // dispatch(toggleDarkMode(data));
+    const adminData = JSON.parse(localStorage.getItem("admin"));
+    if (adminData) {
+      const newMode = adminData.preference.mode === "dark" ? "light" : "dark";
+      const data = {
+        preference: {
+          mode: newMode,
+        },
+      };
+      dispatch(toggleDarkMode(data))
+        .unwrap()
+        .then(() => {
+          adminData.preference.mode = newMode;
+          localStorage.setItem("admin", JSON.stringify(adminData));
+          document.body.classList.toggle("dark", newMode === "dark");
+        })
+        .catch((error) => {
+          console.error("Failed to update dark mode:", error);
+        });
     }
-    dispatch(toggleDarkMode(data));
   };
 
   return (

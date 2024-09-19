@@ -762,7 +762,8 @@ const toggleDarkMode = asyncHandler(async (req, res) => {
         new: true,
         runValidators: true, // Optional: Ensure that validators are run
       }
-    );
+    ).select("preference.mode -_id");
+    console.log(darkmode);
     res.json(darkmode);
   } catch (error) {
     throw new Error(error);

@@ -1,24 +1,28 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-import {store} from "./store/store"
-import {Provider} from "react-redux"
-import { Toaster } from 'react-hot-toast'
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import { store, persistor } from "./store/store";
+import { PersistGate } from "redux-persist/integration/react";
+import { Provider } from "react-redux";
+import { Toaster } from "react-hot-toast";
 
-
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Provider store={store}>
-    <App />
-    <Toaster toastOptions={{
-      position: 'top-right',
-      style: {
-        background: 'white',
-        color: 'black'
-      }
-    }} />
+    <PersistGate loading={null} persistor={persistor}>
+      <App />
+      <Toaster
+        toastOptions={{
+          position: "top-right",
+          style: {
+            background: "white",
+            color: "black",
+          },
+        }}
+      />
+    </PersistGate>
   </Provider>
 );
 

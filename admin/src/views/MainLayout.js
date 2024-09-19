@@ -5,14 +5,24 @@ import { Outlet } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 const MainLayout = () => {
-  const { user } = useSelector((state) => state.auth);
+  // const { user } = useSelector((state) => state.auth);
+  // useEffect(() => {
+  //   console.log(user);
+  //   document.querySelector("html").classList.remove("dark");
+  //   if (user.preference === "dark") {
+  //     document.querySelector("html").classList.add("dark");
+  //   } else if (user.preference === "light") {
+  //     document.querySelector("html").classList.remove("dark");
+  //   }
+  // }, []);
   useEffect(() => {
-    console.log(user);
-    document.querySelector("html").classList.remove("dark");
-    if (user.preference === "dark") {
-      document.querySelector("html").classList.add("dark");
-    } else if (user.preference === "light") {
-      document.querySelector("html").classList.remove("dark");
+    // Retrieve the current admin object from localStorage
+    const adminData = JSON.parse(localStorage.getItem("admin"));
+    console.log("admin data", adminData);
+
+    // Check if adminData exists and apply dark mode if necessary
+    if (adminData && adminData.preference.mode === "dark") {
+      document.body.classList.add("dark");
     }
   }, []);
   return (

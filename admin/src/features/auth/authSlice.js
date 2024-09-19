@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import authService from "./authService";
+import toast from "react-hot-toast";
 
 const getTokenFromLocalStorage = localStorage.getItem("admin")
   ? JSON.parse(localStorage.getItem("admin"))
@@ -7,7 +8,6 @@ const getTokenFromLocalStorage = localStorage.getItem("admin")
 
 const initialState = {
   user: getTokenFromLocalStorage,
-  userInfo: null,
   isLoading: false,
   isSuccess: false,
   isError: false,
@@ -49,6 +49,17 @@ export const uploadProfile = createAsyncThunk(
   async (data, thunkAPI) => {
     try {
       return await authService.uploadProfile(data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+export const toggleDarkMode = createAsyncThunk(
+  "admin/dark-mode",
+  async (data, thunkAPI) => {
+    try {
+      return await authService.toggleDarkMode(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -124,14 +135,36 @@ export const authSlice = createSlice({
         state.isSuccess = true;
         state.isError = false;
         state.message = "profile uploaded";
-        // state.userInfo = action.payload.userInfo;
-        // console.log("userInfo: ", action.payload.userInfo);
+        console.log("userInfo: ", action.payload.userInfo);
+        if (action.payload.userInfo) {
+          state.user.image = action.payload.userInfo.image;
+        }
+        toast.success(state.message);
       })
       .addCase(uploadProfile.rejected, (state, action) => {
         state.isLoading = false;
         state.isSuccess = false;
         state.isError = true;
         state.message = action.error;
+      })
+      .addCase(toggleDarkMode.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(toggleDarkMode.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isSuccess = true;
+        state.message = "mode changed successfully";
+        if (action.payload.preference) {
+          state.user.preference.mode = action.payload.preference.mode;
+        }
+        toast.success(state.message);
+      })
+      .addCase(toggleDarkMode.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = false;
+        state.isError = true;
+        state.message = action.error.message;
       });
   },
 });

@@ -71,17 +71,6 @@ const updateManager = async (data) => {
   return response.data;
 };
 
-const toggleDarkMode = async (data) => {
-  // console.log(config);
-  const response = await axios.post(
-    `${base_url}/admin/dark-mode`,
-    data,
-    config
-  );
-  console.log(response.data);
-  return response.data;
-};
-
 const userService = {
   getAllUsers,
   getAllAdmins,
@@ -92,7 +81,6 @@ const userService = {
   addManager,
   deleteManager,
   updateManager,
-  toggleDarkMode,
 };
 
 export default userService;
