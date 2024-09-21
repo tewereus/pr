@@ -117,6 +117,11 @@ const userSchema = mongoose.Schema(
   }
 );
 
+userSchema.pre("save", function (next) {
+  this.role = "user";
+  next();
+});
+
 userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) {
     next();

@@ -94,6 +94,11 @@ const managerSchema = mongoose.Schema(
   { timestamps: true }
 );
 
+managerSchema.pre("save", function (next) {
+  this.role = "manager";
+  next();
+});
+
 managerSchema.pre("save", async function (next) {
   if (!this.isModified("password")) {
     next();

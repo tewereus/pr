@@ -88,6 +88,11 @@ const adminSchema = mongoose.Schema(
   }
 );
 
+userSchema.pre("save", function (next) {
+  this.role = "administrator";
+  next();
+});
+
 adminSchema.pre("save", async function (next) {
   if (!this.isModified("password")) {
     next();
