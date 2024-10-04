@@ -1,6 +1,8 @@
 const Manager = require("../../models/users/managerModel");
 const asyncHandler = require("express-async-handler");
 const bcrypt = require("bcryptjs");
+const { generateRefreshToken } = require("../../config/refreshtoken");
+const { generateToken } = require("../../config/jwtToken");
 
 // const url = require('url')
 
@@ -125,35 +127,44 @@ const viewProfile = asyncHandler(async (req, res) => {
 });
 
 const loginManager = asyncHandler(async (req, res) => {
-  const { mobile, password } = req.body;
+  const { token } = req.params;
+  const { password } = req.body;
   try {
-    const manager = await Manager.findOne({ mobile });
+    const manager = await Manager.findOne({ unique_id: token });
     if (!manager) throw new Error("no manager found");
+    // console.log(password);
+    // console.log(manager);
+    // const check = await bcrypt.compare(password, manager.password);
+    // console.log(check);
     if (manager && (await manager.isPasswordMatched(password))) {
+      console.log("here");
       const managerToken = await generateRefreshToken(manager?._id);
       const updateToken = await Manager.findOneAndUpdate(
-        manager.mobile,
+        manager._id,
         { managerToken: managerToken },
         { new: true }
       );
+
+      res.cookie("manager", managerToken, {
+        httpOnly: true,
+        // sameSite: "true",
+        maxAge: 72 * 60 * 60 * 1000,
+      });
+      res.json({
+        message: "Manager logged in successfully",
+        _id: manager._id,
+        unique_id: manager.unique_id,
+        fullname: manager.fullname,
+        email: manager.email,
+        mobile: manager.mobile,
+        status: manager.status,
+        main_status: manager.main_status,
+        // payment: [{ bankName, bankAccount }],
+        token: generateToken(manager?._id),
+      });
+    } else {
+      throw new Error("Invalid credentials");
     }
-    res.cookie("manager", managerToken, {
-      httpOnly: true,
-      sameSite: "true",
-      maxAge: 72 * 60 * 60 * 1000,
-    });
-    res.json({
-      message: "Manager logged in successfully",
-      _id: manager._id,
-      unique_id: manager.unique_id,
-      fullname: manager.fullname,
-      email: manager.email,
-      mobile: manager.mobile,
-      status: manager.status,
-      main_status: manager.main_status,
-      payment: [{ bankName, bankAccount }],
-      token: generateToken(manager?._id),
-    });
   } catch (error) {
     throw new Error(error);
   }

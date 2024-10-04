@@ -29,6 +29,12 @@ const InactiveManager = () => {
     (state) => state.auth
   );
 
+  useEffect(() => {
+    if (user?.main_status !== "inactive") {
+      navigate(-1, { replace: true });
+    }
+  }, []);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const data = {

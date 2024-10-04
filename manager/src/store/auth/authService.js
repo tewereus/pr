@@ -20,10 +20,22 @@ const managerInfo = async (data) => {
   return response.data;
 };
 
+const login = async (data) => {
+  const response = await axios.post(
+    `${base_url}/manager/manager/${data.token}/login`,
+    data.data
+  );
+  if (response.data) {
+    localStorage.setItem("manager", JSON.stringify(response.data));
+  }
+  return response.data;
+};
+
 const authService = {
   verifyManager,
   // verifyPassword,
   managerInfo,
+  login,
 };
 
 export default authService;

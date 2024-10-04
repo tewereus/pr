@@ -7,6 +7,7 @@ const AddManager = ({ setIsOpen }) => {
   const [inputState, setInputState] = useState({
     mobile: "",
     email: "",
+    password: "",
   });
 
   const handleChange = (e) => {
@@ -21,6 +22,7 @@ const AddManager = ({ setIsOpen }) => {
     const data = {
       mobile: inputState.mobile,
       email: inputState.email,
+      password: inputState.password,
     };
     dispatch(addManager(data));
     // setIsOpen(false);
@@ -42,6 +44,14 @@ const AddManager = ({ setIsOpen }) => {
           name="email"
           onChange={handleChange}
           placeholder="E-Mail"
+          className="border rounded-lg h-10 pl-2 m-4"
+        />
+        <input
+          type="password"
+          value={inputState.password}
+          name="password"
+          onChange={handleChange}
+          placeholder="Password"
           className="border rounded-lg h-10 pl-2 m-4"
         />
         <div className="flex justify-end">

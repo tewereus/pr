@@ -42,7 +42,6 @@ const VerifyManager = () => {
 
       // navigate("verify-password");
     }
-    console.log(isSuccess, isError);
   }, [isSuccess, isError]);
 
   return (

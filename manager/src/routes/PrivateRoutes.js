@@ -6,6 +6,6 @@ export const PrivateRoutes = ({ children }) => {
   return getTokenFromLocalStorage?.token !== undefined ? (
     children
   ) : (
-    <Navigate to="/login" replace={true} />
+    <Navigate to="/unauthorized" replace={true} />
   );
 };

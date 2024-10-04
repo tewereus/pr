@@ -581,11 +581,11 @@ const checkAdminPass = asyncHandler(async (req, res) => {
 
 const addManager = asyncHandler(async (req, res) => {
   // const {id} = req.user
-  const { mobile, email } = req.body;
+  const { mobile, email, password } = req.body;
   try {
     const manager = await Manager.findOne({ mobile });
     if (manager) throw new Error("Manager with this mobile already exists");
-    const newManager = await Manager.create({ mobile, email }); // check if it can be added with await manager.save()
+    const newManager = await Manager.create({ mobile, email, password }); // check if it can be added with await manager.save()
     const token = await newManager.createManagerToken();
     await newManager.save();
     console.log(token);

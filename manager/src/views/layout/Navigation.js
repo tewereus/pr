@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-// import logo from "./onPrintz-removebg-preview.png";
 import { useSelector, useDispatch } from "react-redux";
-// import {user_reset} from "../store/auth/authSlice"
 import { FaMoon, FaSun } from "react-icons/fa";
-import { toggleDarkMode } from "../store/auth/authSlice";
+// import { toggleDarkMode } from "../store/auth/authSlice";
 
 const Navigation = () => {
   // const dispatch = useDispatch();
@@ -22,24 +20,24 @@ const Navigation = () => {
   // };
 
   const handleTheme = () => {
-    const adminData = JSON.parse(localStorage.getItem("admin"));
-    if (adminData) {
-      const newMode = adminData.preference.mode === "dark" ? "light" : "dark";
+    const managerData = JSON.parse(localStorage.getItem("manager"));
+    if (managerData) {
+      const newMode = managerData.preference.mode === "dark" ? "light" : "dark";
       const data = {
         preference: {
           mode: newMode,
         },
       };
-      dispatch(toggleDarkMode(data))
-        .unwrap()
-        .then(() => {
-          adminData.preference.mode = newMode;
-          localStorage.setItem("admin", JSON.stringify(adminData));
-          document.body.classList.toggle("dark", newMode === "dark");
-        })
-        .catch((error) => {
-          console.error("Failed to update dark mode:", error);
-        });
+      //   dispatch(toggleDarkMode(data))
+      //     .unwrap()
+      //     .then(() => {
+      //       managerData.preference.mode = newMode;
+      //       localStorage.setItem("manager", JSON.stringify(managerData));
+      //       document.body.classList.toggle("dark", newMode === "dark");
+      //     })
+      //     .catch((error) => {
+      //       console.error("Failed to update dark mode:", error);
+      //     });
     }
   };
 
@@ -50,7 +48,7 @@ const Navigation = () => {
       </Link> */}
       <ul>
         <li>
-          <Link to="/admin">Home</Link>
+          <Link to="/manager">Home</Link>
         </li>
       </ul>
       <div>
@@ -63,7 +61,7 @@ const Navigation = () => {
               {darkMode ? <FaSun /> : <FaMoon />}
             </button>
             <button type="button" className="pl-4">
-              <Link to="profile">{user.username}</Link>
+              <Link to="profile">{user.fullname}</Link>
             </button>
 
             {/* <button onClick={handleLogout} type="button">

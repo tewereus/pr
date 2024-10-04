@@ -1,5 +1,7 @@
 => change the status of manager from admin after checking the profile(do view profile(edit profile))
 => change the product catagories(maybe add product type)
 => create coupon
+=> manager add printers and also change status
 => initialize printers
 => image(profile)
+=> when working on change password, modify the manager(change(select: false) the password property in manager model)

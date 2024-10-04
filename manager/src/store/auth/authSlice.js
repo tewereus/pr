@@ -7,7 +7,7 @@ const getTokenFromLocalStorage = localStorage.getItem("manager")
   : null;
 
 const initialState = {
-  user: [],
+  user: getTokenFromLocalStorage,
   isLoading: false,
   isSuccess: false,
   isError: false,
@@ -47,13 +47,23 @@ export const managerInfo = createAsyncThunk(
   }
 );
 
+export const login = createAsyncThunk("auth/login", async (data, thunkAPI) => {
+  try {
+    return await authService.login(data);
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error);
+  }
+});
+
 export const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    messageClear: (state) => {
+    resetAuthState: (state) => {
       state.isSuccess = false;
       state.isError = false;
+      state.isLoading = false;
+      state.message = "";
     },
     user_reset: (state) => {
       state.user = "";
@@ -70,6 +80,7 @@ export const authSlice = createSlice({
         state.isError = false;
         state.message = "verified manager";
         state.user = action.payload;
+        // console.log(state.user);
         toast.success("Manager Verified");
       })
       .addCase(verifyManager.rejected, (state, action) => {
@@ -126,10 +137,33 @@ export const authSlice = createSlice({
             action.payload.response.data.message.split(":")[1];
           toast.error(validationError);
         }
+      })
+      .addCase(login.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(login.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.isError = false;
+        state.message = "Logged in successfully";
+        state.user = action.payload;
+        // console.log("user ", state.user);
+        toast.success(state.message);
+      })
+      .addCase(login.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = false;
+        state.isError = true;
+        state.message = action.error;
+        if (state.isError === true) {
+          const validationError =
+            action.payload.response.data.message.split(":")[1];
+          toast.error(validationError);
+        }
       });
   },
 });
 
-export const { messageClear, user_reset } = authSlice.actions;
+export const { resetAuthState, user_reset } = authSlice.actions;
 
 export default authSlice.reducer;

@@ -39,8 +39,9 @@ const managerSchema = mongoose.Schema(
     },
     password: {
       type: String,
+      default: "",
       // required: true,
-      select: false,
+      // select: false,
     },
     role: {
       type: String,
@@ -90,6 +91,10 @@ const managerSchema = mongoose.Schema(
       default: 0,
       min: 0,
     },
+    managerToken: { type: String },
+    passwordChangedAt: Date,
+    passwordResetToken: String,
+    passwordResetExpires: Date,
   },
   { timestamps: true }
 );
@@ -113,6 +118,7 @@ managerSchema.pre("save", async function (next) {
 });
 
 managerSchema.methods.isPasswordMatched = async function (enteredPassword) {
+  console.log("here", this.password);
   return await bcrypt.compare(enteredPassword, this.password);
 };
 
