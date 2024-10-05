@@ -10,6 +10,7 @@ const {
   verifyManager,
   // verifyPassword,
   managerInfo,
+  toggleDarkMode,
 } = require("../../controllers/users/managerCtrl");
 const { managerAuthMiddleware } = require("../../middlewares/authMiddleware");
 
@@ -21,8 +22,10 @@ router.put("/manager/:token/manager-info", managerInfo);
 // router.post("/manager/:token/verify-password", verifyPassword);
 // router.get("/manager/:token/register-account", registerManager);
 router.post("/manager/:token/login", loginManager);
+
 router.put("/manager/:token/update", updateManagerInfo);
 router.put("/manager/:token/change-status", changeStatus);
 router.delete("/manager/:token/delete-account", deleteAccount);
+router.put("/dark-mode", managerAuthMiddleware, toggleDarkMode);
 
 module.exports = router;

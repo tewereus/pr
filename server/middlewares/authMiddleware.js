@@ -175,9 +175,9 @@ const managerAuthMiddleware = asyncHandler(async (req, res, next) => {
         // Verify and decode the token
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
         // Retrieve the user based on the decoded token
-        const user = await Manager.findById(decoded.id).select("-password");
-        if (user) {
-          req.user = user;
+        const manager = await Manager.findById(decoded.id).select("-password");
+        if (manager) {
+          req.manager = manager;
           next(); // Continue to the next middleware or route handler
         } else {
           throw new Error("User not found with the provided token");

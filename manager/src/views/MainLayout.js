@@ -4,12 +4,12 @@ import Navigation from "./layout/Navigation";
 import Sidebar from "./layout/Sidebar";
 
 const MainLayout = () => {
-  // useEffect(() => {
-  //   const managerData = JSON.parse(localStorage.getItem("manager"));
-  //   if (managerData && managerData.preference.mode === "dark") {
-  //     document.body.classList.add("dark");
-  //   }
-  // }, []);
+  useEffect(() => {
+    const managerData = JSON.parse(localStorage.getItem("manager"));
+    if (managerData && managerData.preference.mode === "dark") {
+      document.body.classList.add("dark");
+    }
+  }, []);
 
   return (
     <>

@@ -3,6 +3,7 @@ const asyncHandler = require("express-async-handler");
 const bcrypt = require("bcryptjs");
 const { generateRefreshToken } = require("../../config/refreshtoken");
 const { generateToken } = require("../../config/jwtToken");
+const { connect } = require("mongoose");
 
 // const url = require('url')
 
@@ -158,6 +159,7 @@ const loginManager = asyncHandler(async (req, res) => {
         email: manager.email,
         mobile: manager.mobile,
         status: manager.status,
+        preference: manager.preference,
         main_status: manager.main_status,
         // payment: [{ bankName, bankAccount }],
         token: generateToken(manager?._id),
@@ -208,6 +210,25 @@ const deleteAccount = asyncHandler(async (req, res) => {
   }
 });
 
+const toggleDarkMode = asyncHandler(async (req, res) => {
+  const { id } = req.manager;
+  const { mode } = req.body.preference;
+  try {
+    const darkmode = await Manager.findByIdAndUpdate(
+      id,
+      { "preference.mode": mode },
+      {
+        new: true,
+        runValidators: true, // Optional: Ensure that validators are run
+      }
+    ).select("preference.mode -_id");
+    console.log(darkmode);
+    res.json(darkmode);
+  } catch (error) {
+    throw new Error(error);
+  }
+});
+
 module.exports = {
   // verifyManagerToken,
   verifyManager,
@@ -217,4 +238,5 @@ module.exports = {
   updateManagerInfo,
   changeStatus,
   deleteAccount,
+  toggleDarkMode,
 };

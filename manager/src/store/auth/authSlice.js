@@ -55,6 +55,17 @@ export const login = createAsyncThunk("auth/login", async (data, thunkAPI) => {
   }
 });
 
+export const toggleDarkMode = createAsyncThunk(
+  "manager/dark-mode",
+  async (data, thunkAPI) => {
+    try {
+      return await authService.toggleDarkMode(data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 export const authSlice = createSlice({
   name: "auth",
   initialState,
@@ -160,6 +171,25 @@ export const authSlice = createSlice({
             action.payload.response.data.message.split(":")[1];
           toast.error(validationError);
         }
+      })
+      .addCase(toggleDarkMode.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(toggleDarkMode.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isSuccess = true;
+        state.message = "mode changed successfully";
+        if (action.payload.preference) {
+          state.user.preference.mode = action.payload.preference.mode;
+        }
+        toast.success(state.message);
+      })
+      .addCase(toggleDarkMode.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = false;
+        state.isError = true;
+        state.message = action.error.message;
       });
   },
 });

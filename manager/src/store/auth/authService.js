@@ -31,11 +31,31 @@ const login = async (data) => {
   return response.data;
 };
 
+const toggleDarkMode = async (data) => {
+  // console.log(config);
+  const getTokenFromLocalStorage = localStorage.getItem("manager")
+    ? JSON.parse(localStorage.getItem("manager"))
+    : null;
+
+  const response = await axios.put(`${base_url}/manager/dark-mode`, data, {
+    headers: {
+      Authorization: `Bearer ${
+        getTokenFromLocalStorage !== null ? getTokenFromLocalStorage.token : ""
+      }`,
+      // Accept: "application/json",
+    },
+    withCredentials: true,
+  });
+  console.log(response.data);
+  return response.data;
+};
+
 const authService = {
   verifyManager,
   // verifyPassword,
   managerInfo,
   login,
+  toggleDarkMode,
 };
 
 export default authService;

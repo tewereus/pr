@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { FaMoon, FaSun } from "react-icons/fa";
+import { toggleDarkMode } from "../../store/auth/authSlice";
 // import { toggleDarkMode } from "../store/auth/authSlice";
 
 const Navigation = () => {
@@ -28,16 +29,16 @@ const Navigation = () => {
           mode: newMode,
         },
       };
-      //   dispatch(toggleDarkMode(data))
-      //     .unwrap()
-      //     .then(() => {
-      //       managerData.preference.mode = newMode;
-      //       localStorage.setItem("manager", JSON.stringify(managerData));
-      //       document.body.classList.toggle("dark", newMode === "dark");
-      //     })
-      //     .catch((error) => {
-      //       console.error("Failed to update dark mode:", error);
-      //     });
+      dispatch(toggleDarkMode(data))
+        .unwrap()
+        .then(() => {
+          managerData.preference.mode = newMode;
+          localStorage.setItem("manager", JSON.stringify(managerData));
+          document.body.classList.toggle("dark", newMode === "dark");
+        })
+        .catch((error) => {
+          console.error("Failed to update dark mode:", error);
+        });
     }
   };
 
