@@ -11,6 +11,8 @@ const {
   // verifyPassword,
   managerInfo,
   toggleDarkMode,
+  addPrinters,
+  getAllPrinters,
 } = require("../../controllers/users/managerCtrl");
 const { managerAuthMiddleware } = require("../../middlewares/authMiddleware");
 
@@ -27,5 +29,7 @@ router.put("/manager/:token/update", updateManagerInfo);
 router.put("/manager/:token/change-status", changeStatus);
 router.delete("/manager/:token/delete-account", deleteAccount);
 router.put("/dark-mode", managerAuthMiddleware, toggleDarkMode);
+router.post("/add-printers", managerAuthMiddleware, addPrinters);
+router.get("/all-printers", managerAuthMiddleware, getAllPrinters);
 
 module.exports = router;

@@ -4,6 +4,7 @@ const bcrypt = require("bcryptjs");
 const { generateRefreshToken } = require("../../config/refreshtoken");
 const { generateToken } = require("../../config/jwtToken");
 const { connect } = require("mongoose");
+const Printer = require("../../models/users/printerModel");
 
 // const url = require('url')
 
@@ -229,6 +230,46 @@ const toggleDarkMode = asyncHandler(async (req, res) => {
   }
 });
 
+const addPrinters = asyncHandler(async (req, res) => {
+  const { id } = req.manager;
+  const { mobile, fullname } = req.body;
+  try {
+    const printer = await Printer.findOne({ mobile });
+    if (printer) throw new Error("printer already exists");
+    const manager = await Manager.findById(id).select("-password");
+    if (!manager) throw new Error("manager doesn't exists");
+    const newPrinter = await Printer.create({
+      mobile,
+      fullname,
+      manager: id,
+    });
+    const updateManager = await Manager.findByIdAndUpdate(
+      id,
+      {
+        $push: { printers: newPrinter._id },
+      },
+      { new: true }
+    ).select("-password");
+    res.json(updateManager);
+  } catch (error) {
+    throw new Error(error);
+  }
+});
+
+const getAllPrinters = asyncHandler(async (req, res) => {
+  const { id } = req.manager;
+  try {
+    const printers = await Manager.findById(id).populate({
+      path: "printers",
+      select: "fullname",
+    });
+    // .select("printers");
+    res.json(printers);
+  } catch (error) {
+    throw new Error(error);
+  }
+});
+
 module.exports = {
   // verifyManagerToken,
   verifyManager,
@@ -239,4 +280,6 @@ module.exports = {
   changeStatus,
   deleteAccount,
   toggleDarkMode,
+  addPrinters,
+  getAllPrinters,
 };

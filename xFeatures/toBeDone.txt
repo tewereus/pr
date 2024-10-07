@@ -31,3 +31,5 @@ modify the users(Users, userService anduserSlice ), make it like products (not c
 => something modified in client authSlice bring back from github
 => (Done!!) make the colors in add product be multiselectable and by default be all colors(or chose all color option)
 => all routes are accessable from the url like http://localhost:3001/manager/cba86d/manager-info/ when status is waiting
+
+=> on getAllPrinters use the manager as searchfield to search printers based on manager name(use mongodb aggregate?)

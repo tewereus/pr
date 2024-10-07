@@ -79,6 +79,17 @@ export const getAllManagers = createAsyncThunk(
   }
 );
 
+export const getAllPrinters = createAsyncThunk(
+  "users/all-printers",
+  async (data, thunkAPI) => {
+    try {
+      return await userService.getAllPrinters(data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 export const deleteUser = createAsyncThunk(
   "users/delete-user",
   async (id, thunkAPI) => {
@@ -173,6 +184,26 @@ export const userSlice = createSlice({
         // console.log("Fulfilled - Total Users:", action.payload.totalUsers);
       })
       .addCase(getAllManagers.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = false;
+        state.isError = true;
+        state.message = action.error;
+      })
+      .addCase(getAllPrinters.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getAllPrinters.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.isError = false;
+        state.printers = action.payload.users;
+        state.totalUsers = action.payload.totalUsers;
+        state.message = "success";
+        // console.log("Fulfilled - Data:", action.payload);
+        // console.log("Fulfilled - Users Data:", action.payload.user);
+        // console.log("Fulfilled - Total Users:", action.payload.totalUsers);
+      })
+      .addCase(getAllPrinters.rejected, (state, action) => {
         state.isLoading = false;
         state.isSuccess = false;
         state.isError = true;

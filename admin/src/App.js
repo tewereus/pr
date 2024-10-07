@@ -4,6 +4,7 @@ import MainLayout from "./views/MainLayout";
 import Dashboard from "./views/Dashboard";
 import Users from "./views/users/Users";
 import Manager from "./views/users/manager/Manager";
+import Printers from "./views/users/printers/Printers";
 import Products from "./views/products/Products";
 import ProductTypes from "./views/prodTypes/ProductTypes";
 import { PrivateRoutes } from "./views/routes/PrivateRoutes";
@@ -35,6 +36,7 @@ const router = createBrowserRouter([
       { path: "profile", element: <Profile /> },
       { path: "users", element: <Users /> },
       { path: "managers", element: <Manager /> },
+      { path: "printers", element: <Printers /> },
       { path: "products", element: <Products /> },
       { path: "product-types", element: <ProductTypes /> },
       { path: "colors", element: <Colors /> },

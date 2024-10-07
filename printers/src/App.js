@@ -7,48 +7,13 @@ import Waiting from "./views/auth/Waiting";
 import Login from "./views/auth/Login";
 import MainLayout from "./views/MainLayout";
 import Dashboard from "./views/Dashboard";
-import Unauthorized from "./views/auth/Unauthorized";
-import Printers from "./views/printers/Printers";
 
 const router = createBrowserRouter([
   {
-    path: "/manager/:id",
+    path: "/login",
     element: (
       <OpenRoutes>
         <VerifyManager />
-      </OpenRoutes>
-    ),
-  },
-  // make it so that this can't be accessed unless from verifyManager
-  {
-    path: "/manager/:id/manager-info",
-    element: (
-      <OpenRoutes>
-        <InactiveManager />
-      </OpenRoutes>
-    ),
-  },
-  {
-    path: "/manager/:id/waiting",
-    element: (
-      <OpenRoutes>
-        <Waiting />
-      </OpenRoutes>
-    ),
-  },
-  {
-    path: "/manager/:id/login",
-    element: (
-      <OpenRoutes>
-        <Login />
-      </OpenRoutes>
-    ),
-  },
-  {
-    path: "/unauthorized",
-    element: (
-      <OpenRoutes>
-        <Unauthorized />
       </OpenRoutes>
     ),
   },
@@ -62,7 +27,7 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <Dashboard /> },
       // { path: "profile", element: <Profile /> },
-      { path: "printers", element: <Printers /> },
+      // { path: "users", element: <Users /> },
       // { path: "managers", element: <Manager /> },
       // { path: "products", element: <Products /> },
       // { path: "product-types", element: <ProductTypes /> },
