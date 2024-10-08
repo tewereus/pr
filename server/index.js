@@ -20,7 +20,7 @@ const imageTypeRouter = require("./routes/image/imageTypeRoutes");
 const imageCategoryRouter = require("./routes/image/imageCategoryRoutes");
 const imageRouter = require("./routes/image/imageRoutes");
 const uploadRouter = require("./routes/utils/uploadRoutes");
-const addressRouter = require("./routes/utils/addressRoutes");
+const addressRouter = require("./routes/other/addressRoutes");
 
 const PORT = process.env.PORT || 9001;
 

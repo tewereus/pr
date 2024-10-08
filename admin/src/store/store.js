@@ -15,6 +15,7 @@ import usersReducer from "./users/userSlice";
 import productReducer from "./products/productSlice";
 import prodTypeReducer from "./productType/prodTypeSlice";
 import colorReducer from "./color/colorSlice";
+import addressReducer from "./address/adressSlice";
 import imgCategoryReducer from "./images/imageCategories/imgCategorySlice";
 import imgTypeReducer from "./images/imageTypes/imgTypeSlice";
 
@@ -32,6 +33,7 @@ export const store = configureStore({
     products: productReducer,
     productTypes: prodTypeReducer,
     colors: colorReducer,
+    addresses: addressReducer,
     imgCategories: imgCategoryReducer,
     imageTypes: imgTypeReducer,
   },

@@ -78,6 +78,9 @@ const Sidebar = () => {
           </div>
         </li>
         <li>
+          <Link to="address">Address</Link>
+        </li>
+        <li>
           <Link to="colors">Colors</Link>
         </li>
         <li>
