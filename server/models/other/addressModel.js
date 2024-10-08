@@ -1,20 +1,26 @@
-const mongoose = require('mongoose'); // Erase if already required
+const mongoose = require("mongoose"); // Erase if already required
 
 // Declare the Schema of the Mongo model
 var addressSchema = new mongoose.Schema({
-        country: { 
-        type: String,
-        required: true,
-      },
-      region: { // like Addis ababa
-        type: String,
-        required: true
-      },
-      location: { // like Yeka, Bole
-        type: String,
-        required: true
-      },
+  country: {
+    type: String,
+    required: true,
+  },
+  region: {
+    // like Addis ababa
+    type: String,
+    required: true,
+  },
+  location: {
+    // like Yeka, Bole
+    type: String,
+    required: true,
+  },
+  isAccessable: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 //Export the model
-module.exports = mongoose.model('Address', addressSchema);
+module.exports = mongoose.model("Address", addressSchema);

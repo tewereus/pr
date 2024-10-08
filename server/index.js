@@ -19,7 +19,9 @@ const couponRouter = require("./routes/other/couponRoutes");
 const imageTypeRouter = require("./routes/image/imageTypeRoutes");
 const imageCategoryRouter = require("./routes/image/imageCategoryRoutes");
 const imageRouter = require("./routes/image/imageRoutes");
-const uploadRouter = require("./routes/utils/uploadRoute");
+const uploadRouter = require("./routes/utils/uploadRoutes");
+const addressRouter = require("./routes/utils/addressRoutes");
+
 const PORT = process.env.PORT || 9001;
 
 connectDB();
@@ -54,6 +56,7 @@ app.use("/api/v1/image-category", imageCategoryRouter);
 app.use("/api/v1/image-types", imageTypeRouter);
 app.use("/api/v1/images", imageRouter);
 app.use("/api/v1/upload", uploadRouter);
+app.use("/api/v1/address", addressRouter);
 
 app.use(notFound);
 app.use(errorHandler);
