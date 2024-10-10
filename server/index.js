@@ -20,7 +20,9 @@ const imageTypeRouter = require("./routes/image/imageTypeRoutes");
 const imageCategoryRouter = require("./routes/image/imageCategoryRoutes");
 const imageRouter = require("./routes/image/imageRoutes");
 const uploadRouter = require("./routes/utils/uploadRoutes");
-const addressRouter = require("./routes/other/addressRoutes");
+const countryRouter = require("./routes/address/countryRoutes");
+const locationRouter = require("./routes/address/locationRoutes");
+const regionRouter = require("./routes/address/regionRoutes");
 
 const PORT = process.env.PORT || 9001;
 
@@ -55,8 +57,10 @@ app.use("/api/v1/colors", colorRouter);
 app.use("/api/v1/image-category", imageCategoryRouter);
 app.use("/api/v1/image-types", imageTypeRouter);
 app.use("/api/v1/images", imageRouter);
+app.use("/api/v1/country", countryRouter);
+app.use("/api/v1/region", regionRouter);
+app.use("/api/v1/location", locationRouter);
 app.use("/api/v1/upload", uploadRouter);
-app.use("/api/v1/address", addressRouter);
 
 app.use(notFound);
 app.use(errorHandler);

@@ -1,150 +1,150 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import addressService from "./addressService";
+import countryService from "./countryService";
 import toast from "react-hot-toast";
 
 const initialState = {
-  addresses: [],
-  totalColors: 0,
+  countries: [],
+  totalCountries: 0,
   isLoading: false,
   isSuccess: false,
   isError: false,
   message: "",
 };
 
-export const addAddress = createAsyncThunk(
-  "address/add-address",
+export const addCountry = createAsyncThunk(
+  "country/add-country",
   async (data, thunkAPI) => {
     try {
-      return await addressService.addAddress(data);
+      return await countryService.addCountry(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
   }
 );
 
-export const getAllAddresses = createAsyncThunk(
-  "address/all-address",
+export const getAllCountries = createAsyncThunk(
+  "country/all-countries",
   async (thunkAPI) => {
     try {
-      return await addressService.getAllAddresses();
+      return await countryService.getAllCountries();
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
   }
 );
 
-export const updateAddress = createAsyncThunk(
-  "address/update-address",
+export const updateCountry = createAsyncThunk(
+  "country/update-country",
   async (data, thunkAPI) => {
     try {
-      return await addressService.updateAddress(data);
+      return await countryService.updateCountry(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
   }
 );
 
-export const deleteAddress = createAsyncThunk(
-  "address/delete-address",
+export const deleteCountry = createAsyncThunk(
+  "country/delete-country",
   async (id, thunkAPI) => {
     try {
-      return await addressService.deleteAddress(id);
+      return await countryService.deleteCountry(id);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
   }
 );
 
-export const deleteAllAddresses = createAsyncThunk(
-  "address/delete-addresses",
+export const deleteAllCountries = createAsyncThunk(
+  "country/delete-countries",
   async (thunkAPI) => {
     try {
-      return await addressService.deleteAllAddresses();
+      return await countryService.deleteAllCountries();
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
   }
 );
 
-export const addressSlice = createSlice({
-  name: "address",
+export const countrySlice = createSlice({
+  name: "country",
   initialState,
   reducers: [],
   extraReducers: (builder) => {
     builder
-      .addCase(addAddress.pending, (state) => {
+      .addCase(addCountry.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(addAddress.fulfilled, (state, action) => {
+      .addCase(addCountry.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isError = false;
         state.message = "success";
         state.isSuccess = true;
-        state.createdAddress = action.payload;
+        state.createdCountry = action.payload;
         if (state.isSuccess === true) {
-          toast.success("Address Added Successfully");
+          toast.success("Country Added Successfully");
         }
-        state.addresses = [...state.addresses, action.payload];
+        state.countries = [...state.countries, action.payload];
       })
-      .addCase(addAddress.rejected, (state, action) => {
+      .addCase(addCountry.rejected, (state, action) => {
         state.isLoading = false;
         state.isSuccess = false;
         state.isError = true;
         state.message = action.error;
       })
-      .addCase(getAllAddresses.pending, (state) => {
+      .addCase(getAllCountries.pending, (state) => {
         state.isLoading = false;
       })
-      .addCase(getAllAddresses.fulfilled, (state, action) => {
+      .addCase(getAllCountries.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isError = false;
         state.isSuccess = true;
         state.message = "";
-        state.addresses = action.payload;
+        state.countries = action.payload;
       })
-      .addCase(getAllAddresses.rejected, (state, action) => {
+      .addCase(getAllCountries.rejected, (state, action) => {
         state.isLoading = false;
         state.isSuccess = false;
         state.isError = true;
         state.message = action.error;
       })
-      .addCase(updateAddress.pending, (state) => {
+      .addCase(updateCountry.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(updateAddress.fulfilled, (state, action) => {
+      .addCase(updateCountry.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isError = false;
         state.isSuccess = true;
         state.message = "";
-        state.addresses = state.addresses.map((address) =>
-          address._id === action.payload._id ? action.payload : address
+        state.countries = state.countries.map((country) =>
+          country._id === action.payload._id ? action.payload : country
         );
         if (state.isSuccess === true) {
-          toast.success("Address updated Successfully");
+          toast.success("Country updated Successfully");
         }
       })
-      .addCase(updateAddress.rejected, (state, action) => {
+      .addCase(updateCountry.rejected, (state, action) => {
         state.isLoading = false;
         state.isSuccess = false;
         state.isError = true;
         state.message = action.error;
       })
-      .addCase(deleteAddress.pending, (state) => {
+      .addCase(deleteCountry.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(deleteAddress.fulfilled, (state, action) => {
+      .addCase(deleteCountry.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isError = false;
         state.isSuccess = true;
         state.message = "";
-        state.addresses = state.addresses.filter(
-          (address) => address._id !== action.payload._id
+        state.countries = state.countries.filter(
+          (country) => country._id !== action.payload._id
         );
         if (state.isSuccess === true) {
-          toast.success("Address Deleted Successfully");
+          toast.success("Country Deleted Successfully");
         }
       })
-      .addCase(deleteAddress.rejected, (state, action) => {
+      .addCase(deleteCountry.rejected, (state, action) => {
         state.isLoading = false;
         state.isSuccess = false;
         state.isError = true;
@@ -153,20 +153,20 @@ export const addressSlice = createSlice({
           toast.error(action.payload.response.data.message);
         }
       })
-      .addCase(deleteAllAddresses.pending, (state) => {
+      .addCase(deleteAllCountries.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(deleteAllAddresses.fulfilled, (state) => {
+      .addCase(deleteAllCountries.fulfilled, (state) => {
         state.isLoading = false;
         state.isError = false;
         state.isSuccess = true;
         state.message = "";
-        state.addresses = [];
+        state.countries = [];
         if (state.isSuccess === true) {
-          toast.success("All Addresses Deleted Successfully");
+          toast.success("All Countries Deleted Successfully");
         }
       })
-      .addCase(deleteAllAddresses.rejected, (state, action) => {
+      .addCase(deleteAllCountries.rejected, (state, action) => {
         state.isLoading = false;
         state.isSuccess = false;
         state.isError = true;
@@ -178,4 +178,4 @@ export const addressSlice = createSlice({
   },
 });
 
-export default addressSlice.reducer;
+export default countrySlice.reducer;

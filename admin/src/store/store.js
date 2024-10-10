@@ -15,9 +15,11 @@ import usersReducer from "./users/userSlice";
 import productReducer from "./products/productSlice";
 import prodTypeReducer from "./productType/prodTypeSlice";
 import colorReducer from "./color/colorSlice";
-import addressReducer from "./address/adressSlice";
 import imgCategoryReducer from "./images/imageCategories/imgCategorySlice";
 import imgTypeReducer from "./images/imageTypes/imgTypeSlice";
+import countryReducer from "./address/country/countrySlice";
+import regionReducer from "./address/region/regionSlice";
+import locationReducer from "./address/location/locationSlice";
 
 const persistConfig = {
   key: "root",
@@ -33,7 +35,9 @@ export const store = configureStore({
     products: productReducer,
     productTypes: prodTypeReducer,
     colors: colorReducer,
-    addresses: addressReducer,
+    countries: countryReducer,
+    locations: locationReducer,
+    regions: regionReducer,
     imgCategories: imgCategoryReducer,
     imageTypes: imgTypeReducer,
   },

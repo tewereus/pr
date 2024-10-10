@@ -1,25 +1,23 @@
 const mongoose = require("mongoose"); // Erase if already required
 
 // Declare the Schema of the Mongo model
-var addressSchema = new mongoose.Schema(
+var locationSchema = new mongoose.Schema(
   {
     country: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Country",
       required: true,
     },
     region: {
       // like Addis ababa
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Region",
       required: true,
     },
     location: {
       // like Yeka, Bole
       type: String,
       required: true,
-    },
-    isAccessable: {
-      type: Boolean,
-      default: false,
     },
   },
   {
@@ -28,4 +26,4 @@ var addressSchema = new mongoose.Schema(
 );
 
 //Export the model
-module.exports = mongoose.model("Address", addressSchema);
+module.exports = mongoose.model("Location", locationSchema);

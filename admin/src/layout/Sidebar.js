@@ -6,6 +6,7 @@ const Sidebar = () => {
   const [isUsersOpen, setIsUsersOpen] = useState(false);
   const [isImagesOpen, setIsImagesOpen] = useState(false);
   const [isProductsOpen, setIsProductsOpen] = useState(false);
+  const [isAddressOpen, setIsAddressOpen] = useState(false);
 
   const handleLogout = () => {
     localStorage.clear();
@@ -28,6 +29,7 @@ const Sidebar = () => {
                 setIsUsersOpen(!isUsersOpen);
                 setIsImagesOpen(false);
                 setIsProductsOpen(false);
+                setIsAddressOpen(false);
               }}
             >
               Users
@@ -54,6 +56,7 @@ const Sidebar = () => {
                 setIsProductsOpen(!isProductsOpen);
                 setIsUsersOpen(false);
                 setIsImagesOpen(false);
+                setIsAddressOpen(false);
               }}
               style={{
                 cursor: "pointer",
@@ -78,8 +81,36 @@ const Sidebar = () => {
           </div>
         </li>
         <li>
-          <Link to="address">Address</Link>
+          <div>
+            <button
+              className="cursor-pointer bg-none border-none p-0 m-0"
+              onClick={() => {
+                setIsUsersOpen(false);
+                setIsImagesOpen(false);
+                setIsProductsOpen(false);
+                setIsAddressOpen(!isAddressOpen);
+              }}
+            >
+              Address
+            </button>
+            {isAddressOpen && (
+              <ul className="bg-[#999] pl-[10px]">
+                <li>
+                  <Link to="countries">Country</Link>
+                </li>
+                <li>
+                  <Link to="regions">Region</Link>
+                </li>
+                <li>
+                  <Link to="locations">Location</Link>
+                </li>
+              </ul>
+            )}
+          </div>
         </li>
+        {/* <li>
+          <Link to="address">Address</Link>
+        </li> */}
         <li>
           <Link to="colors">Colors</Link>
         </li>
@@ -90,6 +121,7 @@ const Sidebar = () => {
                 setIsImagesOpen(!isImagesOpen);
                 setIsUsersOpen(false);
                 setIsProductsOpen(false);
+                setIsAddressOpen(false);
               }}
               style={{
                 cursor: "pointer",

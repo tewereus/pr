@@ -14,7 +14,9 @@ import Images from "./views/images/image/Images";
 import ImageTypes from "./views/images/imageTypes/ImageTypes";
 import ImageCategories from "./views/images/imageCategories/ImageCategories";
 import Profile from "./views/auth/Profile";
-import Address from "./views/address/Address";
+import Country from "./views/address/country/Country";
+import Region from "./views/address/region/Region";
+import Location from "./views/address/location/Location";
 
 const router = createBrowserRouter([
   {
@@ -40,7 +42,9 @@ const router = createBrowserRouter([
       { path: "printers", element: <Printers /> },
       { path: "products", element: <Products /> },
       { path: "product-types", element: <ProductTypes /> },
-      { path: "address", element: <Address /> },
+      { path: "countries", element: <Country /> },
+      { path: "regions", element: <Region /> },
+      { path: "locations", element: <Location /> },
       { path: "colors", element: <Colors /> },
       { path: "images", element: <Images /> },
       { path: "image-types", element: <ImageTypes /> },
