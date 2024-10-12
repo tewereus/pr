@@ -17,6 +17,7 @@ const sendEmail = require("../utils/emailCtrl");
 const crypto = require("crypto");
 const Manager = require("../../models/users/managerModel");
 const Printer = require("../../models/users/printerModel");
+const Rider = require("../../models/users/riderModel");
 
 // const registerUser = asyncHandler(async (req, res) => {
 //   const { fullname, username, mobile, email, password,   profile } = req.body;
@@ -860,6 +861,95 @@ const getAllPrinters = asyncHandler(async (req, res) => {
   }
 });
 
+const getAllRiders = asyncHandler(async (req, res) => {
+  try {
+    //Filtering
+    const queryObj = { ...req.query };
+    const excludeFields = [
+      "page",
+      "sort",
+      "limit",
+      "fields",
+      "search",
+      "searchField",
+    ];
+    excludeFields.forEach((el) => delete queryObj[el]);
+
+    let queryStr = JSON.stringify(queryObj);
+    queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`);
+
+    let query = Rider.find(JSON.parse(queryStr));
+
+    // Search
+    if (req.query.search) {
+      const searchField = req.query.searchField; // Add this line to get the search field from the query parameters
+      let searchQuery = {};
+
+      // Determine which field to search based on the searchField parameter
+      switch (searchField) {
+        // case "username":
+        //   searchQuery = {
+        //     username: { $regex: req.query.search, $options: "i" },
+        //   };
+        //   break;
+        case "fullname":
+          searchQuery = {
+            fullname: { $regex: req.query.search, $options: "i" },
+          };
+          break;
+        case "mobile":
+          searchQuery = { mobile: { $regex: req.query.search, $options: "i" } };
+          break;
+        case "manager":
+          searchQuery = {
+            "manager.fullname": { $regex: req.query.search, $options: "i" },
+          };
+          break;
+        default:
+          throw new Error("Invalid search field");
+      }
+
+      query = query.find(searchQuery);
+    }
+
+    //Sorting
+    if (req.query.sort) {
+      const sortBy = req.query.sort.split(",").join(" ");
+      query = query.sort(sortBy);
+    } else {
+      query = query.sort("-createdAt");
+    }
+
+    // limiting the fields
+    if (req.query.fields) {
+      const fields = req.query.fields.split(",").join(" ");
+      query = query.select(fields);
+    } else {
+      query = query.select("-__v");
+    }
+
+    // pagination
+    const page = req.query.page;
+    const limit = req.query.limit;
+    const skip = (page - 1) * limit;
+    query = query.skip(skip).limit(limit);
+    if (req.query.page) {
+      const usersCount = await Rider.countDocuments();
+      if (skip >= usersCount) throw new Error("This Page does not exists");
+    }
+    // const usersCount = await User.countDocuments(JSON.parse(queryStr));
+    // Get the total number of users
+    const totalUsers = await Rider.countDocuments();
+    const users = await query.populate({
+      path: "manager",
+      select: "fullname -_id",
+    });
+    res.json({ users, totalUsers });
+  } catch (error) {
+    throw new Error(error);
+  }
+});
+
 module.exports = {
   // registerUser,
   loginAdmin,
@@ -886,4 +976,5 @@ module.exports = {
   updateManager,
   toggleDarkMode,
   getAllPrinters,
+  getAllRiders,
 };

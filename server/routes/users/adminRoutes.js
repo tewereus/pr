@@ -25,6 +25,7 @@ const {
   updateManager,
   profileUpload,
   getAllPrinters,
+  getAllRiders,
 } = require("../../controllers/users/adminCtrl");
 
 const { adminAuthMiddleware } = require("../../middlewares/authMiddleware");
@@ -53,5 +54,6 @@ router.delete("/get-manager/:id/delete", deleteManager);
 router.put("/get-manager/:id/update", updateManager);
 router.post("/dark-mode", adminAuthMiddleware, toggleDarkMode);
 router.get("/all-printers", getAllPrinters);
+router.get("/all-riders", getAllRiders);
 
 module.exports = router;

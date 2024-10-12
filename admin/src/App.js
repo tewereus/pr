@@ -5,6 +5,7 @@ import Dashboard from "./views/Dashboard";
 import Users from "./views/users/Users";
 import Manager from "./views/users/manager/Manager";
 import Printers from "./views/users/printers/Printers";
+import Riders from "./views/users/riders/Riders";
 import Products from "./views/products/Products";
 import ProductTypes from "./views/prodTypes/ProductTypes";
 import { PrivateRoutes } from "./views/routes/PrivateRoutes";
@@ -40,6 +41,7 @@ const router = createBrowserRouter([
       { path: "users", element: <Users /> },
       { path: "managers", element: <Manager /> },
       { path: "printers", element: <Printers /> },
+      { path: "riders", element: <Riders /> },
       { path: "products", element: <Products /> },
       { path: "product-types", element: <ProductTypes /> },
       { path: "countries", element: <Country /> },

@@ -45,6 +45,9 @@ const Sidebar = () => {
                 <li>
                   <Link to="printers">Printers</Link>{" "}
                 </li>
+                <li>
+                  <Link to="riders">Riders</Link>{" "}
+                </li>
               </ul>
             )}
           </div>

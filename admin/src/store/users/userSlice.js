@@ -90,6 +90,17 @@ export const getAllPrinters = createAsyncThunk(
   }
 );
 
+export const getAllRiders = createAsyncThunk(
+  "users/all-riders",
+  async (data, thunkAPI) => {
+    try {
+      return await userService.getAllRiders(data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 export const deleteUser = createAsyncThunk(
   "users/delete-user",
   async (id, thunkAPI) => {
@@ -204,6 +215,26 @@ export const userSlice = createSlice({
         // console.log("Fulfilled - Total Users:", action.payload.totalUsers);
       })
       .addCase(getAllPrinters.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = false;
+        state.isError = true;
+        state.message = action.error;
+      })
+      .addCase(getAllRiders.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getAllRiders.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.isError = false;
+        state.riders = action.payload.users;
+        state.totalUsers = action.payload.totalUsers;
+        state.message = "success";
+        // console.log("Fulfilled - Data:", action.payload);
+        // console.log("Fulfilled - Users Data:", action.payload.user);
+        // console.log("Fulfilled - Total Users:", action.payload.totalUsers);
+      })
+      .addCase(getAllRiders.rejected, (state, action) => {
         state.isLoading = false;
         state.isSuccess = false;
         state.isError = true;

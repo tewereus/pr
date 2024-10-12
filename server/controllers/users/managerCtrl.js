@@ -5,6 +5,7 @@ const { generateRefreshToken } = require("../../config/refreshtoken");
 const { generateToken } = require("../../config/jwtToken");
 const { connect } = require("mongoose");
 const Printer = require("../../models/users/printerModel");
+const Rider = require("../../models/users/riderModel");
 
 // const url = require('url')
 
@@ -270,6 +271,32 @@ const getAllPrinters = asyncHandler(async (req, res) => {
   }
 });
 
+const addRiders = asyncHandler(async (req, res) => {
+  const { id } = req.manager;
+  const { mobile, fullname } = req.body;
+  try {
+    const rider = await Rider.findOne({ mobile });
+    if (rider) throw new Error("rider already exists");
+    const manager = await Manager.findById(id).select("-password");
+    if (!manager) throw new Error("manager doesn't exists");
+    const newRider = await Rider.create({
+      mobile,
+      fullname,
+      manager: id,
+    });
+    const updateManager = await Manager.findByIdAndUpdate(
+      id,
+      {
+        $push: { riders: newRider._id },
+      },
+      { new: true }
+    ).select("-password");
+    res.json(updateManager);
+  } catch (error) {
+    throw new Error(error);
+  }
+});
+
 module.exports = {
   // verifyManagerToken,
   verifyManager,
@@ -282,4 +309,5 @@ module.exports = {
   toggleDarkMode,
   addPrinters,
   getAllPrinters,
+  addRiders,
 };

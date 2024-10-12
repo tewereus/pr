@@ -14,8 +14,8 @@ const adminLogin = async (data) => {
   return response.data;
 };
 
-const allUsers = async (data) => {
-  const response = await axios.post(`${base_url}/user/all-users`, config);
+const allUsers = async () => {
+  const response = await axios.get(`${base_url}/user/all-users`, config);
   return response.data;
 };
 

@@ -42,6 +42,14 @@ const getAllPrinters = async ({ page, limit, search, searchField }) => {
   return response.data;
 };
 
+const getAllRiders = async ({ page, limit, search, searchField }) => {
+  const response = await axios.get(
+    `${base_url}/admin/all-riders?page=${page}&limit=${limit}&search=${search}&searchField=${searchField}`,
+    config
+  );
+  return response.data;
+};
+
 const getManagerInfo = async (id) => {
   const response = await axios.get(`${base_url}/admin/get-manager/${id}`);
   return response.data;
@@ -87,6 +95,7 @@ const userService = {
   deleteAllUsers,
   getAllManagers,
   getAllPrinters,
+  getAllRiders,
   addManager,
   deleteManager,
   updateManager,

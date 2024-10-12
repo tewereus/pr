@@ -2,9 +2,8 @@ const mongoose = require("mongoose");
 const crypto = require("crypto");
 const bcrypt = require("bcryptjs");
 
-const managerSchema = mongoose.Schema(
+const riderSchema = mongoose.Schema(
   {
-    unique_id: String,
     fullname: {
       type: String,
       // required: [true, "full name is required"],
@@ -12,7 +11,7 @@ const managerSchema = mongoose.Schema(
     },
     email: {
       type: String,
-      required: true,
+      //   required: true,
     },
     mobile: {
       type: String,
@@ -39,13 +38,15 @@ const managerSchema = mongoose.Schema(
     },
     password: {
       type: String,
-      default: "",
-      // required: true,
-      // select: false,
+      //   required: true,
+    },
+    manager: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Manager",
     },
     role: {
       type: String,
-      default: "manager",
+      default: "rider",
     },
     status: {
       // this is for the managers to make it inactive incase of an emergency
@@ -54,25 +55,6 @@ const managerSchema = mongoose.Schema(
       enum: ["active", "inactive"],
       default: "inactive",
     },
-    main_status: {
-      // this is for the admin to make them active after verifying the manager info
-      type: String,
-      require: true,
-      enum: ["active", "inactive", "waiting", "unavailable"], // unavailable if the manager is not working anymore(change/ fired/ retired)
-      default: "inactive",
-    },
-    printers: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Printer",
-      },
-    ],
-    riders: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Rider",
-      },
-    ],
     payment: [
       {
         bankName: String,
@@ -83,21 +65,12 @@ const managerSchema = mongoose.Schema(
       type: String,
       default: "",
     },
-    address: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Address",
-    },
-    // may be remove this
-    shopInfo: {
-      type: Object,
-      default: {},
-    },
-    sold: {
+    delivered: {
       type: Number,
       default: 0,
       min: 0,
     },
-    managerToken: { type: String },
+    riderToken: { type: String },
     passwordChangedAt: Date,
     passwordResetToken: String,
     passwordResetExpires: Date,
@@ -105,12 +78,12 @@ const managerSchema = mongoose.Schema(
   { timestamps: true }
 );
 
-managerSchema.pre("save", function (next) {
-  this.role = "manager";
+riderSchema.pre("save", function (next) {
+  this.role = "rider";
   next();
 });
 
-managerSchema.pre("save", async function (next) {
+riderSchema.pre("save", async function (next) {
   if (!this.isModified("password")) {
     next();
   }
@@ -123,17 +96,8 @@ managerSchema.pre("save", async function (next) {
   next();
 });
 
-managerSchema.methods.isPasswordMatched = async function (enteredPassword) {
-  console.log("here", this.password);
+riderSchema.methods.isPasswordMatched = async function (enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password);
 };
 
-managerSchema.methods.createManagerToken = async function () {
-  const token = crypto.randomBytes(3).toString("hex");
-  this.unique_id = token;
-
-  console.log("token: ", token);
-  return token;
-};
-
-module.exports = mongoose.model("Manager", managerSchema);
+module.exports = mongoose.model("Rider", riderSchema);

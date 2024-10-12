@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from "react";
 import Modal from "react-modal";
-import { getAllPrinters } from "../../../store/users/userSlice";
+import { getAllRiders } from "../../../store/users/userSlice";
 import { GiEyeTarget } from "react-icons/gi";
 import { BsTrash } from "react-icons/bs";
 import { FaRegEdit } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
 import Pagination from "../../components/Pagination";
-// import AddManager from "./AddManager";
-// import EditManager from "./EditManager";
-// import DeleteManager from "./DeleteManager";
-// import ViewManager from "./ViewManager";
+// import AddRider from "./AddRider";
+// import EditRider from "./EditRider";
+// import DeleteRider from "./DeleteRider";
+// import ViewRider from "./ViewRider";
 
 Modal.setAppElement("#root");
-const Printers = () => {
+const Rider = () => {
   const dispatch = useDispatch();
   const [selectedUser, setSelectedUser] = useState(null);
   const [isAdd, setIsAdd] = useState(false);
@@ -31,7 +31,7 @@ const Printers = () => {
       search,
       searchField,
     };
-    dispatch(getAllPrinters(obj));
+    dispatch(getAllRiders(obj));
   }, [page, limit, search, searchField]);
 
   useEffect(() => {
@@ -64,14 +64,12 @@ const Printers = () => {
     }
   };
 
-  const handleRowSelect = (printer) => {
-    setSelectedUser(printer);
-    // console.log(printer);
+  const handleRowSelect = (rider) => {
+    setSelectedUser(rider);
+    // console.log(rider);
   };
 
-  const { printers, totalUsers, isLoading } = useSelector(
-    (state) => state.users
-  );
+  const { riders, totalUsers, isLoading } = useSelector((state) => state.users);
   return (
     <div>
       <div className="search-container h-200 pb-30 border-3">
@@ -120,24 +118,24 @@ const Printers = () => {
               </td>
             </tr>
           ) : totalUsers > 0 ? (
-            printers.map((printer) => (
+            riders.map((rider) => (
               <tr
-                key={printer?._id}
-                onClick={() => handleRowSelect(printer)}
+                key={rider?._id}
+                onClick={() => handleRowSelect(rider)}
                 className="text-center border"
               >
-                <td className="p-4" onClick={() => console.log(printers)}>
-                  {printer?.fullname}
+                <td className="p-4" onClick={() => console.log(riders)}>
+                  {rider?.fullname}
                 </td>
-                <td>{printer?.mobile}</td>
-                <td>{printer?.manager?.fullname}</td>
-                <td className="text-red-500">{printer?.status}</td>
-                <td className="text-purple-600">{printer?.main_status}</td>
-                <td>{new Date(printer?.createdAt).toLocaleString()}</td>
+                <td>{rider?.mobile}</td>
+                <td>{rider?.manager?.fullname}</td>
+                <td className="text-red-500">{rider?.status}</td>
+                <td className="text-purple-600">{rider?.main_status}</td>
+                <td>{new Date(rider?.createdAt).toLocaleString()}</td>
                 <td className="flex items-center justify-center text-center">
                   <span
                     onClick={() => {
-                      setSelectedUser(printer);
+                      setSelectedUser(rider);
                       setIsView(true);
                     }}
                     className="text-blue-500 text-2xl"
@@ -146,7 +144,7 @@ const Printers = () => {
                   </span>
                   <span
                     onClick={() => {
-                      setSelectedUser(printer);
+                      setSelectedUser(rider);
                       setIsEdit(true);
                     }}
                     className="text-orange-400 text-2xl pl-2"
@@ -155,7 +153,7 @@ const Printers = () => {
                   </span>
                   <span
                     onClick={() => {
-                      setSelectedUser(printer);
+                      setSelectedUser(rider);
                       setIsDelete(true);
                     }}
                     className="text-red-500 text-2xl pl-2"
@@ -168,7 +166,7 @@ const Printers = () => {
           ) : (
             <tr>
               <td colSpan="6" align="center">
-                No printer found
+                No rider found
               </td>
             </tr>
           )}
@@ -231,4 +229,4 @@ const Printers = () => {
   );
 };
 
-export default Printers;
+export default Rider;
